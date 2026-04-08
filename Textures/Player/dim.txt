@@ -1,0 +1,2 @@
+bredde: 45
+Højde: 64

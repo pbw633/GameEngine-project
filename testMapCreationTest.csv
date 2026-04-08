@@ -1,0 +1,10 @@
+x,y,walkable,tile_type,elevation
+0,0,1,futureTileType,futureElevationLevel
+0,1,0,futureTileType,futureElevationLevel
+0,2,0,futureTileType,futureElevationLevel
+1,0,1,futureTileType,futureElevationLevel
+1,1,0,futureTileType,futureElevationLevel
+1,2,0,futureTileType,futureElevationLevel
+2,0,1,futureTileType,futureElevationLevel
+2,1,1,futureTileType,futureElevationLevel
+2,2,0,futureTileType,futureElevationLevel
