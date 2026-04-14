@@ -80,6 +80,7 @@ private:
 
 	// debugging
 	void mouseInGridDetection();
+	std::pair<int, int> mouseToGrid(sf::Vector2i mousePos);
 	void mouseInTileDetection();
 	void debugModeActivationSwitch();
 public:

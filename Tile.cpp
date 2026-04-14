@@ -241,12 +241,8 @@ void Tile::isMouseInTile(sf::Vector2i& mousePos) { // this method is really expe
 	sf::Vector2f worldMousePos = static_cast<sf::Vector2f>(mousePos);
 
 	
-	//if outside then end early
-	if (!(this->getBoundingBoxMinX() > worldMousePos.x ||      // venstre
-			this->getBoundingBoxMaxX() < worldMousePos.x ||      // højre
-			this->getBoundingBoxMinY() > worldMousePos.y ||      // top
-			this->getBoundingBoxMaxY() < worldMousePos.y)) {
-
+	
+			
 		// Check if the mouse position is inside the hexagon using point-in-polygon test
 		bool isInside = false;
 		size_t numPoints = hexagon.getPointCount();
@@ -266,8 +262,7 @@ void Tile::isMouseInTile(sf::Vector2i& mousePos) { // this method is really expe
 		}
 
 		mouseIsInTile = isInside;
-	}
-	
+
 }
 
 void Tile::isMousePressedInTile(sf::Vector2i& mousePos) {
@@ -290,10 +285,11 @@ void Tile::display(sf::RenderWindow& window, int x, int y, int z) {
 	} else if (occupiedByOrganism){
 		this->hexagon.setFillColor(sf::Color(140,0,10));
 	} else if (mousePressedTile) {
-		this->hexagon.setFillColor(sf::Color(255, 50, 110));
+		this->hexagon.setFillColor(sf::Color(255, 50, 110)); 
 	} else {
 		this->hexagon.setFillColor(sf::Color(x, y, z));
 	}
+
 	
 	window.draw(this->hexagon);
 }

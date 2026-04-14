@@ -89,11 +89,13 @@ void Game::initGrid() { // initialize the grid
 }
 
 void Game::initTestGrid() {
+	// grid som faktisk vises da gamle version var langsommere
 
 	testGrid = sf::VertexArray(sf::Triangles);
 	testGridLines = sf::VertexArray(sf::Lines);
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
+			
 			Tile& t = grid[i][j];
 
 			sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
@@ -107,6 +109,7 @@ void Game::initTestGrid() {
 				testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black ));
 				testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
 			}
+			
 
 		}
 	}
@@ -201,7 +204,7 @@ Game::Game() { //when you start the game somethings need to be initialized
 	this->initStartAndEndPoints(grid[0][0], grid[rows-1][cols-1]);
 	this->initPathStartCondition();
 	this->start_time = std::chrono::high_resolution_clock::now();
-
+	this->initMouseInTileDetection();
 	/*
 	- Declare objects for testíng
 	*/
@@ -228,13 +231,14 @@ void Game::updateMousePositions() {
 }
 
 void Game::updateGrid() {
+	/*
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			//std::cout << "Setting grid[" << i << "][" << j << "]" << std::endl;
-			//grid[i][j].moveTile(direction);
 			grid[i][j].isMouseInTile(mousePosWindow);
 		}
 	}
+	*/
+	this->mouseInGridDetection();
 }
 
 void Game::updateFrameRate() {
@@ -356,9 +360,7 @@ void Game::chooseDirectionOfGridMovement(sf::Vector2f mousePos ) {
 void Game::moveGrid(sf::Vector2f direction) {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			//std::cout << "Setting grid[" << i << "][" << j << "]" << std::endl;
 			//grid[i][j].moveTile(direction);
-			grid[i][j].isMouseInTile(mousePosWindow);
 		}
 	}
 }
@@ -368,13 +370,12 @@ void Game::movePlayerPosition() {
 
 }*/
 
+
 void Game::mouseInGridDetection() {
 	// activate upon Mouse Movement
 	/*
-		- If the mouse is outside of grid then run initial tile detection until it is inside
-		- If mouse was in the grid then check if still in tile, then neighboors. I neither then mouse is outside of grid
-	*/
 	if (lastDetectedTileByMouse == nullptr ) {
+		std::cout << "Debug" << "\n";
 		this->initMouseInTileDetection();
 	} else if (!mouseInsideOfGrid && lastDetectedTileByMouse != nullptr) {
 		// check egdes
@@ -382,16 +383,21 @@ void Game::mouseInGridDetection() {
 			for (int j = 0; j < cols; j++) {
 				if (!(0 < i && i < rows - 1 && 0< j && j< cols-1 )) {
 					grid[i][j].isMouseInTile(mousePosWindow);
-					lastDetectedTileByMouse = &grid[i][j];
-					mouseInsideOfGrid = true;
-					return;
+					if (grid[i][j].mouseIsInTile) {
+						lastDetectedTileByMouse = &grid[i][j];
+						mouseInsideOfGrid = true;
+						std::cout << "mouse is in: " << i << "," << j <<  "and came from outside" <<"\n";
+						return;
+					}
 				}
 			}
 		}
 
 	} else {
 		// check if still in the same tile
+		lastDetectedTileByMouse->isMouseInTile( mousePosWindow );
 		if (lastDetectedTileByMouse->mouseIsInTile) {
+			//std::cout << "mousePos not changed and is at: " << lastDetectedTileByMouse->xRow << ","<< lastDetectedTileByMouse->yRow << "\n";
 			return;
 		}
 		//check if the mouse is now in one of the neighbors
@@ -400,14 +406,16 @@ void Game::mouseInGridDetection() {
 			Tile* currentNeighbor = lastDetectedTileByMouse->neighbors[i];
 			currentNeighbor->isMouseInTile(this->mousePosWindow);
 			if (currentNeighbor->mouseIsInTile) {
+				std::cout << "new tile " << "\n";
 				lastDetectedTileByMouse = currentNeighbor;
 				return;
 			}
 		}
-		
 		mouseInsideOfGrid = false;
 		lastDetectedTileByMouse = nullptr; // if you tap out this is for safety
 	}
+
+	*/
 }
 
 //mouse in grid detection will be outdated afterwards
@@ -427,6 +435,62 @@ void Game::mouseInTileDetection() {
 	std::cout << "Guess coordinates: " << rowGuess << ","<< colGuess << "\n";
 }
 
+
+std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
+	float x = static_cast<float>(mousePos.x);
+	float y = static_cast<float>(mousePos.y);
+
+	const float angle = this->grid[0][0].construcangle * 3.14159265f / 180.f;
+
+	const float dx = 2.f * this->grid[0][0].r_1 * cos(angle); // r_1 = 15
+	const float dy = this->grid[0][0].r_1 * 2.f * sin(angle) + (this->grid[0][0].r_2 - cos((90.f - this->grid[0][0].construcangle) * 3.14159265f / 180.f) * this->grid[0][0].r_1);
+
+	int approxRow = static_cast<int>((y - 100.f) / dy);
+	approxRow = std::max(0, std::min(rows - 1, approxRow));
+
+	float offsetX = (approxRow % 2 == 0) ? (15.f * cos(angle)) : 0.f;
+
+	int approxCol = static_cast<int>((x - 100.f - offsetX) / dx);
+	approxCol = std::max(0, std::min(cols - 1, approxCol));
+
+	// refine by checking this tile + neighbors only
+	Tile* bestTile = nullptr;
+
+	std::vector<Tile*> candidates;
+	candidates.push_back(&grid[approxRow][approxCol]);
+
+	for (Tile* n : grid[approxRow][approxCol].neighbors)
+		candidates.push_back(n);
+
+	for (Tile* t : candidates)
+	{
+		if (t->getBoundingBoxMinX() <= x && x <= t->getBoundingBoxMaxX() &&
+			t->getBoundingBoxMinY() <= y && y <= t->getBoundingBoxMaxY())
+		{
+			// final precise check
+			bool inside = false;
+			size_t numPoints = t->hexagon.getPointCount();
+
+			for (size_t i = 0, j = numPoints - 1; i < numPoints; j = i++)
+			{
+				sf::Vector2f vi = t->getPoint(i);
+				sf::Vector2f vj = t->getPoint(j);
+
+				bool intersect = ((vi.y > y) != (vj.y > y)) &&
+					(x < (vj.x - vi.x) * (y - vi.y) / (vj.y - vi.y) + vi.x);
+
+				if (intersect)
+					inside = !inside;
+			}
+
+			if (inside)
+				std::cout << "the guess is: " << t->xRow << "," << t->yRow << "\n";
+				return { t->xRow, t->yRow };
+		}
+	}
+	std::cout << "fail " << "\n";
+	return { -1, -1 };
+}
 
 void Game::leftMouseClickExecution() {
 	/*
@@ -487,7 +551,8 @@ void Game::update() {
 	this->updatePath();
 	this->updateFrameRate();
 	//this->frameRate();
-	
+	//this->mouseInGridDetection();
+	this->mouseToGrid(mousePosWindow);
 	//this->movePlayerPosition(); // move playerPosition
 	
 	//Player
