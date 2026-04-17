@@ -39,7 +39,7 @@ void Tile::initializeTileShape(int x, int y, int z) {
 
 		sx = midx + cos(angle) * radius;
 		sy = midy + sin(angle) * radius;
-		points.emplace_back(sf::Vector2f(sx,sy));
+		points.emplace_back(sf::Vector2f(sx,sy)); // this is for the new version of the grid 
 
 		this->hexagon.setPoint(k, sf::Vector2f(float(sx), float(sy)));
 	}

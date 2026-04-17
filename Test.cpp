@@ -5,6 +5,7 @@
 #include "Organism.h"
 #include "StorageContainer.h"
 #include "MapCSVExporter.h"
+#include "Game.h"
 /*
 TODO:
 This is a list of tests that should be done:
@@ -369,6 +370,74 @@ void organismPathCalculationTest() {
 	
 }
 
+void mouseInGridDetectionTest() {
+	// Setup
+	// game and grid
+	Game game;
+	int gridDim = 10;
+	std::vector<std::vector<Tile>> gridSetup = declareTestGrid(gridDim, gridDim);
+	game.grid = gridSetup;
+	
+	std::vector<std::pair<int,int>> expectedResultInGrid;
+	for (int i = 0; i < gridDim; i++) {
+		for (int j = 0; j < gridDim; j++) {
+			expectedResultInGrid.push_back({i,j});
+		}
+	}
+	std::pair<int, int> expectedResultOutsideGrid = { -1,-1 };
+
+	// Act
+	std::vector<std::pair<int, int >> estimatedMouseTileLocationInGrid;
+	std::vector<std::pair<int, int>> estimatedMouseTileLocationOutsideGrid;
+	
+	// inside grid
+	for (int i = 0; i < gridDim; i++) {
+		for (int j = 0; j < gridDim; j++) {
+			estimatedMouseTileLocationInGrid
+				.push_back( game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy)));
+		}
+	}
+	
+	//outside grid along the edges
+	for (int i = 0; i < gridDim; i++) {
+		for (int j = 0; j < gridDim; j++) {
+			if (i==0) { // upper grid
+				estimatedMouseTileLocationOutsideGrid
+					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy - game.grid[i][j].r_1*1.5)));
+
+			} else if(i == (gridDim)) {// lower grid
+				estimatedMouseTileLocationOutsideGrid
+					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy + game.grid[i][j].r_1*1.5)));
+
+			} else if (j == 0 ) { // left grid
+				estimatedMouseTileLocationOutsideGrid
+					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx- game.grid[i][j].r_1*1.5, game.grid[i][j].midy)));
+
+			} else if (j == (gridDim)) { // right grid
+				estimatedMouseTileLocationOutsideGrid
+					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx + game.grid[i][j].r_1*1.5, game.grid[i][j].midy)));
+
+			}
+		}
+	}
+
+	// Assert
+	for (int i = 0; i < estimatedMouseTileLocationInGrid.size(); i++) {
+		if (estimatedMouseTileLocationInGrid[i] != expectedResultInGrid[i] && 
+			estimatedMouseTileLocationInGrid.size() == expectedResultInGrid.size()) {
+			throw std::runtime_error("MouseToGrid estimated wrong inside grid!");
+		}
+	}
+
+	for (int i = 0; i < estimatedMouseTileLocationOutsideGrid.size(); i++) {
+		if (estimatedMouseTileLocationOutsideGrid[i] != expectedResultOutsideGrid ) {
+			throw std::runtime_error("MouseToGrid estimated wrong outside grid!");
+		}
+	}
+
+	
+}
+
 #ifdef TEST_MODE  // debug-Test to run this
 int main() {
 	minHeapInsertTest();
@@ -383,6 +452,8 @@ int main() {
 	runTest("Add item to storage Test", storageAddTest);
 	runTest("Remove items from storage Test", storageRemovalTest);
 	runTest("calculation of path for organism", organismPathCalculationTest);
+	runTest("calculation mouse to grid coordinates", mouseInGridDetectionTest);
+	
 	// Number of failed tests
 	if (failedTests > 0) {
 		std::cerr << "Amount of failed tests: " << failedTests << "\n";

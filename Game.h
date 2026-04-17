@@ -74,14 +74,11 @@ private:
 	Organism playerObject; 
 	void updatePlayerObject();
 
-	//event executions put together in one
-	void rightMouseClickExecution();
-	void leftMouseClickExecution();
+	
 
 	// debugging
-	void mouseInGridDetection();
-	std::pair<int, int> mouseToGrid(sf::Vector2i mousePos);
-	void mouseInTileDetection();
+	void mouseInGridDetection(); // remove
+	void mouseInTileDetection(); // remove
 	void debugModeActivationSwitch();
 public:
 	//constructors / Destructors
@@ -143,14 +140,21 @@ public:
 	const bool running() const;
 
 	//--------------------declare functions---------------------------
+	//-------------------- FrameRate ---------------
 	void updateFrameRate();
 	void renderFrameRate();
 
+	//---------------------Mouse Methods----------
+	std::pair<int, int> mouseToGrid(sf::Vector2i mousePos);
+	void rightMouseClickExecution(); //maybe in pollEvents?
+	void leftMouseClickExecution();
+
+	// ------------------ Level design -------------
 	void createLevel();
 	void loadLevel();
 	void deleteLevel();
 
-	
+	// --------------------Update objects --------------
 	void update();
 	void updateGrid();
 	void updatePath();
@@ -158,6 +162,7 @@ public:
 	void updateMousePositions();
 	void pollEvents();
 
+	//----------------- Rendering ------------------
 	void renderPlayer();
 	void render();
 

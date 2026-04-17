@@ -32,7 +32,7 @@ void StorageContainer::initTextureSheet(std::string fileName) {
 		std::cout << "Failed loading texture: " << fileName << std::endl;
 	}
 	else {
-		std::cout << "Loaded texture: " << fileName << std::endl;
+		//std::cout << "Loaded texture: " << fileName << std::endl;
 	}
 }
 
