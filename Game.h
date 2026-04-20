@@ -60,7 +60,7 @@ private:
 	void initStartAndEndPoints(Tile& startPosition , Tile& endPosition); // initialize start and end of the path. just some random points
 	void initPathStartCondition();
 	void initOrganism(int rowPos, int colPos, Organism& organism);
-	void initMouseInTileDetection();
+	
 	
 	//void initGridNeighbors(const Game& game); // initialize the neighbors of each Tile in the grid
 
@@ -77,8 +77,6 @@ private:
 	
 
 	// debugging
-	void mouseInGridDetection(); // remove
-	void mouseInTileDetection(); // remove
 	void debugModeActivationSwitch();
 public:
 	//constructors / Destructors
@@ -130,8 +128,9 @@ public:
 	bool loadModeActive		= false;
 	bool deleteModeActive	= false;
 	// ----------------------- Grid ---------------------------
-	bool mouseInsideOfGrid = false;
-	Tile* lastDetectedTileByMouse = nullptr;
+	std::pair<int, int> detectedTileByMouse;
+	std::pair<int, int> lastDetectedTileByMouse;
+
 
 	//----------------------- Debugging----------------------
 	bool debugModeActivated = false;
@@ -157,6 +156,10 @@ public:
 	// --------------------Update objects --------------
 	void update();
 	void updateGrid();
+	void updateMouseToGrid();
+	void updateTileBorder();
+	void updateTileInsides();
+	void updateLastDetectedTileByMouse();
 	void updatePath();
 
 	void updateMousePositions();

@@ -22,6 +22,8 @@ void Game::initVariables() { // like the void setup but for the values
 	cols = 62;
 	gridOffset = 100;
 	grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
+	detectedTileByMouse = { -1,-1 };
+	lastDetectedTileByMouse = { -1,-1 };
 	//std::cout << "Rows: " << rows << ", Cols: " << cols << std::endl;
 }
 void Game::initFonts() {
@@ -152,34 +154,6 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	organism.initVariables();
 }
 
-void Game::initMouseInTileDetection() {
-	/*
-		- look at the grid and see if the mouse is in one of the tiles via raycasting
-	*/
-
-	
-	// Konverter musens position fra vindueskoordinater til verdenskoordinater
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			this->grid[i][j].isMouseInTile(this->mousePosWindow);
-			
-			if (this->grid[i][j].mouseIsInTile) {
-				mouseInsideOfGrid = true;
-				lastDetectedTileByMouse = &(this->grid[i][j]);
-				break;
-			} else {
-				mouseInsideOfGrid = false;
-			}
-		}
-		if (mouseInsideOfGrid) {
-			break;
-		}
-	}
-
-	
-
-}
-
 //constructors/ destructors
 Game::Game() { //when you start the game somethings need to be initialized
 	//importend to first initialize the variables before the window
@@ -203,7 +177,6 @@ Game::Game() { //when you start the game somethings need to be initialized
 	this->initStartAndEndPoints(grid[0][0], grid[rows-1][cols-1]);
 	this->initPathStartCondition();
 	this->start_time = std::chrono::high_resolution_clock::now();
-	this->initMouseInTileDetection();
 	/*
 	- Declare objects for testíng
 	*/
@@ -224,20 +197,74 @@ const bool Game::running() const
 }
 
 //functions
+
+//  -------------------- Updating methods ------------------------
 void Game::updateMousePositions() {
 	//updates mouse position mouseposition relative to window
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 }
 
 void Game::updateGrid() {
-	/*
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j].isMouseInTile(mousePosWindow);
+	this->updateMouseToGrid();
+	this->updateTileBorder();
+	this->updateTileInsides();
+	this->updateLastDetectedTileByMouse();
+}
+
+void Game::updateMouseToGrid() {
+	this->mouseToGrid( this->mousePosWindow );
+}
+
+void Game::updateTileBorder() {
+	// reset the previous tile
+	if (lastDetectedTileByMouse.first != -1 || lastDetectedTileByMouse.second != -1) {
+		//this->lastDetectedTile = { t->xRow, t->yRow };
+		int tileIndexToArrayIndex = lastDetectedTileByMouse.first* cols + lastDetectedTileByMouse.second;
+		// convert tileIndexToArrayIndex to gridLines coordinates
+		int lineStart = tileIndexToArrayIndex * 12;
+		for (int i = 0; i < 12; i++) {
+			testGridLines[lineStart + i].color = sf::Color::Black;
 		}
 	}
-	*/
-	this->mouseInGridDetection();
+
+	if (detectedTileByMouse.first != -1 || detectedTileByMouse.second != -1) {
+		//convert tile coordinates to tileArray coordinates
+		int tileIndexToArrayIndex = detectedTileByMouse.first* cols + detectedTileByMouse.second;
+		// convert tileIndexToArrayIndex to gridLines coordinates
+		int lineStart = tileIndexToArrayIndex * 12;
+		for (int i = 0; i < 12; i++) {
+			testGridLines[lineStart + i].color = sf::Color::Red;
+		}
+	}
+	
+	
+}
+
+void Game::updateTileInsides() {
+	if (lastDetectedTileByMouse.first != -1 || lastDetectedTileByMouse.second != -1) {
+		if (!grid[lastDetectedTileByMouse.first][lastDetectedTileByMouse.second].wall) {
+			int tileIndex = lastDetectedTileByMouse.first * cols + lastDetectedTileByMouse.second;
+			int triangleStart = tileIndex * 18;
+
+			for (int i = 0; i < 18; i++) {
+				testGrid[triangleStart + i].color = sf::Color::White;
+			}
+		}
+	}
+	if ( detectedTileByMouse.first !=-1 || detectedTileByMouse.second != -1 ) {
+		if (!grid[detectedTileByMouse.first][detectedTileByMouse.second].wall) {
+			int tileIndex = detectedTileByMouse.first * cols + detectedTileByMouse.second;
+			int triangleStart = tileIndex * 18;
+
+			for (int i = 0; i < 18; i++) {
+				testGrid[triangleStart + i].color = sf::Color::Red;
+			}
+		}
+	}
+}
+
+void Game::updateLastDetectedTileByMouse() {
+	lastDetectedTileByMouse = detectedTileByMouse;
 }
 
 void Game::updateFrameRate() {
@@ -363,22 +390,7 @@ void Game::moveGrid(sf::Vector2f direction) {
 		}
 	}
 }
-/*
-void Game::movePlayerPosition() {
-	this->playerObject.updatePosition( );
 
-}*/
-
-
-void Game::mouseInGridDetection() {
-	
-}
-
-//mouse in grid detection will be outdated afterwards
-void Game::mouseInTileDetection() {
-	// can this be optimized?
-
-}
 
 
 std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
@@ -428,6 +440,7 @@ std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
 
 			if (inside) {
 				//std::cout << "the guess is: " << t->xRow << "," << t->yRow << "\n";
+				detectedTileByMouse = { t->xRow, t->yRow };
 				return { t->xRow, t->yRow };
 			}
 		}
@@ -442,9 +455,7 @@ void Game::leftMouseClickExecution() {
 	// complete List of what to execute when right mouse buttom is pressed:
 	//	-Detction of mouse press in a tile
 	*/
-	
-	
-	//this->mouseInGridDetection();
+	this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
 }
 
 void Game::rightMouseClickExecution() {
@@ -455,6 +466,7 @@ void Game::rightMouseClickExecution() {
 	//this->playerObject.mouseInSprite(this->mousePosWindow);
 	
 	this->playerObject.rotateOrganism(this->mousePosWindow);
+	
 }
 
 void Game::pollEvents() {
@@ -472,12 +484,11 @@ void Game::pollEvents() {
 		case sf::Event::MouseButtonReleased:
 			if (this->ev.mouseButton.button == sf::Mouse::Left) {
 				this->leftMouseClickExecution();
-				this->mouseInTileDetection();
-				std::cout << "there was a buttonRealese" << "\n";
+				std::cout << "Left-buttonRealese" << "\n";
 
 			} else if (this->ev.mouseButton.button == sf::Mouse::Right) {
 				this->rightMouseClickExecution();
-				std::cout << "there was a buttonRealese" << "\n";
+				std::cout << "Right-buttonRealese" << "\n";
 			}
 			break;
 
@@ -499,7 +510,7 @@ void Game::update() {
 	//this->mouseInGridDetection();
 	this->mouseToGrid(mousePosWindow);
 	//this->movePlayerPosition(); // move playerPosition
-	
+	this->updateGrid();
 	//Player
 	this->updatePlayerObject();
 
@@ -590,7 +601,7 @@ void Game::updatePath() {
 void Game::updatePlayerObject() {
 	playerObject.updatePosition();
 	playerObject.updateSpriteLocation();
-	playerObject.updateMovement(0,0); // later this should instead be the next tile should be moving towards Keyboard movement
+	playerObject.updateMovement(0,0); // remove. this is old code
 	playerObject.updateSprite();
 }
 
