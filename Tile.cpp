@@ -72,7 +72,7 @@ void Tile::initBoundingBoxIndex() {
 	boundingBoxIndex = tempIndexValues;
 }
 
-void Tile::initializeNeighbors(int i, int j ,Game& game) { //
+void Tile::initializeNeighbors(int i, int j ,Game& game) { // no need to pass the game as this object is very big
 	// might have to do something here since it does not like emplace_back
 	int cols = game.cols;
 	int rows = game.rows;
@@ -227,7 +227,46 @@ void Tile::placeOrganismInTile(Organism& organism) {
 	occupiedByOrganism = true;
 }
 
-void Tile::moveTile(sf::Vector2f direction) {
+void Tile::updateTileSize( float sizeIndex ) {
+	if (sizeIndex>0) {
+		sf::Vector2f center = this->getCenter();
+
+		//displacement of center of hexagon (this is vectors and therefore probably wrong.)
+		sf::Vector2f leftSkewedVector = (this->getPoint(0) - center);
+		float lenthOfLeftSkewedVector = std::sqrt(leftSkewedVector.x * leftSkewedVector.x + leftSkewedVector.y * leftSkewedVector.y);
+		
+		float displacementFactorX = ((lenthOfLeftSkewedVector) * sizeIndex * cos(PI * construcangle / 180.0) - lenthOfLeftSkewedVector * cos(PI * construcangle / 180.0));
+		
+		float displacementFactorY = (lenthOfLeftSkewedVector * sizeIndex * sin(PI * construcangle / 180.0) - lenthOfLeftSkewedVector * sin(PI * construcangle / 180.0)) * (this->xRow);
+		
+		//sf::Vector2f displacementFactor( displacementFactorX, displacementFactorY);
+		std::vector<sf::Vector2f> newPoints;
+		sf::Vector2f newCenter( center*sizeIndex) ;
+		
+		for (int i = 0; i < this->points.size(); i++) {
+			newPoints.emplace_back(newCenter + (this->getPoint(i) - center) * sizeIndex);
+		}
+
+		points = newPoints;
+		this->setCenter(newCenter.x, newCenter.y);
+		this->r_1 = this->r_1 * sizeIndex;	
+		this->r_2 = this->r_2 * sizeIndex;
+	} else {
+		std::cout << "Size index must be greater than 0" << "\n";
+	}
+	
+
+}
+void Tile::setCenter(float x, float y) {
+	this->midx = x;
+	this->midy = y;
+}
+
+void Tile::updateBoundingBox(){
+	this->initBoundingBoxIndex();
+}
+
+void Tile::moveTile(sf::Vector2f direction) { // should be removed
 	/*
 		move the corners of the hexagon in the given direction
 	*/

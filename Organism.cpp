@@ -137,10 +137,6 @@ void Organism::updatePosition(){
 		this->interTileTimer.restart();
 		this->animationTimer.restart();
 	}
-	
-	
-
-
 }
 
 void Organism::updateSpriteLocation() {
@@ -274,12 +270,11 @@ void Organism::updateSprite() { // skal rettes
 
 	
 }
-
+/*
+	- If mouse is in sprite while pressed and not moving then update sprite by rotating clockwise
+	- should be scale safe for future
+*/
 void Organism::rotateOrganism(sf::Vector2i mousePos) {
-	/*
-		- If mouse is in sprite while pressed and not moving then update sprite by rotating clockwise
-		- should be scale safe for future
-	*/
 	if (mouseInSprite( mousePos) && !moving ) {
 		int scalingFactorSign = this->sprite.getScale().x;
 		// Last movement direction should rotate clockwise

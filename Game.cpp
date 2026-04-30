@@ -390,7 +390,11 @@ void Game::moveGrid(sf::Vector2f direction) {
 		}
 	}
 }
-
+/*
+	- update method for resized grid.
+	- could be done by updating the parameters of the tile in each tile but that might be to much work.
+		-maybe move tile parameters to game Object
+*/
 
 
 std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
@@ -405,7 +409,7 @@ std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
 	int approxRow = static_cast<int>((y - 100.f) / dy);
 	approxRow = std::max(0, std::min(rows - 1, approxRow));
 
-	float offsetX = (approxRow % 2 == 0) ? (15.f * cos(angle)) : 0.f;
+	float offsetX = (approxRow % 2 == 0) ? (this->grid[0][0].r_1 * cos(angle)) : 0.f;
 
 	int approxCol = static_cast<int>((x - 100.f - offsetX) / dx);
 	approxCol = std::max(0, std::min(cols - 1, approxCol));
@@ -491,7 +495,18 @@ void Game::pollEvents() {
 				std::cout << "Right-buttonRealese" << "\n";
 			}
 			break;
+		case sf::Event::MouseWheelMoved:
+			if ( this->ev.mouseWheel.delta> 0 ) {
+				std::cout << "scrolled up" << "\n";
+				this->updateGridSize(1.02f);
+				this->updateBoundingBoxsForTiles();
 
+			} else if ( this->ev.mouseWheel.delta < 0 ) {
+				std::cout << "scrolled down" << "\n";
+				this->updateGridSize(0.98f);
+				this->updateBoundingBoxsForTiles();
+			}
+			break;
 		}
 	}
 }
@@ -597,6 +612,42 @@ void Game::updatePath() {
 		}
 	}
 }
+
+void Game::updateGridSize( float sizeIndex) {
+	// reset the grid lines and triangles
+	testGrid.clear();
+	testGridLines.clear();
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			grid[i][j].updateTileSize(sizeIndex);
+
+			Tile& t = grid[i][j];
+
+			sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
+
+			// Make triangles and lines 
+
+			for (int k = 0; k <= 5; k++) {
+				testGrid.append(sf::Vertex(t.getCenter(), col));
+				testGrid.append(sf::Vertex(t.getPoint(k), col));
+				testGrid.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), col));
+				testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black));
+				testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
+			}
+
+		}
+	}
+	std::cout << "Grid size updated" << "\n";
+}
+
+void Game::updateBoundingBoxsForTiles() {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			grid[i][j].updateBoundingBox();
+		}
+	}
+}	
+
 // player stuff
 void Game::updatePlayerObject() {
 	playerObject.updatePosition();

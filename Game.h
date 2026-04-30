@@ -102,6 +102,8 @@ public:
 	int rows;
 	int cols;
 
+	float tileSizeFactor = 1.0;
+
 	Tile tile;
 	std::vector<std::vector<Tile>> grid;
 	sf::VertexArray testGrid;
@@ -161,6 +163,8 @@ public:
 	void updateTileInsides();
 	void updateLastDetectedTileByMouse();
 	void updatePath();
+	void updateGridSize(float sizeIndex);
+	void updateBoundingBoxsForTiles();
 
 	void updateMousePositions();
 	void pollEvents();
