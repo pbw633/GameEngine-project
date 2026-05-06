@@ -1,6 +1,6 @@
 #pragma once
 #include "StorageContainer.h"
-#include "Tile.h"
+
 #include "Heap.h"
 
 class Game;
@@ -23,8 +23,7 @@ class Organism : public StorageContainer{
 	int rows;
 	int cols;
 
-	// Position
-	Tile* currerntPosition = nullptr; 
+	
 public:
 	Organism() {};
 	Organism(std::vector<std::vector<Tile>>* gameGrid) {
@@ -46,7 +45,8 @@ public:
 	void rotateOrganism(sf::Vector2i mousePos);
 	void updateMovement(int nextTileX, int nextTileY);
 	void updateSprite();
-	void updateSpriteLocation();
+	void updateSpriteLocation(); // rename to update sprite location walking
+	
 
 private:
 	// For pathfinding

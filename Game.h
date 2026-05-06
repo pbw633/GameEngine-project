@@ -37,6 +37,7 @@ private:
 	sf::Event ev;
 
 	float gridOffset;
+	bool isFullscreen = false;
 
 	//mousePosition
 	sf::Vector2i mousePosWindow;
@@ -162,6 +163,10 @@ public:
 	void updateTileBorder();
 	void updateTileInsides();
 	void updateLastDetectedTileByMouse();
+
+	void toggleFullScreen();
+	void switchWindowMode();
+
 	void updatePath();
 	void updateGridSize(float sizeIndex);
 	void updateBoundingBoxsForTiles();

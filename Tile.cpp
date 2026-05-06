@@ -227,6 +227,16 @@ void Tile::placeOrganismInTile(Organism& organism) {
 	occupiedByOrganism = true;
 }
 
+bool Tile::tileInWindow(int windowWidth, int windowHeight) {
+	// check if the tile is in the window by checking if the bounding box of the tile is in the window
+	if (this->getBoundingBoxMaxX() < 0 || this->getBoundingBoxMinX() > windowWidth || this->getBoundingBoxMaxY() < 0 || this->getBoundingBoxMinY() > windowHeight) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 void Tile::updateTileSize( float sizeIndex ) {
 	if (sizeIndex>0) {
 		sf::Vector2f center = this->getCenter();

@@ -68,6 +68,13 @@ bool StorageContainer::mouseInSprite(sf::Vector2i mousePos){
 	}
 }
 
+void StorageContainer::updateSpriteLocationInTile() {
+	/*
+		- Update the location of the sprite in the tile
+	*/
+		this->sprite.setPosition(this->currerntPosition->midx, this->currerntPosition->midy);
+}
+
 void StorageContainer::dropItem( int itemIndex ) {
 	if (itemIndex < inventory.size() && itemIndex > -1) {
 		inventory.erase(inventory.begin() + itemIndex);

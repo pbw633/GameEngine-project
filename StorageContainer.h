@@ -6,6 +6,7 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
 #include "Item.h"
+#include "Tile.h"
 //This class is the lowest class which has an inventory and can not do anything else
 
 class StorageContainer{
@@ -19,6 +20,9 @@ public:
 	StorageContainer() {
 		
 	}
+	// Position
+	Tile* currerntPosition = nullptr;
+
 
 	// Defining functions
 	void dropItem( int itemIndex );
@@ -34,7 +38,8 @@ public:
 	// Core
 	bool mouseInSprite(sf::Vector2i mousePos);
 	
-	void update();
+	//void update();
+	void updateSpriteLocationInTile();
 	
 protected:
 //protected so it can be used in larger classes

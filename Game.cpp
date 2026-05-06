@@ -97,6 +97,7 @@ void Game::initTestGrid() {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			
+
 			Tile& t = grid[i][j];
 
 			sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
@@ -265,6 +266,25 @@ void Game::updateTileInsides() {
 
 void Game::updateLastDetectedTileByMouse() {
 	lastDetectedTileByMouse = detectedTileByMouse;
+}
+
+void Game::toggleFullScreen() {
+	isFullscreen = !isFullscreen;
+
+	if (isFullscreen) {
+		this->window->create(sf::VideoMode::getDesktopMode(), "Game", sf::Style::Fullscreen);
+	} else {
+		this->window->create(this->videomode, "Game", sf::Style::Default);
+	}
+}
+
+void Game::switchWindowMode() {
+	/*
+		- Open a menu to choose between different window modes (fullscreen, windowed, borderless)
+	*/
+
+
+
 }
 
 void Game::updateFrameRate() {
@@ -500,11 +520,13 @@ void Game::pollEvents() {
 				std::cout << "scrolled up" << "\n";
 				this->updateGridSize(1.02f);
 				this->updateBoundingBoxsForTiles();
+				this->playerObject.updateSpriteLocationInTile();
 
 			} else if ( this->ev.mouseWheel.delta < 0 ) {
 				std::cout << "scrolled down" << "\n";
 				this->updateGridSize(0.98f);
 				this->updateBoundingBoxsForTiles();
+				this->playerObject.updateSpriteLocationInTile();
 			}
 			break;
 		}
@@ -613,28 +635,31 @@ void Game::updatePath() {
 	}
 }
 
+/*
+TODO
+	- Update so only tiles within the window is shown/calculated
+*/
 void Game::updateGridSize( float sizeIndex) {
 	// reset the grid lines and triangles
 	testGrid.clear();
 	testGridLines.clear();
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			grid[i][j].updateTileSize(sizeIndex);
+				grid[i][j].updateTileSize(sizeIndex);
 
-			Tile& t = grid[i][j];
+				Tile& t = grid[i][j];
 
-			sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
+				sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
 
-			// Make triangles and lines 
+				// Make triangles and lines 
 
-			for (int k = 0; k <= 5; k++) {
-				testGrid.append(sf::Vertex(t.getCenter(), col));
-				testGrid.append(sf::Vertex(t.getPoint(k), col));
-				testGrid.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), col));
-				testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black));
-				testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
-			}
-
+				for (int k = 0; k <= 5; k++) {
+					testGrid.append(sf::Vertex(t.getCenter(), col));
+					testGrid.append(sf::Vertex(t.getPoint(k), col));
+					testGrid.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), col));
+					testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black));
+					testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
+				}
 		}
 	}
 	std::cout << "Grid size updated" << "\n";

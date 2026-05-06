@@ -109,6 +109,8 @@ public:// i need to access position, Neighbors, wall or not
 	void isMousePressedInTile( sf::Vector2i& mousePos );
 	void placeOrganismInTile( Organism& organism );
 	
+	bool tileInWindow(int windowWidth, int windowHeight);
+	
 	void updateTileSize(float sizeIndex);
 	//------------- Render -----------------
 	void display( sf::RenderWindow&, int x, int y, int z );
