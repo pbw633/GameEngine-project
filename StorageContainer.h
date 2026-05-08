@@ -46,7 +46,7 @@ protected:
 	//Animation/sprites
 	sf::Texture texture;
 	sf::Sprite sprite;
-	sf::IntRect currentFrame; // The rectangle of the picture we use
+	sf::IntRect currentFrame; // The rectangle of the picture
 
 	sf::Clock moveTileTimer;
 	//sf::Clock interTileTimer;
