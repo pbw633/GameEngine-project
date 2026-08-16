@@ -138,12 +138,12 @@ void Game::initPathStartCondition() {
 void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	// This is temperary to try the organism object
 	/*
-		- if position is not out of bound, not occupied and not a wall
+		- if position is not out of bound place organism
 	*/
 	if ( 0 <= rowPos && 0 <= colPos && colPos < cols && rowPos < rows &&
-		this->grid[rowPos][colPos].occupiedByOrganism == false &&
-		this->grid[rowPos][colPos].wall == false ) {
-	
+		this->grid[rowPos][colPos].occupiedByOrganism == false ) {
+		
+		this->grid[rowPos][colPos].wall = false;
 		
 		organism.setPosition( &(this->grid[rowPos][colPos]) );
 
