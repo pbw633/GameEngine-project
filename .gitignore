@@ -434,3 +434,7 @@ External/lib/
 
 # Ignorer sprites, hvis de ikke skal versioneres
 sprites/
+
+# Include all external libraries
+!External/
+!External/**

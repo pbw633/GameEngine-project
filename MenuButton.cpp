@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include "MenuButton.h"
 #include <iostream>
@@ -71,6 +72,11 @@ bool Button::buttonInsideMenu(sf::RectangleShape shape) {
 	}
 }
 
+bool Button::buttonInsideMenu(baseMenu& menu) {
+	sf::RectangleShape menuShape = menu.getMenuBackground();
+	return buttonInsideMenu(menuShape);
+}
+
 // ------------------ getters ------------------	
 sf::RectangleShape Button::getButtonShape() {
 	return this->buttonShape;
@@ -104,3 +110,4 @@ void Button::setButtonTexture( sf::Texture buttonTexture ) {
 void Button::setButtonSprite( sf::Sprite buttonSprite ) {
 	this->buttonSprite = buttonSprite;
 }
+*/

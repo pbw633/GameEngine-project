@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include <vector>
 #include <string>
@@ -6,6 +7,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include "baseMenu.h"
+
 class Button{
 public:
 	bool buttonPressedBool = false;	
@@ -19,7 +22,6 @@ public:
 	Button(sf::RectangleShape buttonShape);
 	Button(float x, float y, float width, float height);
 	
-	~Button();
 
 	void initButtonShape(float x, float y, float width, float height);
 	void initButtonShape(sf::RectangleShape buttonShape);
@@ -31,6 +33,7 @@ public:
 
 	bool buttonOverlapsButton(Button& otherButton);
 	bool buttonInsideMenu(sf::RectangleShape shape);
+	bool buttonInsideMenu(baseMenu& menu);
 
 	// ------------------ getters ------------------
 	sf::RectangleShape getButtonShape();
@@ -46,3 +49,5 @@ public:
 private:
 
 };
+
+*/

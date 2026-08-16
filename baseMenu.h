@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include <vector>
 #include <string>
@@ -40,6 +41,7 @@ public:
 	// ----------------- Getters -----------------
 	sf::Vector2f getPosition() const;
 	sf::Vector2f getSize() const;
+	sf::RectangleShape getMenuBackground() const;
 
 	// ----------------- Additional methods -----------------
 	void addButton(Button button);
@@ -50,3 +52,4 @@ public:
     virtual void close() {}
 };
 
+*/

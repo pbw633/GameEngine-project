@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include "baseMenu.h"
 #include <iostream>
@@ -59,6 +60,10 @@ sf::Vector2f baseMenu::getSize() const {
 	return this->menuBackground.getSize();
 }
 
+sf::RectangleShape baseMenu::getMenuBackground() const {
+	return this->menuBackground;
+}
+
 // ------------------ Additional methods -----------------
 void baseMenu::addButton(Button button) {
 	if (button.buttonInsideMenu(this->menuBackground)) {
@@ -78,3 +83,4 @@ void baseMenu::addButton(Button button) {
 
 	//this->menuButtons.push_back(button);
 }
+*/
