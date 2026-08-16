@@ -440,7 +440,6 @@ void mouseInGridDetectionTest() {
 
 #ifdef TEST_MODE  // debug-Test to run this
 int main() {
-	minHeapInsertTest();
 	
 	// run tests
 	runTest("Min_Heap Insert Test", minHeapInsertTest);

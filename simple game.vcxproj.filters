@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{54a88a35-f2c2-4901-b571-150dd4f9ace1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{d6683d60-5285-46e1-adb1-291fa9c05f6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +51,12 @@
     <ClCompile Include="Organism.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="baseMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -70,6 +82,15 @@
     </ClInclude>
     <ClInclude Include="Organism.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="baseMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="windowMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header Files\Menus</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,12 @@
 #include <iostream>
 #include "Game.h"
-//#include <SFML/Graphics.hpp>
+/*
+#ifdef TEST_MODE
+#error TEST_MODE IS ENABLED
+#endif
+*/
 
+#ifndef TEST_MODE
 int main() {
 	//std::cout << "dette er en test" << "\n";
 	//system("pause");
@@ -31,3 +36,4 @@ int main() {
 	//end application
 	return 0;
 }
+#endif
