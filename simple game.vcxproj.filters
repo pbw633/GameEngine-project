@@ -19,36 +19,54 @@
     <Filter Include="Source Files\Menus">
       <UniqueIdentifier>{d6683d60-5285-46e1-adb1-291fa9c05f6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Containers">
+      <UniqueIdentifier>{ff0d552a-47a7-40d4-8376-764c1f1f32e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Containers\StorageContainer">
+      <UniqueIdentifier>{abeffa5b-b84a-4630-8743-4931320844ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HelperClasses">
+      <UniqueIdentifier>{cbe85486-fd3b-4674-9bf9-88242645ba77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DroppableObjects">
+      <UniqueIdentifier>{6c01c375-91bd-474c-983e-901d7e65f3ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GridObjects">
+      <UniqueIdentifier>{b9feae6f-5849-4f4b-93e4-b9c1e2bf0d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HelperFunctions">
+      <UniqueIdentifier>{3bef7369-d5aa-44fc-a340-960ca5b7ab32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Containers">
+      <UniqueIdentifier>{fc7d590e-6bb7-4be7-9b27-c0e498fea4dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Containers\StorageContainer">
+      <UniqueIdentifier>{7ab58be3-6fe2-4fe5-ae18-e13c5d311ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HelperClasses">
+      <UniqueIdentifier>{de02bd1e-0553-40ac-b576-7fe438a7af9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DroppableObjects">
+      <UniqueIdentifier>{78ed8973-5498-4db9-88ca-396d5b972713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GridObjects">
+      <UniqueIdentifier>{929fa3b5-f8a9-4ba4-a40f-9c7f20922f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HelperFunctions">
+      <UniqueIdentifier>{5cb39611-b573-4d1f-9f36-a3ab684ae90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObject">
+      <UniqueIdentifier>{07d31812-ca7a-4d02-af00-8181f05971ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObject">
+      <UniqueIdentifier>{9a19e792-b321-4838-97bf-18a0c1bf0211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="commonFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Heap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MapCSVExporter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StorageContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Organism.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="baseMenu.cpp">
@@ -57,32 +75,32 @@
     <ClCompile Include="MenuButton.cpp">
       <Filter>Source Files\Menus</Filter>
     </ClCompile>
+    <ClCompile Include="Organism.cpp">
+      <Filter>Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="StorageContainer.cpp">
+      <Filter>Source Files\Containers\StorageContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Heap.cpp">
+      <Filter>Source Files\HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="MapCSVExporter.cpp">
+      <Filter>Source Files\HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\DroppableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\GridObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="commonFunctions.cpp">
+      <Filter>Source Files\HelperFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="commonFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Heap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MapCSVExporter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StorageContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Organism.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="baseMenu.h">
       <Filter>Header Files\Menus</Filter>
     </ClInclude>
@@ -91,6 +109,30 @@
     </ClInclude>
     <ClInclude Include="MenuButton.h">
       <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Organism.h">
+      <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="StorageContainer.h">
+      <Filter>Header Files\Containers\StorageContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Heap.h">
+      <Filter>Header Files\HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCSVExporter.h">
+      <Filter>Header Files\HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\DroppableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\GridObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="commonFunctions.h">
+      <Filter>Header Files\HelperFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
