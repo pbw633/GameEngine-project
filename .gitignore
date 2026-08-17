@@ -421,7 +421,9 @@ FodyWeavers.xsd
 Debug/
 Debug-Test/
 *.exe
-*.dll
+
+# SFML runtime DLLs
+!sfml-*.dll
 
 # VS Code og Visual Studio midlertidige filer
 .vscode/*
