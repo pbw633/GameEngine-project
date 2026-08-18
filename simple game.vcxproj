@@ -212,6 +212,7 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseButton.cpp" />
     <ClCompile Include="baseMenu.cpp" />
     <ClCompile Include="commonFunctions.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -231,6 +232,7 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseButton.h" />
     <ClInclude Include="baseMenu.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="commonFunctions.h" />

@@ -15,19 +15,5 @@ float heuristic(Tile* grid1, Tile* grid2);
 
 
 
-/*
-class Min_heap {
-public:
-	Min_heap();
-
-	void insert(Tile* tile);
-	Tile* delMin();
-private:
-	std::vector<Tile*> heap;
-	void exch(int i, int j);
-	void swim(int k);
-	void sink(int k);
-};
-*/
 
 

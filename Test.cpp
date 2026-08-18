@@ -11,6 +11,7 @@ TODO:
 This is a list of tests that should be done:
 - test the pathfinding of an organism and make a wall it should get passed 
 - Delete minimum with multiple elements in heap
+- splitt tthis file up into several files for each class that should be tested
 */
 int failedTests = 0;
 
