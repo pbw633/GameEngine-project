@@ -1,6 +1,10 @@
 #include "StorageContainer.h"
 #include <stdexcept>
 
+// TODO
+// 1. Check why mouse in sprite is in the method mouseInSprite as this method already returns a bool. If it is not used anywhere else in the code so it should be removed.	
+//	   - Rename the method to pointInSprite
+
 void StorageContainer::initVariables() {
 	this->moveTileTimer.restart();
 	//this->interTileTimer.restart();
