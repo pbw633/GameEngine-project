@@ -64,14 +64,8 @@
     <Filter Include="Header Files\Menus\BaseMenu">
       <UniqueIdentifier>{2ff4c745-66ab-44ce-abd4-66edce535cbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Menus\BaseButton">
-      <UniqueIdentifier>{2b409101-b689-4333-9b80-2ec904b52b77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Menus\BaseMenu">
       <UniqueIdentifier>{76444b04-732f-440a-b983-f892937e6faf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\BaseButton">
-      <UniqueIdentifier>{10cf8de9-1441-47ef-b80c-f0060e696970}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{a0131e09-1572-4c55-8504-20d46d0430cc}</UniqueIdentifier>
@@ -84,6 +78,18 @@
     </Filter>
     <Filter Include="Source Files\Tests\StorageContainerTests">
       <UniqueIdentifier>{93edc6ce-fbdd-4c94-890f-3ac22ea509e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus\Buttons">
+      <UniqueIdentifier>{2b409101-b689-4333-9b80-2ec904b52b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus\Buttons">
+      <UniqueIdentifier>{10cf8de9-1441-47ef-b80c-f0060e696970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus\Buttons\BaseButton">
+      <UniqueIdentifier>{77804a12-132c-4cb7-a823-7e8ab9450941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus\Buttons\BaseButton">
+      <UniqueIdentifier>{be36a2b6-197b-4714-81bd-a893697ff4cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,11 +126,14 @@
     <ClCompile Include="baseMenu.cpp">
       <Filter>Source Files\Menus\BaseMenu</Filter>
     </ClCompile>
-    <ClCompile Include="BaseButton.cpp">
-      <Filter>Source Files\Menus\BaseButton</Filter>
+    <ClCompile Include="BasicButton.cpp">
+      <Filter>Source Files\Menus\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseButton.cpp">
+      <Filter>Source Files\Menus\Buttons\BaseButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,8 +170,11 @@
     <ClInclude Include="baseMenu.h">
       <Filter>Header Files\Menus\BaseMenu</Filter>
     </ClInclude>
+    <ClInclude Include="BasicButton.h">
+      <Filter>Header Files\Menus\Buttons</Filter>
+    </ClInclude>
     <ClInclude Include="BaseButton.h">
-      <Filter>Header Files\Menus\BaseButton</Filter>
+      <Filter>Header Files\Menus\Buttons\BaseButton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
