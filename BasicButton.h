@@ -15,7 +15,7 @@
 //		- If that is the case then this should be child and this class could be named "basicButton"
 
 
-class BasicButton : public BaseButton {
+class BasicButton {
 public:
 
 	// ------------------ variables ------------------
@@ -32,7 +32,7 @@ public:
 	void setButtonText(sf::Text buttonText);
 	void setButtonTexture(sf::Texture buttonTexture);
 	void setButtonSprite(sf::Sprite buttonSprite);
-
+	void setButtonPosition(float x, float y);
 
 	void setButtonLength(float length);
 	void setButtonHeight(float height);
@@ -41,6 +41,7 @@ public:
 	// ------------------ Getters ------------------
 	float getButtonLength();
 	float getButtonHeight();
+	sf::Vector2f getButtonPosition();
 	sf::Texture getButtonTexture();
 	sf::Sprite getButtonSprite();
 
@@ -63,4 +64,7 @@ private:
 	float buttonLength;
 	float buttonHeight;
 
+
+	// ---------------- Override--------------------
+	void addPointToShape(sf::Vector2f point); // should make it so this cllass cannot be other than a simplle square
 };

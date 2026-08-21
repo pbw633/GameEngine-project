@@ -9,20 +9,31 @@
 #include <SFML/Network.hpp>
 // This class is the base class for all buttons. It is used to define the basic properties of a button such as position, size, and shape. 
 // It is not meant to be used directly, but rather to be inherited by other button classes that will implement specific functionality.
+// Just by redefining the containsPoint function you can make a button of any shape. The button will then be able to detect if the mouse is over it or not.
 class BaseButton{
 public:
 	//------------------ Initialization ------------------
 
-	//------------------ Setters ------------------
 
+	//-------------------- Adders ----------------------
 	
-	void setPosition(sf::Vector2i newPosition);
+
+	//------------------ Setters ------------------
+	
+	
+	
 	//------------------ Getters ------------------
-	sf::Vector2i getPosition();
+	bool getToggleState();
 
 	//------------------ Actions ------------------
-private:
-	sf::Vector2i position;
+	bool isPressed(sf::Vector2i mousePos);
+	void isToggled(sf::Vector2i mousePos);
 
+	virtual bool containsPoint(sf::Vector2i point);
+	//------------------ Variables ------------------
+
+private:
+	//------------------ Variables ------------------	
+	bool togleState = false;
 };
 

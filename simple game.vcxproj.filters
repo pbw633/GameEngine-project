@@ -91,6 +91,18 @@
     <Filter Include="Source Files\Menus\Buttons\BaseButton">
       <UniqueIdentifier>{be36a2b6-197b-4714-81bd-a893697ff4cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Menus\Buttons\BasicButton">
+      <UniqueIdentifier>{f1a06516-eef1-4004-9c35-6fe324ea8d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus\Buttons\PolygonButton">
+      <UniqueIdentifier>{16166fd4-86ce-40f1-a99e-06f24de98d4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus\Buttons\BasicButton">
+      <UniqueIdentifier>{fd6117ae-1d48-437a-a4ff-4726c4189c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus\Buttons\PolygonButton">
+      <UniqueIdentifier>{d5f1bf1c-150d-4851-b163-64f572adaddc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -126,14 +138,14 @@
     <ClCompile Include="baseMenu.cpp">
       <Filter>Source Files\Menus\BaseMenu</Filter>
     </ClCompile>
-    <ClCompile Include="BasicButton.cpp">
-      <Filter>Source Files\Menus\Buttons</Filter>
-    </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="BaseButton.cpp">
       <Filter>Source Files\Menus\Buttons\BaseButton</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicButton.cpp">
+      <Filter>Source Files\Menus\Buttons\BasicButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,11 +182,11 @@
     <ClInclude Include="baseMenu.h">
       <Filter>Header Files\Menus\BaseMenu</Filter>
     </ClInclude>
-    <ClInclude Include="BasicButton.h">
-      <Filter>Header Files\Menus\Buttons</Filter>
-    </ClInclude>
     <ClInclude Include="BaseButton.h">
       <Filter>Header Files\Menus\Buttons\BaseButton</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicButton.h">
+      <Filter>Header Files\Menus\Buttons\BasicButton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 #include "BasicButton.h"
+
 // ------------------ Initialization ------------------	
 void BasicButton::initButtonShape(float x, float y, float width, float height) {
 	this->basicButtonShape.setPosition(x, y);
