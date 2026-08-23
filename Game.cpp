@@ -488,7 +488,10 @@ void Game::leftMouseClickExecution() {
 	//	-Detction of mouse press in a tile
 	*/
 	if (detectedTileByMouse.first != -1 && detectedTileByMouse.second !=-1) {
-		this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
+		if (!(this->grid[detectedTileByMouse.first][detectedTileByMouse.second].wall)) {
+			this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
+		}
+		
 	}
 	
 }

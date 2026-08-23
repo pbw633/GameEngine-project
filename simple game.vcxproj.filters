@@ -147,6 +147,9 @@
     <ClCompile Include="BasicButton.cpp">
       <Filter>Source Files\Menus\Buttons\BasicButton</Filter>
     </ClCompile>
+    <ClCompile Include="PolygonButton.cpp">
+      <Filter>Source Files\Menus\Buttons\PolygonButton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windowMenu.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="BasicButton.h">
       <Filter>Header Files\Menus\Buttons\BasicButton</Filter>
+    </ClInclude>
+    <ClInclude Include="PolygonButton.h">
+      <Filter>Header Files\Menus\Buttons\PolygonButton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

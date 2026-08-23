@@ -8,12 +8,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-//TODO
-// 1. Try to use templates to make this class more generic and compact so there is no need for overloading maybe
-// 2. base is the button is a square but the button should be able to be any shape. Maybe use a vector of points to define the shape of the button.
-//		- methods should later be changed to use the shape of the button instead of the rectangle shape. This would make the button more flexible and allow for more complex shapes.
-//		- If that is the case then this should be child and this class could be named "basicButton"
-
 
 class BasicButton : BaseButton {
 public:
@@ -32,6 +26,7 @@ public:
 	void setButtonText(sf::Text buttonText);
 	void setButtonTexture(sf::Texture buttonTexture);
 	void setButtonSprite(sf::Sprite buttonSprite);
+
 	void setButtonPosition(float x, float y);
 
 	void setButtonLength(float length);
@@ -65,7 +60,5 @@ private:
 	float buttonLength;
 	float buttonHeight;
 
-
-	// ---------------- Override--------------------
-	void addPointToShape(sf::Vector2f point); // should make it so this cllass cannot be other than a simplle square
+	
 };
