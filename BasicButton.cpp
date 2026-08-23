@@ -85,13 +85,16 @@ bool BasicButton::buttonInsideMenu(sf::RectangleShape shape) {
 	}
 }
 
-bool BasicButton::pointInsideButton(sf::Vector2i point) {
-	if (this->basicButtonShape.getGlobalBounds().contains(point.x, point.y)) {
+bool BasicButton::containsPoint(sf::Vector2i point) {
+	if (this->basicButtonShape.getPoint(0).x < point.x &&
+		this->basicButtonShape.getPoint(0).y < point.y && 
+		this->basicButtonShape.getPoint(2).x > point.x &&
+		this->basicButtonShape.getPoint(2).y > point.x) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
+
 
 bool BasicButton::pointInsideSprite(sf::Vector2i point) {
 	// can be optimized as the convertion to img is very heavy but is alright since it is only done once 

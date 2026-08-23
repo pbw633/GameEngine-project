@@ -15,7 +15,7 @@
 //		- If that is the case then this should be child and this class could be named "basicButton"
 
 
-class BasicButton {
+class BasicButton : BaseButton {
 public:
 
 	// ------------------ variables ------------------
@@ -48,7 +48,8 @@ public:
 	// ------------------ Actions ------------------
 	bool buttonOverlapsButton(BasicButton& otherButton);
 	bool buttonInsideMenu(sf::RectangleShape shape);
-	bool pointInsideButton(sf::Vector2i point);
+	bool containsPoint(sf::Vector2i point) override;
+
 	bool pointInsideSprite(sf::Vector2i point);
 
 	void resizeButton(float sizeFactor);

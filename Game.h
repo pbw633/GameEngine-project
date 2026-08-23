@@ -22,6 +22,7 @@ TODO:
 	- consider only to clear the part that is neccesary since some parts are should only be cleared and then redrawn if there's an update to the area
 	- add delta time so that the animetions are independent of the framerate
 	- Introduuce debug mode while program is running
+	- Make a class for the mousePosition that contains window/screen- and grid coordinates and whether or not the coordinates are valid
 */
 
 

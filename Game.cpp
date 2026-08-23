@@ -416,7 +416,10 @@ void Game::moveGrid(sf::Vector2f direction) {
 		-maybe move tile parameters to game Object
 */
 
-
+/*
+	- convert mouse/screen coordinates to grid coorinates
+	- if outside grid then return {-1, -1}
+*/
 std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
 	float x = static_cast<float>(mousePos.x);
 	float y = static_cast<float>(mousePos.y);
@@ -474,12 +477,20 @@ std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
 	return { -1, -1 };
 }
 
+/*
+TODO:
+	- A valid tile check should be made either inside the click execution or inside the method. 
+	- best if it as early as possible
+*/
 void Game::leftMouseClickExecution() {
 	/*
 	// complete List of what to execute when right mouse buttom is pressed:
 	//	-Detction of mouse press in a tile
 	*/
-	this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
+	if (detectedTileByMouse.first != -1 && detectedTileByMouse.second !=-1) {
+		this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
+	}
+	
 }
 
 void Game::rightMouseClickExecution() {
