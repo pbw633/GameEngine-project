@@ -31,11 +31,21 @@ public:
 	void changePointAtIndex(sf::Vector2f point, int index);
 	void removePoint(int index);
 	bool containsPoint(sf::Vector2i point) override;
+	void resize(float sizeFactor);
+	void update();
 private:
 	// ------------------ variables ------------------
 	std::vector<sf::Vector2f> points;
 	sf::Vector2f center;
+	
+	// ------------------ Setters ------------------
+
+	void setMaxDistanceFromCenter(float distance);
+	// ------------------ Getters ------------------
+	float getMaxDistanceFromCenter();
+	float getMinDistanceFromCenter();
 
 	// ------------------ Actions ------------------
 	void calculateCenter();
+	void calculateMaxDistanceFromCenter(); // if you are over the max distance from the center then you are outside the polygon	
 };
