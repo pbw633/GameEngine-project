@@ -26,6 +26,7 @@ public:
 	// ------------------ Getters ------------------
 	sf::Vector2f getPoint(int index);
 	sf::Vector2f getCenter();
+	float getMaxDistanceFromCenter();
 
 	// ------------------ Actions ------------------
 	void changePointAtIndex(sf::Vector2f point, int index);
@@ -37,13 +38,14 @@ private:
 	// ------------------ variables ------------------
 	std::vector<sf::Vector2f> points;
 	sf::Vector2f center;
+	float maxDistanceFromCenter = 0.f;
 	
 	// ------------------ Setters ------------------
 
-	void setMaxDistanceFromCenter(float distance);
+	
 	// ------------------ Getters ------------------
 	float getMaxDistanceFromCenter();
-	float getMinDistanceFromCenter();
+	
 
 	// ------------------ Actions ------------------
 	void calculateCenter();
