@@ -19,11 +19,21 @@ class Organism;
 
 class Tile {
 private:
+	// --------------------- Variables --------------------
 	double PI = 3.14159265; // just PI
-	void initBoundingBoxIndex();
 	sf::Text coordinateText;
 
+	// --------------------- Initialization --------------------
+	void initBoundingBoxIndex();
+	// --------------------- Setters --------------------
+
+	// --------------------- Getters --------------------
+	
+	// --------------------- Actions --------------------
+
 public:// i need to access position, Neighbors, wall or not
+
+	// --------------------- Variables --------------------
 	//variables for construction
 	double midx = 100; //should be called offset
 	double midy = 100; //should be called offset
@@ -54,7 +64,6 @@ public:// i need to access position, Neighbors, wall or not
 	bool wall = false;
 	
 	bool occupiedByOrganism = false; 
-	
 	Organism* organismInTile = nullptr;
 
 	// Interaction
@@ -89,7 +98,7 @@ public:// i need to access position, Neighbors, wall or not
 	void initializeNeighbors(int i, int j, std::vector<std::vector<Tile>>& grid);
 	void initializeText();
 	
-	//------------- get Information ----------
+	//------------- Getters	 ----------
 	sf::Vector2f getPoint(size_t i);
 	sf::Vector2f getCenter();
 	sf::Color getFillColor();
@@ -102,17 +111,19 @@ public:// i need to access position, Neighbors, wall or not
 
 	//------------- Setters-----------------
 	void setCenter(float x, float y);
+	void placeOrganismInTile(Organism& organism);
+
+	// ------------- Actions -----------------
+	void moveTile(sf::Vector2f direction);
+	bool tileInWindow(int windowWidth, int windowHeight);
 
 	//------------- Update --------------
 	void updateBoundingBox();
-	void moveTile( sf::Vector2f direction );
+	
 	void isMouseInTile( sf::Vector2i& mousePos );
 	void isMousePressedInTile( sf::Vector2i& mousePos );
-	void placeOrganismInTile( Organism& organism );
-	
-	bool tileInWindow(int windowWidth, int windowHeight);
-	
 	void updateTileSize(float sizeIndex);
+
 	//------------- Render -----------------
 	void display( sf::RenderWindow&, int x, int y, int z );
 

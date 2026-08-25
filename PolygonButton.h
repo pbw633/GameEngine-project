@@ -45,7 +45,7 @@ private:
 
 	
 	// ------------------ Getters ------------------
-	float getMaxDistanceFromCenter();
+	
 	
 
 	// ------------------ Actions ------------------

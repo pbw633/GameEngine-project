@@ -501,7 +501,7 @@ void Game::rightMouseClickExecution() {
 	// complete List of what to execute when left mouse buttom is pressed:
 	//	-Detction if mouse pressed player
 	*/
-	//this->playerObject.mouseInSprite(this->mousePosWindow);
+	//this->playerObject.pointInSprite(this->mousePosWindow);
 	
 	this->playerObject.rotateOrganism(this->mousePosWindow);
 	

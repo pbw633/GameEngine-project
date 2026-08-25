@@ -12,44 +12,43 @@
 class StorageContainer{
 	
 public:
-	bool mouesInSpriteBool = false;
 	
-	std::vector<Item*> inventory; // bør ikke være en pointer. Test fejler muligvis.
-	
-
 	StorageContainer() {
 		
 	}
-	// Position
+	// ---------------- Variables ----------------
 	Tile* currerntPosition = nullptr;
 
+	bool mouesInSpriteBool = false;
+	std::vector<Item*> inventory; // bør ikke være en pointer. Test fejler muligvis.
 
-	// Defining functions
-	void dropItem( int itemIndex );
-	void addItem( Item* item );
-
-	// initialization
+	// ---------------- Initialization ----------------
 	virtual void initVariables();
 
-	// Animation/sprites
 	void initTexture(std::string fileName);
+	
+	// ---------------- Setters ----------------
+	// ---------------- Getters ----------------
+	// ---------------- Actions ----------------
+
+	void dropItem( int itemIndex );
+	void addItem( Item* item );	
 	void render(sf::RenderTarget& target);
 
-	// Core
-	bool mouseInSprite(sf::Vector2i mousePos);
+	bool pointInSprite(sf::Vector2i mousePos);
 	
-	//void update();
+	//---------------- Updaters ----------------	
 	void updateSpriteLocationInTile();
 	
 protected:
 //protected so it can be used in larger classes
+	//--------------- Variables ---------------
 	//Animation/sprites
 	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::IntRect currentFrame; // The rectangle of the picture
 
 	sf::Clock moveTileTimer;
-	//sf::Clock interTileTimer;
 	sf::Clock animationTimer;
 
 	float interTileTime = 1.f;
@@ -59,8 +58,11 @@ protected:
 	int lastSpriteIndexX = 0;
 	int lastSpriteIndexY = 0;
 
+	// ---------------- Initialization ----------------
 	void initTextureSheet(std::string fileName);
 	virtual void initSprite();
+
+
 
 	
 };

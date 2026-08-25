@@ -276,9 +276,10 @@ void Organism::updateSprite() { // skal rettes
 /*
 	- If mouse is in sprite while pressed and not moving then update sprite by rotating clockwise
 	- should be scale safe for future
+	- make switch statement instead of if else statements
 */
 void Organism::rotateOrganism(sf::Vector2i mousePos) {
-	if (mouseInSprite( mousePos) && !moving ) {
+	if (pointInSprite( mousePos) && !moving ) {
 		int scalingFactorSign = this->sprite.getScale().x;
 		// Last movement direction should rotate clockwise
 		if (spriteIndexY == 0 && scalingFactorSign > 0) {// East to South East
@@ -347,7 +348,7 @@ void Organism::setPosition( Tile* newPosition ) {
 	}
 }
 
-std::vector<Tile*> Organism::returnCalculatedPath() {
+std::vector<Tile*> Organism::getCalculatedPath() {
 	return pathForOrganism;
 }
 

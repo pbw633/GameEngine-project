@@ -40,7 +40,7 @@ void StorageContainer::initTextureSheet(std::string fileName) {
 	}
 }
 
-bool StorageContainer::mouseInSprite(sf::Vector2i mousePos){
+bool StorageContainer::pointInSprite(sf::Vector2i mousePos){
 	// can be optimized as the convertion to img is very heavy but is alright since it is only done once
 	sf::Vector2f localPos = this->sprite.getInverseTransform().transformPoint((sf::Vector2f) mousePos);
 	sf::IntRect rect = this->sprite.getTextureRect();
