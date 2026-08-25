@@ -85,8 +85,30 @@ bool PolygonButton::containsPoint(sf::Vector2i point) {
 		return false;
 	}
 
-	// then check if the point is within the polygon using the ray-casting algorithm or another algorihm
-	return true;
+	int n = this->points.size();
+	int intersectionCount = 0;
+
+	for (int i = 0; i < n; i++) {
+		sf::Vector2f point1 = points[i];
+		sf::Vector2f point2 = points[(i + 1) % n ];
+		
+		// Check if the point's y-coordinate is within the
+		// edge's y-range and if the point is to the left of
+		// the edge
+		if ( point.y > std::min(point1.y , point2.y) &&
+			 point.y <= std::max(point1.y, point2.y) &&
+			 point.x <= std::max(point1.x, point2.x) ) {
+			
+			float xIntersect = (point.y - point1.y) * (point2.x - point1.x) / (point2.y - point1.y) + point1.x;
+
+			if (point1.x == point2.x || point.x <= xIntersect) {
+				intersectionCount++;
+			}
+		}
+	}
+	// If the number of intersections is odd, the point is
+	// inside the polygon
+	return intersectionCount % 2 == 1;;
 }
 // ------------------ Private Getters ------------------
 float PolygonButton::getMaxDistanceFromCenter() {
