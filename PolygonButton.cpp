@@ -4,21 +4,24 @@ void PolygonButton::initButtonShape(std::vector<sf::Vector2f> points) {
 	if (points.size()<3) {
 		throw std::runtime_error("PolygonButton: to few points");
 	}
-	this->points = points;
+	this->buttonShape.setPointCount(points.size());
+	for (int i = 0; i < points.size(); i++){
+		this->buttonShape.setPoint(i, points[i]);
+	}
+	//this->points = points;
 	this->calculateCenter();
 }
 // ----------------- Adders ------------------
 void PolygonButton::addPoint(sf::Vector2f point) {
-	this->points.push_back(point);
+	this->buttonShape.setPointCount(this->buttonShape.getPointCount() + 1);
+	this->buttonShape.setPoint(this->buttonShape.getPointCount() - 1, point);
+
 	this->calculateCenter();
 }
 
 // ------------------ Setters ------------------
 void PolygonButton::setCenter(sf::Vector2f position) {
-	//this->center = position;
-	for (auto& point : points) {
-		point += position - center; // move each point by the difference between the new and old center
-	}
+	this->buttonShape.setPosition(position);
 	center = position;
 }
 
@@ -27,7 +30,7 @@ sf::Vector2f PolygonButton::getPoint(int index) {
 	if (index < 0 || index >= points.size()) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
-	return points[index];
+	return this->buttonShape.getPoint(index);
 }
 
 sf::Vector2f PolygonButton::getCenter() {
@@ -41,21 +44,31 @@ sf::Vector2f PolygonButton::getCenter() {
 
 
 void PolygonButton::changePointAtIndex(sf::Vector2f point, int index) {
-	if (index < 0 || index >= points.size()) {
+	if (index < 0 || index >= this->buttonShape.getPointCount()) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
-	points[index] = point;
+	this->buttonShape.setPoint(index, point);
 	this->calculateCenter();
 }
 
 void PolygonButton::removePoint(int index) {
-	if (index < 0 || index >= points.size()) {
+	if (index < 0 || index >= this->buttonShape.getPointCount()) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
-	if( points.size() <= 3) {
+	if( this->buttonShape.getPointCount() <= 3) {
 		throw std::runtime_error("PolygonButton: cannot remove point, polygon must have at least 3 points");
 	}
-	points.erase(points.begin() + index);
+	sf::ConvexShape tempShape;
+	tempShape.setPointCount(this->buttonShape.getPointCount() - 1);
+	
+	int tempIndex = 0;
+	for (int i = 0; i < this->buttonShape.getPointCount(); i++){
+		if (i != index) {
+			tempShape.setPoint(tempIndex, this->buttonShape.getPoint(i));
+			tempIndex++;
+		}
+	}
+	this->buttonShape = tempShape;
 	this->calculateCenter();
 }
 
@@ -63,10 +76,13 @@ void PolygonButton::resize(float sizeFactor) {
 	if (sizeFactor <= 0) {
 		throw std::runtime_error("PolygonButton: sizeFactor must be strictly larger than 0");
 	}
-	for (auto& point: points ){
-		point = (point-center)*sizeFactor + center;
 
+	for( int i = 0; i < this->buttonShape.getPointCount(); i++ ){
+		sf::Vector2f point = this->buttonShape.getPoint(i);
+		point = (point - center) * sizeFactor + center;
+		this->buttonShape.setPoint(i, point);
 	}
+	
 }
 
 void PolygonButton::update() {
@@ -89,9 +105,9 @@ bool PolygonButton::containsPoint(sf::Vector2i point) {
 	int intersectionCount = 0;
 
 	for (int i = 0; i < n; i++) {
-		sf::Vector2f point1 = points[i];
-		sf::Vector2f point2 = points[(i + 1) % n ];
-		
+		sf::Vector2f point1 = this->buttonShape.getPoint(i);
+		sf::Vector2f point2 = this->buttonShape.getPoint((i + 1) % n);
+
 		// Check if the point's y-coordinate is within the
 		// edge's y-range and if the point is to the left of
 		// the edge
@@ -117,31 +133,35 @@ float PolygonButton::getMaxDistanceFromCenter() {
 
 // ------------------ private Actions ------------------
 void PolygonButton::calculateMaxDistanceFromCenter() {
-	if (this->points.empty()) {
+	int numPoints = this->buttonShape.getPointCount();
+	if ( numPoints == 0 ) {
 		throw std::runtime_error("PolygonButton: no points to calculate max distance");
 	}
 	float maxDistance = 0.0f;
-	for (const auto& point : points) {
-		float distance = std::sqrt(std::pow(point.x - center.x, 2) + std::pow(point.y - center.y, 2));
+	for (int i = 0; i < numPoints; i++) {
+		sf::Vector2f point = this->buttonShape.getPoint(i);
+		float distance = std::pow(point.x - center.x, 2) + std::pow(point.y - center.y, 2); 
 		if (distance > maxDistance) {
 			maxDistance = distance;
 		}
 	}
-	maxDistanceFromCenter = maxDistance;
+	maxDistanceFromCenter = std::sqrt(maxDistance);
 }
 
 void PolygonButton::calculateCenter() {
-	if (this->points.size() < 3) {
+	int numPoints = this->buttonShape.getPointCount();
+	if (numPoints < 3) {
 		throw std::runtime_error("PolygonButton: to few points");
 	}
 
 	float sumX = 0;
 	float sumY = 0;
-	for (const auto& point : points) {
+	for (int i = 0; i < numPoints; i++) {
+		sf::Vector2f point = this->buttonShape.getPoint(i);
 		sumX += point.x;
 		sumY += point.y;
 	}
-	center.x = sumX / points.size();
-	center.y = sumY / points.size();
+	center.x = sumX / numPoints;
+	center.y = sumY / numPoints;
 }
 // the contains method can be impemented by one of the algoritms seen in https://en.wikipedia.org/wiki/Point_in_polygon

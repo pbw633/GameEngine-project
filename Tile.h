@@ -100,9 +100,10 @@ public:// i need to access position, Neighbors, wall or not
 	float getBoundingBoxMaxX();
 	float getBoundingBoxMaxY();
 
-	//------------- Update --------------
-
+	//------------- Setters-----------------
 	void setCenter(float x, float y);
+
+	//------------- Update --------------
 	void updateBoundingBox();
 	void moveTile( sf::Vector2f direction );
 	void isMouseInTile( sf::Vector2i& mousePos );

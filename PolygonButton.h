@@ -36,6 +36,7 @@ public:
 	void update();
 private:
 	// ------------------ variables ------------------
+	sf::ConvexShape buttonShape;
 	std::vector<sf::Vector2f> points;
 	sf::Vector2f center;
 	float maxDistanceFromCenter = 0.f;
