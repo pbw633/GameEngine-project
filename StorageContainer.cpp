@@ -5,6 +5,7 @@
 // 1. Check why mouse in sprite is in the method mouseInSprite as this method already returns a bool. If it is not used anywhere else in the code so it should be removed.	
 //	   - Rename the method to pointInSprite
 
+// ---------------------- Initialization --------------------
 void StorageContainer::initVariables() {
 	this->moveTileTimer.restart();
 	//this->interTileTimer.restart();
@@ -34,12 +35,15 @@ void StorageContainer::initTextureSheet(std::string fileName) {
 
 	if (!texture.loadFromFile(fileName)) {
 		std::cout << "Failed loading texture: " << fileName << std::endl;
-	}
-	else {
+	} else {
 		//std::cout << "Loaded texture: " << fileName << std::endl;
 	}
 }
+// --------------------- Setters ----------------------
 
+// ---------------------- Getters ---------------------
+
+// ---------------------- Actions ---------------------
 bool StorageContainer::pointInSprite(sf::Vector2i mousePos){
 	// can be optimized as the convertion to img is very heavy but is alright since it is only done once
 	sf::Vector2f localPos = this->sprite.getInverseTransform().transformPoint((sf::Vector2f) mousePos);

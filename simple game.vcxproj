@@ -239,7 +239,6 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="baseMenu.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="commonFunctions.h" />
-    <ClInclude Include="MenuButton.h" />
     <ClInclude Include="PolygonButton.h" />
     <ClInclude Include="windowMenu.h" />
     <ClInclude Include="Heap.h" />

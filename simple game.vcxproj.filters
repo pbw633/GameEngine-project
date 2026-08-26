@@ -155,9 +155,6 @@
     <ClInclude Include="windowMenu.h">
       <Filter>Header Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="Organism.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>

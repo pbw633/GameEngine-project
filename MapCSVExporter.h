@@ -11,6 +11,7 @@
 class MapCSVExporter{
 
 public:
+	// --------------------- Actions --------------------
 	void saveMap(std::string& filename, std::vector<std::vector<Tile>>& grid);
 	bool loadMap(std::string& filename, std::vector<std::vector<Tile>>& grid);
 

@@ -13,8 +13,7 @@ Notes to self:
 /*
 	- make update counter that counts the number of updates in each loop so if we can exit the update loop early
 */
-//where the functions are defined 
-//private functions
+// ------------------------ Initialization -------------------
 void Game::initVariables() { // like the void setup but for the values
 	this->window = nullptr; // laver den til en nullpointer
 
@@ -24,7 +23,7 @@ void Game::initVariables() { // like the void setup but for the values
 	grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
 	detectedTileByMouse = { -1,-1 };
 	lastDetectedTileByMouse = { -1,-1 };
-	//std::cout << "Rows: " << rows << ", Cols: " << cols << std::endl;
+	
 }
 void Game::initFonts() {
 	font.loadFromFile("Fonts/ARIAL.ttf");
@@ -46,35 +45,11 @@ void Game::initWindow() {
 }
 
 
-void Game::initEnemies() {
-	this->enemy.setPosition(10.f,10.f);
-	this->enemy.setSize(sf::Vector2f(100.f,100.f)); // sets the size (uses float)
-	this->enemy.setFillColor(sf::Color::Blue); // the color
-	this->enemy.setOutlineColor(sf::Color::Green); //sets color of outline
-	this->enemy.setOutlineThickness(1.f); //sets the thickness 
-}
-
-void Game::initCells() {
-	// red weird object that can be removed now
-	this->Cell.setPointCount(5);
-	this->Cell.setPoint(0, sf::Vector2f(0, 0));
-	this->Cell.setPoint(1, sf::Vector2f(150, 10));
-	this->Cell.setPoint(2, sf::Vector2f(120, 90));
-	this->Cell.setPoint(3, sf::Vector2f(30, 100));
-	this->Cell.setPoint(4, sf::Vector2f(0, 50));
-
-	this->Cell.setFillColor(sf::Color::Red);
-		
-}
-
-
-
 void Game::initGrid() { // initialize the grid
 
 	// actual initialize the grid
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			//std::cout << "Setting grid[" << i << "][" << j << "]" << std::endl;
 			grid[i][j] = Tile(i,j); // declare it exists
 			grid[i][j].initializeTileShape(255, 0, 0); // declare the tile has a shape aka hexagon
 		}
@@ -117,24 +92,6 @@ void Game::initTestGrid() {
 	}
 }
 
-void Game::initStartAndEndPoints(Tile& startPosition, Tile& endPosition) {
-	
-	
-	this->start = &startPosition;
-	this->end = &endPosition;
-
-	this->end->wall = false;
-	this->start->wall = false;
-	sorter.insert(&startPosition);
-	
-	//openSet.push_back(&startPosition);
-	//closedSet.push_back(&endPosition); // can't remember if this should be included
-	
-
-}
-void Game::initPathStartCondition() {
-	//openSet.push_back(&start);
-}
 void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	// This is temperary to try the organism object
 	/*
@@ -155,7 +112,8 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	organism.initVariables();
 }
 
-//constructors/ destructors
+
+//---------------------- constructors/ destructors ------------------
 Game::Game() { //when you start the game somethings need to be initialized
 	//importend to first initialize the variables before the window
 	this->initVariables();
@@ -163,9 +121,7 @@ Game::Game() { //when you start the game somethings need to be initialized
 	this->initWindow();
 	
 
-	this->initEnemies();
-	this->initCells();
-
+	//this->initEnemies();
 	/*
 	- Declare the grid and its tiles with their variables and properties
 	- Add their neighbors for each tile.
@@ -175,8 +131,7 @@ Game::Game() { //when you start the game somethings need to be initialized
 	*/
 	this->initGrid();
 	this->initTestGrid();
-	this->initStartAndEndPoints(grid[0][0], grid[rows-1][cols-1]);
-	this->initPathStartCondition();
+	//this->initStartAndEndPoints(grid[0][0], grid[rows-1][cols-1]);
 	this->start_time = std::chrono::high_resolution_clock::now();
 	/*
 	- Declare objects for testíng
@@ -219,7 +174,6 @@ void Game::updateMouseToGrid() {
 void Game::updateTileBorder() {
 	// reset the previous tile
 	if (lastDetectedTileByMouse.first != -1 || lastDetectedTileByMouse.second != -1) {
-		//this->lastDetectedTile = { t->xRow, t->yRow };
 		int tileIndexToArrayIndex = lastDetectedTileByMouse.first* cols + lastDetectedTileByMouse.second;
 		// convert tileIndexToArrayIndex to gridLines coordinates
 		int lineStart = tileIndexToArrayIndex * 12;
@@ -390,10 +344,6 @@ void Game::deleteLevel() {
 
 }
 
-void Game::moveCells() { // just for test
-	this->Cell.setPoint(0, this->Cell.getPoint(0) + sf::Vector2f(1.001, 0));
-}
-
 void Game::chooseDirectionOfGridMovement(sf::Vector2f mousePos ) {
 	/*
 	// choose direction depending on where the mouse is. Areas around the edge
@@ -554,8 +504,7 @@ void Game::update() {
 	this->updateMousePositions();
 	this->moveGrid(sf::Vector2f(1, 1)); // should take our vector as an input
 	this->createLevel();
-	//this->moveCells();
-	this->updatePath();
+
 	this->updateFrameRate();
 	//this->frameRate();
 	//this->mouseInGridDetection();
@@ -565,88 +514,6 @@ void Game::update() {
 	//Player
 	this->updatePlayerObject();
 
-}
-
-void Game::updatePath() {
-	
-	//if there is more to check'
-	if (runPathfinding) {
-		if (sorter.heap.size() > 0) {
-		//if (openSet.size() > 0) {
-			//best Option
-			size_t winner = 0;
-			/*
-			for (size_t i = 0; i < openSet.size(); i++) {
-				if (openSet[i]->f < openSet[winner]->f) {
-					winner = i;
-				}
-			}
-			*/
-			auto current = sorter.heap[0];
-			//auto current = openSet[winner];
-			
-			//did we finish?
-			if (current->yRow == end->yRow && current->xRow == end->xRow) {
-
-				Tile* temp = current;
-				path.push_back(temp);
-				while (!((temp->previous) == NULL)) {
-					path.push_back(temp->previous);
-					temp = temp->previous;
-				}
-				playerPosition = path.size() - 1; 
-				pathFindingComplete = true;
-
-				std::cout << "mission is complete!";
-				this->end_time = std::chrono::high_resolution_clock::now();
-				std::chrono::duration<double> elapsed_seconds = this->end_time - this->start_time;
-				std::cout << "Time spent from start to end: " << (elapsed_seconds).count() << std::endl;
-				this->runPathfinding = false;
-			}
-			//openSet.erase(current);
-			//std::remove: Denne funktion flytter de elementer, der skal fjernes, til slutningen af vektoren og returnerer en iterator til den første af disse elementer
-			//erase: Fjerner de flyttede elementer fra vektoren ved hjælp af iteratoren, der blev returneret af std::remove.
-			
-			//openSet.erase(std::remove(openSet.begin(), openSet.end(), current), openSet.end()); // this is the correct one to comment back in
-			
-			sorter.delMin();
-			closedSet.push_back(current);
-			std::vector<Tile*> neighbors = current->neighbors;
-			
-			for (size_t i = 0; i < neighbors.size(); i++) {
-				Tile* neighbor = neighbors[i];
-				if (!includesTile(closedSet, neighbor) && ! neighbor->wall) { // include wall here
-					double tempG = current->g + 1;
-					// maybe a new path?
-					bool newPath = false;
-					if (includesTile(sorter.heap, neighbor)) {
-					//if (includesTile(openSet, neighbor)) {
-						if (tempG < neighbor->g) {
-							neighbor->g = tempG;
-						}
-					}
-					else {
-						neighbor->g = tempG;
-						newPath = true;
-						//openSet.push_back(neighbor);
-						sorter.insert(neighbor);
-					}
-					if (newPath) {
-						neighbor->h = heuristic(neighbor, end);
-						//neighbor->f = neighbor->g + neighbor->h
-						sorter.changeFValue(sorter.latestInsertedIndex, neighbor->g + neighbor->h);
-						
-						neighbor->previous = current;
-					}
-				}
-			}
-		}
-		else {
-			std::cout << "no solution... Panic!!!!";
-			this->runPathfinding = false;
-			return;
-		}
-	}
 }
 
 /*
@@ -708,7 +575,7 @@ void Game::render() {
 		- render objects
 		-display frame in window
 	*/
-	//this->window->clear(sf::Color(255, 0, 0, 255)); // just makes the background a color
+	
 	this->window->clear(); 
 
 	// draw next frame
@@ -717,46 +584,8 @@ void Game::render() {
 	// This part slows performance greatly when many rows or columns are applied
 	this->window->draw(testGrid);
 	this->window->draw(testGridLines);
-	/*
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j].display( *this->window, 250,250,250);
-		}
-	}
-	*/
 	
 	
-	// the closed set
-	for (int i = 0; i < closedSet.size(); i++) {
-		closedSet[i]->display(*this->window , 250, 0, 0);
-	}
-	
-	// the open set
-	
-	for (int i = 0; i < openSet.size(); i++) {
-		openSet[i]->display(*this->window, 0, 250,0);
-	}
-	
-	
-	for (int i = 0; i < sorter.heap.size(); i++) {
-		sorter.heap[i]->display(*this->window, 0, 250, 0);
-	}
-
-	// the path
-	for (int i = 0; i < path.size(); i++) {
-		path[i]->display(*this->window, 0, 0, 255);
-	}
-	
-	//movement along the path
-	if (pathFindingComplete) {
-		
-		if (initialFrame % 10 == 0 && playerPosition != 0 ){
-			playerPosition--;
-		}
-		path[playerPosition]->display(*this->window, 100, 100, 255);
-		
-		initialFrame++;
-	}
 	
 	this->renderPlayer();
 	this->renderFrameRate();

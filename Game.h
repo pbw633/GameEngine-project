@@ -32,6 +32,7 @@ TODO:
 
 class Game{
 private:
+	// --------------------- Variables --------------------
 	//variables
 	sf::RenderWindow* window;
 	sf::VideoMode videomode;
@@ -45,43 +46,39 @@ private:
 	
 	//game objects aka enemies and cell. This is temp
 	sf::RectangleShape enemy;
-	sf::ConvexShape Cell;
 
-	
+	Organism playerObject;
 
-	//private functions
+	//--------------------- Initialization --------------------
 	void initVariables();
 	void initFonts();
 	void initWindow();
 
-	void initEnemies(); //initialize the enemies (temp)
-	void initCells(); // initialize each Cell (temp)
 	void initGrid(); //initialize the grid
 	void initTestGrid();
 
-	void initStartAndEndPoints(Tile& startPosition , Tile& endPosition); // initialize start and end of the path. just some random points
-	void initPathStartCondition();
+	
 	void initOrganism(int rowPos, int colPos, Organism& organism);
 	
+	// --------------------- Setters --------------------
 	
-	//void initGridNeighbors(const Game& game); // initialize the neighbors of each Tile in the grid
+	// ---------------------- Getters --------------------
 
-
+	// --------------------- Update --------------------
 	//move objects
 	void chooseDirectionOfGridMovement(sf::Vector2f mousePos);
-	void moveCells(); // (temp)
 	void moveGrid(sf::Vector2f direction);
 	void movePlayerPosition();
-	//Game objects
-	Organism playerObject; 
+	
+	
 	void updatePlayerObject();
 
 	
 
-	// debugging
+	// --------------- debugging ----------------------------
 	void debugModeActivationSwitch();
 public:
-	//constructors / Destructors
+	//----------------- constructors / Destructors ---------------
 	Game();
 	virtual ~Game();
 
@@ -100,7 +97,7 @@ public:
 	std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
 	std::chrono::time_point<std::chrono::high_resolution_clock> end_time;
 
-	//creating the grid for you to walk on
+	// game grid variables
 	int rows;
 	int cols;
 
@@ -112,19 +109,10 @@ public:
 	sf::VertexArray testGridLines;
 
 	//variables and other objects for pathfinding
-	bool runPathfinding = true;
 
 	int initialFrame = 0;
-	int playerPosition = 0;
-	bool pathFindingComplete = false;
-	Tile* start;
-	Tile* end;
-	Tile current;
-	std::vector<Tile*> openSet;
-	std::vector<Tile*> closedSet;
-	std::vector<Tile*> path;
-
-	Min_heap sorter; // later each npc should have this
+	
+	// map creation
 	MapCSVExporter mapHelper;
 
 	//Variables for creating, loading and deleting levels
@@ -168,7 +156,6 @@ public:
 	void toggleFullScreen();
 	void switchWindowMode();
 
-	void updatePath();
 	void updateGridSize(float sizeIndex);
 	void updateBoundingBoxsForTiles();
 

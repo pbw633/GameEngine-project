@@ -5,6 +5,8 @@
 // notes to self:
 //		- you can move down as usual but if you try to move again you start from initial point and then it crashes 
 */
+
+// ------------------ Initialize --------------------
 void Organism::initVariables() {
 	this->moveTileTimer.restart();
 	this->interTileTimer.restart();
@@ -23,6 +25,24 @@ void Organism::initSprite() {
 	// Resize the sprite
 	this->sprite.scale(1.0f, 1.0f);
 }
+
+// ------------------- Setters ------------------------
+void Organism::setPosition(Tile* newPosition) {
+	if (newPosition->wall == false) { // should also do something with the position tile aka set the tiles value
+		newPosition->occupiedByOrganism = true;
+		newPosition->placeOrganismInTile(*this);
+		this->currerntPosition = newPosition;
+		this->sorter.insert(newPosition);
+	}
+	else {
+		throw std::runtime_error("Chosen position is a wall");
+	}
+}
+//-------------------- Getters -----------------------
+std::vector<Tile*> Organism::getCalculatedPath() {
+	return pathForOrganism;
+}
+//-------------------- Actions -----------------------
 
 void Organism::calculatePath( Tile* targetPosition ) {
 	//THis can probably be optimized since our steps are limited.
@@ -90,7 +110,46 @@ void Organism::calculatePath( Tile* targetPosition ) {
 		}
 	}
 }
+/*
+	- If mouse is in sprite while pressed and not moving then update sprite by rotating clockwise
+	- should be scale safe for future
+	- make switch statement instead of if else statements
+*/
+void Organism::rotateOrganism(sf::Vector2i mousePos) {
+	if (pointInSprite(mousePos) && !moving) {
+		int scalingFactorSign = this->sprite.getScale().x;
+		// Last movement direction should rotate clockwise
+		if (spriteIndexY == 0 && scalingFactorSign > 0) {// East to South East
+			spriteIndexY = 3;
+			this->sprite.setScale(-1.f * this->sprite.getScale().x, 1.f);
 
+		}
+		else if (spriteIndexY == 3 && scalingFactorSign < 0) { // South East to South West
+			this->sprite.setScale(-1.f * this->sprite.getScale().x, 1.f);
+
+		}
+		else if (spriteIndexY == 3 && scalingFactorSign > 0) { // South West to West
+			spriteIndexY = 1;
+
+		}
+		else if (spriteIndexY == 1 && scalingFactorSign > 0) { // West to north West
+			spriteIndexY = 2;
+
+		}
+		else if (spriteIndexY == 2 && scalingFactorSign > 0) { // north west to north East
+			this->sprite.setScale(-1.f * this->sprite.getScale().x, 1.f);
+
+		}
+		else if (spriteIndexY == 2 && scalingFactorSign < 0) { // north east to east
+			spriteIndexY = 0;
+			this->sprite.setScale(-1.f * this->sprite.getScale().x, 1.f);
+		}
+
+		this->updateSprite();
+	}
+}
+
+// -------------------- Updaters ------------------
 // Animations
 
 void Organism::updatePosition(){
@@ -272,52 +331,30 @@ void Organism::updateSprite() { // skal rettes
 }
 
 
-
-/*
-	- If mouse is in sprite while pressed and not moving then update sprite by rotating clockwise
-	- should be scale safe for future
-	- make switch statement instead of if else statements
-*/
-void Organism::rotateOrganism(sf::Vector2i mousePos) {
-	if (pointInSprite( mousePos) && !moving ) {
-		int scalingFactorSign = this->sprite.getScale().x;
-		// Last movement direction should rotate clockwise
-		if (spriteIndexY == 0 && scalingFactorSign > 0) {// East to South East
-			spriteIndexY = 3;
-			this->sprite.setScale(-1.f* this->sprite.getScale().x, 1.f);
-
-		} else if ( spriteIndexY == 3  && scalingFactorSign < 0) { // South East to South West
-			this->sprite.setScale(-1.f* this->sprite.getScale().x,1.f);
-
-		} else if (spriteIndexY == 3 && scalingFactorSign > 0) { // South West to West
-			spriteIndexY = 1;
-
-		} else if (spriteIndexY == 1 && scalingFactorSign > 0 ) { // West to north West
-			spriteIndexY = 2;
-		
-		} else if (spriteIndexY == 2 && scalingFactorSign > 0) { // north west to north East
-			this->sprite.setScale(-1.f* this->sprite.getScale().x,1.f);
-
-		} else if (spriteIndexY == 2 && scalingFactorSign < 0) { // north east to east
-			spriteIndexY = 0;
-			this->sprite.setScale(-1.f* this->sprite.getScale().x,1.f);
-		}
-
-		this->updateSprite();
+void Organism::updateMovement(int nextTileX, int nextTileY) {
+	//debugging for now
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {// right
+		this->sprite.move(1.f,0.f);
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {// left
+		this->sprite.move(-1.f, 0.f);
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {// up
+		this->sprite.move(0.f, -1.f);
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { // down
+		this->sprite.move(0.f, 1.f);
 	}
 }
 
-// Helper methods
+// --------------- Helper methods ------------------
 
 void Organism::resetPathfinding() {
 	usedMovementPoints = 0;
 	pathFindingComplete = false;
 	// Remove all elements after index 0
-	
+
 	// reInitialize sorter
 	sorter.clear();
 	sorter.insert(currerntPosition);
-	
+
 	if (grid != nullptr) {
 		for (auto& row : *grid) {
 			for (auto& tile : row) {
@@ -335,32 +372,4 @@ void Organism::resetPathfinding() {
 	moveTileTimer.restart();
 	interTileTimer.restart();
 	animationTimer.restart();
-}
-
-void Organism::setPosition( Tile* newPosition ) {
-	if (newPosition->wall == false) { // should also do something with the position tile aka set the tiles value
-		newPosition->occupiedByOrganism = true;
-		newPosition->placeOrganismInTile(*this);
-		this->currerntPosition = newPosition;
-		this->sorter.insert(newPosition);
-	}else{
-		throw std::runtime_error("Chosen position is a wall");
-	}
-}
-
-std::vector<Tile*> Organism::getCalculatedPath() {
-	return pathForOrganism;
-}
-
-void Organism::updateMovement(int nextTileX, int nextTileY) {
-	//debugging for now
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {// right
-		this->sprite.move(1.f,0.f);
-	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {// left
-		this->sprite.move(-1.f, 0.f);
-	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {// up
-		this->sprite.move(0.f, -1.f);
-	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { // down
-		this->sprite.move(0.f, 1.f);
-	}
 }

@@ -4,6 +4,7 @@
 
 class Min_heap {
 public:
+	// --------------------- Variables --------------------
 	int latestInsertedIndex = 0;
 	
 	std::vector<Tile*> heap;
@@ -12,6 +13,7 @@ public:
 		heap.push_back(nullptr); // First element is unused to simplify index math
 	}
 
+	// --------------------- Actions --------------------
 	// adds a tile to the heap
 	void insert(Tile* tile);
 
@@ -27,6 +29,7 @@ public:
 
 private:
 
+	// --------------------- Helper functions --------------------
 	// Exchange two nodes in the heap
 	void exch(int i, int j);
 
