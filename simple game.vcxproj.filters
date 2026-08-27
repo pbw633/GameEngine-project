@@ -103,6 +103,12 @@
     <Filter Include="Source Files\Menus\Buttons\PolygonButton">
       <UniqueIdentifier>{d5f1bf1c-150d-4851-b163-64f572adaddc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GridObjects\Grid">
+      <UniqueIdentifier>{3028326b-6a54-40a5-8bb0-14a48bb3c7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GridObjects\Grid">
+      <UniqueIdentifier>{4405def5-f633-4024-93ff-96f20bda90b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,6 +156,9 @@
     <ClCompile Include="PolygonButton.cpp">
       <Filter>Source Files\Menus\Buttons\PolygonButton</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\GridObjects\Grid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windowMenu.h">
@@ -190,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="PolygonButton.h">
       <Filter>Header Files\Menus\Buttons\PolygonButton</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\GridObjects\Grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

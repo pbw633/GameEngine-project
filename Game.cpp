@@ -16,7 +16,7 @@ Notes to self:
 // ------------------------ Initialization -------------------
 void Game::initVariables() { // like the void setup but for the values
 	this->window = nullptr; // laver den til en nullpointer
-
+	transform.setPosition(100.f,100.f);
 	rows = 58;
 	cols = 62;
 	gridOffset = 100;
@@ -354,11 +354,7 @@ void Game::chooseDirectionOfGridMovement(sf::Vector2f mousePos ) {
 }
 
 void Game::moveGrid(sf::Vector2f direction) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			//grid[i][j].moveTile(direction);
-		}
-	}
+	//this->transform.setPosition(this->transform.getPosition() + direction);
 }
 /*
 	- update method for resized grid.
@@ -582,8 +578,8 @@ void Game::render() {
 	
 	// Renders the grid
 	// This part slows performance greatly when many rows or columns are applied
-	this->window->draw(testGrid);
-	this->window->draw(testGridLines);
+	this->window->draw(testGrid,transform.getTransform());
+	this->window->draw(testGridLines,transform.getTransform());
 	
 	
 	

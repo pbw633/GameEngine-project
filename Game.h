@@ -40,6 +40,7 @@ private:
 
 	float gridOffset;
 	bool isFullscreen = false;
+	sf::Transformable transform;
 
 	//mousePosition
 	sf::Vector2i mousePosWindow;
@@ -65,6 +66,7 @@ private:
 	// ---------------------- Getters --------------------
 
 	// --------------------- Update --------------------
+	
 	//move objects
 	void chooseDirectionOfGridMovement(sf::Vector2f mousePos);
 	void moveGrid(sf::Vector2f direction);
