@@ -17,6 +17,7 @@ public:
 
 	// ----------------- Variables ---------------
 	// ----------------- Initialize -------------
+	void initVariables();
 	void initGrid();
 
 	// ----------------- Setters ----------------
@@ -26,9 +27,11 @@ public:
 	// ----------------- Getters ----------------
 	int getRowCount();
 	int getColCount();
-	Tile getTile(int Row, int Col);
+	Tile& getTile(int Row, int Col);
 	sf::Vector2i getGridDim();
-	std::vector<std::vector<Tile>> getGrid();
+	std::vector<std::vector<Tile>>& getGrid();
+	sf::VertexArray& getGridTriangles();
+	sf::VertexArray& getGridLines();
 	// ----------------- Adders -----------------
 	void addRow();
 	void addCol();
@@ -36,7 +39,9 @@ public:
 	// ----------------- Actions ----------------
 	void placeOrganism(int Row, int Col, Organism& organism);
 	void loadGridFromFile(sf::String filename);
-	void moveInDirection(sf::Vector2f direction);
+	void moveInDirection(sf::Vector2f direction); // this is frameDependen
+	void moveInDirectionWithSpeed(float speed, sf::Vector2f unitDirVec); // this is made to make the movement of the grid frameIndependent
+	void resize( float sizeFactor);
 	// ------------------ update ----------------
 	
 	void update();
@@ -50,6 +55,7 @@ private:
 	sf::VertexArray gridLines;
 	std::vector<std::vector<Tile>> grid;
 	
+	float dirVecBuffer; 
 	// ----------------- Initialize -------------
 	// ----------------- Setters -----------------
 	void setRows(int numRows);
@@ -57,5 +63,8 @@ private:
 	// ----------------- Getters ----------------
 	// ----------------- Adders -----------------
 	// ----------------- Actions ----------------
+
+	// ----------------- Update ----------------
+	void updateBoundingBoxes();
 };
 

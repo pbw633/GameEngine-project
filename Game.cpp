@@ -16,7 +16,7 @@ Notes to self:
 // ------------------------ Initialization -------------------
 void Game::initVariables() { // like the void setup but for the values
 	this->window = nullptr; // laver den til en nullpointer
-	transform.setPosition(100.f,100.f);
+	//transform.setPosition(100.f,100.f);
 	rows = 58;
 	cols = 62;
 	gridOffset = 100;
@@ -356,6 +356,7 @@ void Game::chooseDirectionOfGridMovement(sf::Vector2f mousePos ) {
 void Game::moveGrid(sf::Vector2f direction) {
 	//this->transform.setPosition(this->transform.getPosition() + direction);
 }
+
 /*
 	- update method for resized grid.
 	- could be done by updating the parameters of the tile in each tile but that might be to much work.
