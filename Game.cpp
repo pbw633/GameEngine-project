@@ -20,11 +20,11 @@ void Game::initVariables() { // like the void setup but for the values
 	rows = 58;
 	cols = 62;
 	gridOffset = 100;
-	grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
+	//grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
 	detectedTileByMouse = { -1,-1 };
 	lastDetectedTileByMouse = { -1,-1 };
 
-	grid2 = Grid(rows,cols);
+	grid = Grid(rows,cols);
 	
 	
 }
@@ -47,25 +47,6 @@ void Game::initWindow() {
 	//this->window->setFramerateLimit(144); // sets frameRate limit 
 }
 
-
-void Game::initGrid() { // initialize the grid
-
-	// actual initialize the grid
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j] = Tile(i,j); // declare it exists
-			grid[i][j].initializeTileShape(255, 0, 0); // declare the tile has a shape aka hexagon
-		}
-	}
-	// each tile needs to know their neighbors
-	
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j].initializeNeighbors(i,j, grid);
-		}
-	}
-	
-}
 /*
 		- tempeary method
 */
@@ -75,11 +56,11 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 		- if position is not out of bound place organism
 	*/
 	if ( 0 <= rowPos && 0 <= colPos && colPos < cols && rowPos < rows &&
-		this->grid2.getGrid()[rowPos][colPos].occupiedByOrganism == false ) {
+		this->grid.getGrid()[rowPos][colPos].occupiedByOrganism == false ) {
 		
-		this->grid2.getGrid()[rowPos][colPos].wall = false;
+		this->grid.getGrid()[rowPos][colPos].wall = false;
 		
-		organism.setPosition( &(this->grid2.getGrid()[rowPos][colPos]) );
+		organism.setPosition( &(this->grid.getGrid()[rowPos][colPos]) );
 
 	} else {
 		throw std::runtime_error("Organism position out of bound, tile is a wall or occupied");
@@ -106,13 +87,12 @@ Game::Game() { //when you start the game somethings need to be initialized
 	- Declare start- and end positions for the path
 	- Add the starting point to the openSet
 	*/
-	this->initGrid();
 	
 	this->start_time = std::chrono::high_resolution_clock::now();
 	/*
 	- Declare objects for testíng
 	*/
-	this->playerObject = Organism( &(this->grid2.getGrid() ) );
+	this->playerObject = Organism( &(this->grid.getGrid() ) );
 	this->initOrganism( 0,cols-1,playerObject );
 
 }
@@ -229,7 +209,7 @@ void Game::createLevel() {
 			filename = "unspecifiedLevelName";
 		}
 
-		this->mapHelper.saveMap(filename, this->grid);
+		//this->mapHelper.saveMap(filename, this->grid);
 		createModeActive = false;
 		std::cout << "Map succesfully saved with name: "<< filename << "!" << "\n";
 	}
@@ -264,7 +244,7 @@ void Game::loadLevel() {
 			filename = "unspecifiedLevelName";
 		}
 
-		this->mapHelper.loadMap(filename, this->grid);
+		//this->mapHelper.loadMap(filename, this->grid);
 		loadModeActive = false;
 		std::cout << "Map succesfully loaded map with name: " << filename << "!" << "\n";
 	}
@@ -298,10 +278,10 @@ void Game::leftMouseClickExecution() {
 	// complete List of what to execute when right mouse buttom is pressed:
 	//	-Detction of mouse press in a tile
 	*/
-	std::pair<int, int> detectedTile = this->grid2.getCurrentDetectedTileCoordinates();
+	std::pair<int, int> detectedTile = this->grid.getCurrentDetectedTileCoordinates();
 	if (detectedTile.first != -1 && detectedTile.second != -1) {
-		if (!(this->grid2.getGrid()[detectedTile.first][detectedTile.second].wall)) {
-			this->playerObject.calculatePath(&(this->grid2.getGrid()[detectedTile.first][detectedTile.second]));
+		if (!(this->grid.getGrid()[detectedTile.first][detectedTile.second].wall)) {
+			this->playerObject.calculatePath(&(this->grid.getGrid()[detectedTile.first][detectedTile.second]));
 		}
 	}
 	
@@ -344,14 +324,15 @@ void Game::pollEvents() {
 		case sf::Event::MouseWheelMoved:
 			if ( this->ev.mouseWheel.delta> 0 ) {
 				std::cout << "scrolled up" << "\n";
-				this->updateGridSize(1.02f);
-				this->updateBoundingBoxsForTiles();
+				//this->updateGridSize(1.02f);
+				//this->updateBoundingBoxsForTiles();
 				this->playerObject.updateSpriteLocationInTile();
 
 			} else if ( this->ev.mouseWheel.delta < 0 ) {
 				std::cout << "scrolled down" << "\n";
-				this->updateGridSize(0.98f);
-				this->updateBoundingBoxsForTiles();
+				
+				//this->updateGridSize(0.98f);
+				//this->updateBoundingBoxsForTiles();
 				this->playerObject.updateSpriteLocationInTile();
 			}
 			break;
@@ -370,7 +351,7 @@ void Game::update() {
 	this->updateFrameRate();
 	
 	this->updateGrid();
-	this->grid2.update(mousePosWindow);
+	this->grid.update(mousePosWindow);
 	//Player
 	this->updatePlayerObject();
 
@@ -411,8 +392,8 @@ void Game::render() {
 	// Renders the grid
 	// This part slows performance greatly when many rows or columns are applied
 
-	this->window->draw(grid2.getGridTriangles());
-	this->window->draw(grid2.getGridLines());
+	this->window->draw(grid.getGridTriangles());
+	this->window->draw(grid.getGridLines());
 	
 	this->renderPlayer();
 	this->renderFrameRate();

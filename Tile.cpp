@@ -76,7 +76,7 @@ void Tile::initializeNeighbors(int i, int j ,Game& game) { // no need to pass th
 	// might have to do something here since it does not like emplace_back
 	int cols = game.cols;
 	int rows = game.rows;
-	std::vector<std::vector<Tile>>& grid = game.grid;
+	std::vector<std::vector<Tile>>& grid = game.grid.getGrid();
 
 	if (j < cols - 1) { // right horizontal neighbor 
 		neighbors.emplace_back(&grid[i][j+1]);

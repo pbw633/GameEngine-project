@@ -49,7 +49,7 @@ private:
 	//game objects aka enemies and cell. This is temp
 	sf::RectangleShape enemy;
 
-	Grid grid2;
+	
 
 	Organism playerObject;
 
@@ -58,8 +58,7 @@ private:
 	void initFonts();
 	void initWindow();
 
-	void initGrid(); //initialize the grid
-	void initTestGrid();
+	
 
 	
 	void initOrganism(int rowPos, int colPos, Organism& organism);
@@ -105,13 +104,12 @@ public:
 	// game grid variables
 	int rows;
 	int cols;
+	Grid grid;
 
 	float tileSizeFactor = 1.0;
 
 	Tile tile;
-	std::vector<std::vector<Tile>> grid;
-	sf::VertexArray testGrid;
-	sf::VertexArray testGridLines;
+	
 
 	//variables and other objects for pathfinding
 
