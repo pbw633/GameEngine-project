@@ -66,46 +66,20 @@ void Game::initGrid() { // initialize the grid
 	}
 	
 }
-
-void Game::initTestGrid() {
-	// grid som faktisk vises da gamle version var langsommere
-
-	testGrid = sf::VertexArray(sf::Triangles);
-	testGridLines = sf::VertexArray(sf::Lines);
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			
-
-			Tile& t = grid[i][j];
-
-			sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
-
-			// Make triangles and lines 
-
-			for (int k = 0; k <= 5; k++) {
-				testGrid.append(sf::Vertex(t.getCenter(), col));
-				testGrid.append(sf::Vertex(t.getPoint(k),col));
-				testGrid.append(sf::Vertex(t.getPoint(k == 5 ? 0 :k+1) , col));
-				testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black ));
-				testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
-			}
-			
-
-		}
-	}
-}
-
+/*
+		- tempeary method
+*/
 void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	// This is temperary to try the organism object
 	/*
 		- if position is not out of bound place organism
 	*/
 	if ( 0 <= rowPos && 0 <= colPos && colPos < cols && rowPos < rows &&
-		this->grid[rowPos][colPos].occupiedByOrganism == false ) {
+		this->grid2.getGrid()[rowPos][colPos].occupiedByOrganism == false ) {
 		
-		this->grid[rowPos][colPos].wall = false;
+		this->grid2.getGrid()[rowPos][colPos].wall = false;
 		
-		organism.setPosition( &(this->grid[rowPos][colPos]) );
+		organism.setPosition( &(this->grid2.getGrid()[rowPos][colPos]) );
 
 	} else {
 		throw std::runtime_error("Organism position out of bound, tile is a wall or occupied");
@@ -133,13 +107,12 @@ Game::Game() { //when you start the game somethings need to be initialized
 	- Add the starting point to the openSet
 	*/
 	this->initGrid();
-	this->initTestGrid();
-	//this->initStartAndEndPoints(grid[0][0], grid[rows-1][cols-1]);
+	
 	this->start_time = std::chrono::high_resolution_clock::now();
 	/*
 	- Declare objects for testíng
 	*/
-	this->playerObject = Organism( &(this->grid) );
+	this->playerObject = Organism( &(this->grid2.getGrid() ) );
 	this->initOrganism( 0,cols-1,playerObject );
 
 }
@@ -164,66 +137,20 @@ void Game::updateMousePositions() {
 }
 
 void Game::updateGrid() {
+	/*
 	this->updateMouseToGrid();
 	this->updateTileBorder();
 	this->updateTileInsides();
 	this->updateLastDetectedTileByMouse();
+	*/
 }
 
 void Game::updateMouseToGrid() {
+	/*
 	this->mouseToGrid( this->mousePosWindow );
+	*/
 }
 
-void Game::updateTileBorder() {
-	// reset the previous tile
-	if (lastDetectedTileByMouse.first != -1 || lastDetectedTileByMouse.second != -1) {
-		int tileIndexToArrayIndex = lastDetectedTileByMouse.first* cols + lastDetectedTileByMouse.second;
-		// convert tileIndexToArrayIndex to gridLines coordinates
-		int lineStart = tileIndexToArrayIndex * 12;
-		for (int i = 0; i < 12; i++) {
-			testGridLines[lineStart + i].color = sf::Color::Black;
-		}
-	}
-
-	if (detectedTileByMouse.first != -1 || detectedTileByMouse.second != -1) {
-		//convert tile coordinates to tileArray coordinates
-		int tileIndexToArrayIndex = detectedTileByMouse.first* cols + detectedTileByMouse.second;
-		// convert tileIndexToArrayIndex to gridLines coordinates
-		int lineStart = tileIndexToArrayIndex * 12;
-		for (int i = 0; i < 12; i++) {
-			testGridLines[lineStart + i].color = sf::Color::Red;
-		}
-	}
-	
-	
-}
-
-void Game::updateTileInsides() {
-	if (lastDetectedTileByMouse.first != -1 || lastDetectedTileByMouse.second != -1) {
-		if (!grid[lastDetectedTileByMouse.first][lastDetectedTileByMouse.second].wall) {
-			int tileIndex = lastDetectedTileByMouse.first * cols + lastDetectedTileByMouse.second;
-			int triangleStart = tileIndex * 18;
-
-			for (int i = 0; i < 18; i++) {
-				testGrid[triangleStart + i].color = sf::Color::White;
-			}
-		}
-	}
-	if ( detectedTileByMouse.first !=-1 || detectedTileByMouse.second != -1 ) {
-		if (!grid[detectedTileByMouse.first][detectedTileByMouse.second].wall) {
-			int tileIndex = detectedTileByMouse.first * cols + detectedTileByMouse.second;
-			int triangleStart = tileIndex * 18;
-
-			for (int i = 0; i < 18; i++) {
-				testGrid[triangleStart + i].color = sf::Color::Red;
-			}
-		}
-	}
-}
-
-void Game::updateLastDetectedTileByMouse() {
-	lastDetectedTileByMouse = detectedTileByMouse;
-}
 
 void Game::toggleFullScreen() {
 	isFullscreen = !isFullscreen;
@@ -360,72 +287,6 @@ void Game::moveGrid(sf::Vector2f direction) {
 	//this->transform.setPosition(this->transform.getPosition() + direction);
 }
 
-/*
-	- update method for resized grid.
-	- could be done by updating the parameters of the tile in each tile but that might be to much work.
-		-maybe move tile parameters to game Object
-*/
-
-/*
-	- convert mouse/screen coordinates to grid coorinates
-	- if outside grid then return {-1, -1}
-*/
-std::pair<int, int> Game::mouseToGrid(sf::Vector2i mousePos) {
-	float x = static_cast<float>(mousePos.x);
-	float y = static_cast<float>(mousePos.y);
-
-	const float angle = this->grid[0][0].construcangle * 3.14159265f / 180.f;
-
-	const float dx = 2.f * this->grid[0][0].r_1 * cos(angle); // r_1 = 15
-	const float dy = this->grid[0][0].r_1 * 2.f * sin(angle) + (this->grid[0][0].r_2 - cos((90.f - this->grid[0][0].construcangle) * 3.14159265f / 180.f) * this->grid[0][0].r_1);
-
-	int approxRow = static_cast<int>((y - 100.f) / dy);
-	approxRow = std::max(0, std::min(rows - 1, approxRow));
-
-	float offsetX = (approxRow % 2 == 0) ? (this->grid[0][0].r_1 * cos(angle)) : 0.f;
-
-	int approxCol = static_cast<int>((x - 100.f - offsetX) / dx);
-	approxCol = std::max(0, std::min(cols - 1, approxCol));
-
-	// refine by checking this tile + neighbors only
-	Tile* bestTile = nullptr;
-
-	std::vector<Tile*> candidates;
-	candidates.push_back(&grid[approxRow][approxCol]);
-
-	for (Tile* n : grid[approxRow][approxCol].neighbors)
-		candidates.push_back(n);
-
-	for (Tile* t : candidates)
-	{
-		if (t->getBoundingBoxMinX() <= x && x <= t->getBoundingBoxMaxX() &&
-			t->getBoundingBoxMinY() <= y && y <= t->getBoundingBoxMaxY()){
-			// final precise check
-			bool inside = false;
-			size_t numPoints = t->hexagon.getPointCount();
-
-			for (size_t i = 0, j = numPoints - 1; i < numPoints; j = i++){
-				sf::Vector2f vi = t->getPoint(i);
-				sf::Vector2f vj = t->getPoint(j);
-
-				bool intersect = ((vi.y > y) != (vj.y > y)) &&
-					(x < (vj.x - vi.x) * (y - vi.y) / (vj.y - vi.y) + vi.x);
-
-				if (intersect)
-					inside = !inside;
-			}
-
-			if (inside) {
-				//std::cout << "the guess is: " << t->xRow << "," << t->yRow << "\n";
-				detectedTileByMouse = { t->xRow, t->yRow };
-				return { t->xRow, t->yRow };
-			}
-		}
-
-	}
-	//std::cout << "fail " << "\n";
-	return { -1, -1 };
-}
 
 /*
 TODO:
@@ -437,12 +298,13 @@ void Game::leftMouseClickExecution() {
 	// complete List of what to execute when right mouse buttom is pressed:
 	//	-Detction of mouse press in a tile
 	*/
-	if (detectedTileByMouse.first != -1 && detectedTileByMouse.second !=-1) {
-		if (!(this->grid[detectedTileByMouse.first][detectedTileByMouse.second].wall)) {
-			this->playerObject.calculatePath(&(this->grid[detectedTileByMouse.first][detectedTileByMouse.second]));
+	std::pair<int, int> detectedTile = this->grid2.getCurrentDetectedTileCoordinates();
+	if (detectedTile.first != -1 && detectedTile.second != -1) {
+		if (!(this->grid2.getGrid()[detectedTile.first][detectedTile.second].wall)) {
+			this->playerObject.calculatePath(&(this->grid2.getGrid()[detectedTile.first][detectedTile.second]));
 		}
-		
 	}
+	
 	
 }
 
@@ -506,11 +368,9 @@ void Game::update() {
 	this->createLevel();
 
 	this->updateFrameRate();
-	//this->frameRate();
-	//this->mouseInGridDetection();
-	this->mouseToGrid(mousePosWindow);
-	//this->movePlayerPosition(); // move playerPosition
+	
 	this->updateGrid();
+	this->grid2.update(mousePosWindow);
 	//Player
 	this->updatePlayerObject();
 
@@ -520,39 +380,7 @@ void Game::update() {
 TODO
 	- Update so only tiles within the window is shown/calculated
 */
-void Game::updateGridSize( float sizeIndex) {
-	// reset the grid lines and triangles
-	testGrid.clear();
-	testGridLines.clear();
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-				grid[i][j].updateTileSize(sizeIndex);
 
-				Tile& t = grid[i][j];
-
-				sf::Color col = t.getFillColor(); // eller beregn farve efter t.wall/occupied osv.
-
-				// Make triangles and lines 
-
-				for (int k = 0; k <= 5; k++) {
-					testGrid.append(sf::Vertex(t.getCenter(), col));
-					testGrid.append(sf::Vertex(t.getPoint(k), col));
-					testGrid.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), col));
-					testGridLines.append(sf::Vertex(t.getPoint(k), sf::Color::Black));
-					testGridLines.append(sf::Vertex(t.getPoint(k == 5 ? 0 : k + 1), sf::Color::Black));
-				}
-		}
-	}
-	std::cout << "Grid size updated" << "\n";
-}
-
-void Game::updateBoundingBoxsForTiles() {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j].updateBoundingBox();
-		}
-	}
-}	
 
 // player stuff
 void Game::updatePlayerObject() {
@@ -582,9 +410,7 @@ void Game::render() {
 	
 	// Renders the grid
 	// This part slows performance greatly when many rows or columns are applied
-	//this->window->draw(testGrid,transform.getTransform());
-	//this->window->draw(testGridLines,transform.getTransform());
-	
+
 	this->window->draw(grid2.getGridTriangles());
 	this->window->draw(grid2.getGridLines());
 	

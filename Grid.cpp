@@ -131,6 +131,10 @@ std::pair<int, int> Grid::getTileAtPosition(sf::Vector2i mousePos) {
 	return { -1, -1 };
 }
 
+std::pair<int, int> Grid::getCurrentDetectedTileCoordinates() {
+	return this->currentDetectedTileByMouse;
+}
+
 //----------------------------- Actions --------------------------
 void Grid::placeOrganism(int Row, int Col, Organism& organism) {
 	if ( Row < 0 || Col < 0 || this->rows <= Row || this-> cols <= Col ) {
@@ -241,8 +245,11 @@ void Grid::updatePreviousHoveredTile() {
 	previousDetectedTileByMouse = currentDetectedTileByMouse;
 }
 
-void Grid::update() {
-
+void Grid::update( sf::Vector2i mousePos ) {
+	this->getTileAtPosition(mousePos);
+	this->updateHoveredTileBorder();
+	this->updateHoveredTileFill();
+	this->updatePreviousHoveredTile();
 }
 
 // ---------------------------- Private -----------------------------

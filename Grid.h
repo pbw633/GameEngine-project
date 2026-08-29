@@ -37,6 +37,7 @@ public:
 	sf::VertexArray& getGridLines();
 
 	std::pair<int, int> getTileAtPosition(sf::Vector2i mousePos);
+	std::pair<int, int> getCurrentDetectedTileCoordinates();
 	// ----------------- Adders -----------------
 	void addRow();
 	void addCol();
@@ -53,7 +54,7 @@ public:
 	void updateHoveredTileBorder();
 	void updateHoveredTileFill();
 	void updatePreviousHoveredTile();
-	void update();
+	void update(sf::Vector2i mousePos);
 
 private:
 	// ----------------- Variables ---------------

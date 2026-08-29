@@ -35,7 +35,7 @@ void Organism::setPosition(Tile* newPosition) {
 		this->sorter.insert(newPosition);
 	}
 	else {
-		throw std::runtime_error("Chosen position is a wall");
+		throw std::runtime_error("Organism: Choosen position is a wall");
 	}
 }
 //-------------------- Getters -----------------------
