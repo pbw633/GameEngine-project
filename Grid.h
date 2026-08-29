@@ -13,7 +13,10 @@ public:
 	Grid(int Rows, int Cols) {
 		this->rows = Rows;
 		this->cols = Cols;
+		this->initGrid();
+		this->initVariables();
 	}
+	Grid(){}
 
 	// ----------------- Variables ---------------
 	// ----------------- Initialize -------------
@@ -32,6 +35,8 @@ public:
 	std::vector<std::vector<Tile>>& getGrid();
 	sf::VertexArray& getGridTriangles();
 	sf::VertexArray& getGridLines();
+
+	std::pair<int, int> getTileAtPosition(sf::Vector2i mousePos);
 	// ----------------- Adders -----------------
 	void addRow();
 	void addCol();
@@ -42,8 +47,12 @@ public:
 	void moveInDirection(sf::Vector2f direction); // this is frameDependen
 	void moveInDirectionWithSpeed(float speed, sf::Vector2f unitDirVec); // this is made to make the movement of the grid frameIndependent
 	void resize( float sizeFactor);
+	
 	// ------------------ update ----------------
 	
+	void updateHoveredTileBorder();
+	void updateHoveredTileFill();
+	void updatePreviousHoveredTile();
 	void update();
 
 private:
@@ -55,6 +64,8 @@ private:
 	sf::VertexArray gridLines;
 	std::vector<std::vector<Tile>> grid;
 	
+	std::pair<int, int> currentDetectedTileByMouse;
+	std::pair<int, int> previousDetectedTileByMouse;
 	float dirVecBuffer; 
 	// ----------------- Initialize -------------
 	// ----------------- Setters -----------------

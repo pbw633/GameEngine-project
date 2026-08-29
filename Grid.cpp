@@ -74,6 +74,63 @@ sf::VertexArray& Grid::getGridLines() {
 	return this->gridLines;
 }
 
+std::pair<int, int> Grid::getTileAtPosition(sf::Vector2i mousePos) {
+	float x = static_cast<float>(mousePos.x);
+	float y = static_cast<float>(mousePos.y);
+
+	const float angle = this->grid[0][0].construcangle * 3.14159265f / 180.f;
+
+	const float dx = 2.f * this->grid[0][0].r_1 * cos(angle); // r_1 = 15
+	const float dy = this->grid[0][0].r_1 * 2.f * sin(angle) + (this->grid[0][0].r_2 - cos((90.f - this->grid[0][0].construcangle) * 3.14159265f / 180.f) * this->grid[0][0].r_1);
+
+	int approxRow = static_cast<int>((y - 100.f) / dy);
+	approxRow = std::max(0, std::min(rows - 1, approxRow));
+
+	float offsetX = (approxRow % 2 == 0) ? (this->grid[0][0].r_1 * cos(angle)) : 0.f;
+
+	int approxCol = static_cast<int>((x - 100.f - offsetX) / dx);
+	approxCol = std::max(0, std::min(cols - 1, approxCol));
+
+	// refine by checking this tile + neighbors only
+	Tile* bestTile = nullptr;
+
+	std::vector<Tile*> candidates;
+	candidates.push_back(&grid[approxRow][approxCol]);
+
+	for (Tile* n : grid[approxRow][approxCol].neighbors)
+		candidates.push_back(n);
+
+	for (Tile* t : candidates)
+	{
+		if (t->getBoundingBoxMinX() <= x && x <= t->getBoundingBoxMaxX() &&
+			t->getBoundingBoxMinY() <= y && y <= t->getBoundingBoxMaxY()) {
+			// final precise check
+			bool inside = false;
+			size_t numPoints = t->hexagon.getPointCount();
+
+			for (size_t i = 0, j = numPoints - 1; i < numPoints; j = i++) {
+				sf::Vector2f vi = t->getPoint(i);
+				sf::Vector2f vj = t->getPoint(j);
+
+				bool intersect = ((vi.y > y) != (vj.y > y)) &&
+					(x < (vj.x - vi.x) * (y - vi.y) / (vj.y - vi.y) + vi.x);
+
+				if (intersect)
+					inside = !inside;
+			}
+
+			if (inside) {
+				//std::cout << "the guess is: " << t->xRow << "," << t->yRow << "\n";
+				currentDetectedTileByMouse = { t->xRow, t->yRow };
+				return { t->xRow, t->yRow };
+			}
+		}
+
+	}
+	//std::cout << "fail " << "\n";
+	return { -1, -1 };
+}
+
 //----------------------------- Actions --------------------------
 void Grid::placeOrganism(int Row, int Col, Organism& organism) {
 	if ( Row < 0 || Col < 0 || this->rows <= Row || this-> cols <= Col ) {
@@ -136,6 +193,54 @@ void Grid::resize( float sizeFactor ) {
 
 
 // ------------------- Update --------------------
+void Grid::updateHoveredTileBorder() {
+	if (previousDetectedTileByMouse.first != -1 || previousDetectedTileByMouse.second != -1) {
+		int tileIndexToArrayIndex = previousDetectedTileByMouse.first * cols + previousDetectedTileByMouse.second;
+		// convert tileIndexToArrayIndex to gridLines coordinates
+		int lineStart = tileIndexToArrayIndex * 12;
+		for (int i = 0; i < 12; i++) {
+			gridLines[lineStart + i].color = sf::Color::Black;
+		}
+	}
+
+	if (currentDetectedTileByMouse.first != -1 || currentDetectedTileByMouse.second != -1) {
+		//convert tile coordinates to tileArray coordinates
+		int tileIndexToArrayIndex = currentDetectedTileByMouse.first * cols + currentDetectedTileByMouse.second;
+		// convert tileIndexToArrayIndex to gridLines coordinates
+		int lineStart = tileIndexToArrayIndex * 12;
+		for (int i = 0; i < 12; i++) {
+			gridLines[lineStart + i].color = sf::Color::Red;
+		}
+	}
+}
+
+void Grid::updateHoveredTileFill() {
+	if (previousDetectedTileByMouse.first != -1 || previousDetectedTileByMouse.second != -1) {
+		if (!grid[previousDetectedTileByMouse.first][previousDetectedTileByMouse.second].wall) {
+			int tileIndex = previousDetectedTileByMouse.first * cols + previousDetectedTileByMouse.second;
+			int triangleStart = tileIndex * 18;
+
+			for (int i = 0; i < 18; i++) {
+				gridTriangles[triangleStart + i].color = sf::Color::White;
+			}
+		}
+	}
+	if (currentDetectedTileByMouse.first != -1 || currentDetectedTileByMouse.second != -1) {
+		if (!grid[currentDetectedTileByMouse.first][currentDetectedTileByMouse.second].wall) {
+			int tileIndex = currentDetectedTileByMouse.first * cols + currentDetectedTileByMouse.second;
+			int triangleStart = tileIndex * 18;
+
+			for (int i = 0; i < 18; i++) {
+				gridTriangles[triangleStart + i].color = sf::Color::Red;
+			}
+		}
+	}
+}
+
+void Grid::updatePreviousHoveredTile() {
+	previousDetectedTileByMouse = currentDetectedTileByMouse;
+}
+
 void Grid::update() {
 
 }

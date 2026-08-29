@@ -8,6 +8,7 @@
 #include "MapCSVExporter.h"
 #include "Heap.h"
 #include "Organism.h"
+#include "Grid.h"
 
 #include <vector>
 #include <string>
@@ -47,6 +48,8 @@ private:
 	
 	//game objects aka enemies and cell. This is temp
 	sf::RectangleShape enemy;
+
+	Grid grid2;
 
 	Organism playerObject;
 

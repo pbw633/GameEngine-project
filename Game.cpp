@@ -23,6 +23,9 @@ void Game::initVariables() { // like the void setup but for the values
 	grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
 	detectedTileByMouse = { -1,-1 };
 	lastDetectedTileByMouse = { -1,-1 };
+
+	grid2 = Grid(rows,cols);
+	
 	
 }
 void Game::initFonts() {
@@ -579,10 +582,11 @@ void Game::render() {
 	
 	// Renders the grid
 	// This part slows performance greatly when many rows or columns are applied
-	this->window->draw(testGrid,transform.getTransform());
-	this->window->draw(testGridLines,transform.getTransform());
+	//this->window->draw(testGrid,transform.getTransform());
+	//this->window->draw(testGridLines,transform.getTransform());
 	
-	
+	this->window->draw(grid2.getGridTriangles());
+	this->window->draw(grid2.getGridLines());
 	
 	this->renderPlayer();
 	this->renderFrameRate();
