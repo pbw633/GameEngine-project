@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <cassert>
 #include <functional>
@@ -5,7 +6,9 @@
 #include "Organism.h"
 #include "StorageContainer.h"
 #include "MapCSVExporter.h"
-#include "Game.h"
+#include "Grid.h"
+#include "BasicButtonTests.h"
+
 /*
 TODO:
 This is a list of tests that should be done:
@@ -35,30 +38,22 @@ void runTest(const std::string& testName, std::function<void()> testFunc) {
 std::vector<std::vector<Tile>> declareTestGrid(int numberOfTiles) {
 	int cols = 1;
 	int rows = numberOfTiles; 
-	std::vector<std::vector<Tile>> grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j] = Tile(i, j); // declare it exists
-			grid[i][j].initializeTileShape(255, 0, 0); // declare the tile has a shape aka hexagon
-		}
-	}
+	Grid gridClass = Grid(rows, cols);
+	
+	std::vector<std::vector<Tile>> grid = gridClass.getGrid();
+	
 	return(grid);
 }
 
 std::vector<std::vector<Tile>> declareTestGrid(int rows,int cols) {
-	std::vector<std::vector<Tile>> grid = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
+	Grid gridClass = Grid(rows,cols);
+	std::vector<std::vector<Tile>> grid = gridClass.getGrid();
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			grid[i][j] = Tile(i, j); // declare it exists
-			grid[i][j].wall = false;
-			grid[i][j].initializeTileShape(255, 0, 0); // declare the tile has a shape aka hexagon
+			grid[i][j].wall = false; 
 		}
 	}
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			grid[i][j].initializeNeighbors(i, j, grid);
-		}
-	}
+	
 	return(grid);
 }
 
@@ -349,7 +344,11 @@ void storageRemovalTest() {
 //Test organism can calculate the path
 void organismPathCalculationTest() {
 	// Setup
-	std::vector<std::vector<Tile>> grid = declareTestGrid(7, 7);
+	int gridDim = 7;
+	Grid gridSetup = Grid(gridDim, gridDim);
+	gridSetup.setGridWallStatus(false);
+	std::vector<std::vector<Tile>>& grid = gridSetup.getGrid();
+		
 	// creates a wall between the goal and the starting point
 	
 	for (int i = 0; i < 6; i++){ 
@@ -362,7 +361,7 @@ void organismPathCalculationTest() {
 	// Act
 	organism.calculatePath(&grid[0][0]);
 	
-	std::vector<Tile*> path = organism.returnCalculatedPath();
+	std::vector<Tile*> path = organism.getCalculatedPath();
 
 	// Assert
 	if (path[0] != &grid[0][0]) {
@@ -373,11 +372,10 @@ void organismPathCalculationTest() {
 
 void mouseInGridDetectionTest() {
 	// Setup
-	// game and grid
-	Game game;
+	//  grid
+	
 	int gridDim = 10;
-	std::vector<std::vector<Tile>> gridSetup = declareTestGrid(gridDim, gridDim);
-	game.grid = gridSetup;
+	Grid gridSetup = Grid( gridDim, gridDim );
 	
 	std::vector<std::pair<int,int>> expectedResultInGrid;
 	for (int i = 0; i < gridDim; i++) {
@@ -395,7 +393,7 @@ void mouseInGridDetectionTest() {
 	for (int i = 0; i < gridDim; i++) {
 		for (int j = 0; j < gridDim; j++) {
 			estimatedMouseTileLocationInGrid
-				.push_back( game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy)));
+				.push_back( gridSetup.getTileAtPosition(sf::Vector2i(gridSetup.getTile(i,j).midx, gridSetup.getTile(i, j).midy)));
 		}
 	}
 	
@@ -404,19 +402,19 @@ void mouseInGridDetectionTest() {
 		for (int j = 0; j < gridDim; j++) {
 			if (i==0) { // upper grid
 				estimatedMouseTileLocationOutsideGrid
-					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy - game.grid[i][j].r_1*1.5)));
+					.push_back(gridSetup.getTileAtPosition(sf::Vector2i(gridSetup.getTile(i, j).midx, gridSetup.getTile(i, j).midy - gridSetup.getTile(i, j).r_1*1.5)));
 
 			} else if(i == (gridDim)) {// lower grid
 				estimatedMouseTileLocationOutsideGrid
-					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx, game.grid[i][j].midy + game.grid[i][j].r_1*1.5)));
+					.push_back(gridSetup.getTileAtPosition(sf::Vector2i(gridSetup.getTile(i, j).midx, gridSetup.getTile(i, j).midy + gridSetup.getTile(i, j).r_1*1.5)));
 
 			} else if (j == 0 ) { // left grid
 				estimatedMouseTileLocationOutsideGrid
-					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx- game.grid[i][j].r_1*1.5, game.grid[i][j].midy)));
+					.push_back(gridSetup.getTileAtPosition(sf::Vector2i(gridSetup.getTile(i, j).midx- gridSetup.getTile(i, j).r_1*1.5, gridSetup.getTile(i, j).midy)));
 
 			} else if (j == (gridDim)) { // right grid
 				estimatedMouseTileLocationOutsideGrid
-					.push_back(game.mouseToGrid(sf::Vector2i(game.grid[i][j].midx + game.grid[i][j].r_1*1.5, game.grid[i][j].midy)));
+					.push_back(gridSetup.getTileAtPosition(sf::Vector2i(gridSetup.getTile(i, j).midx + gridSetup.getTile(i, j).r_1*1.5, gridSetup.getTile(i, j).midy)));
 
 			}
 		}
@@ -453,6 +451,11 @@ int main() {
 	runTest("Remove items from storage Test", storageRemovalTest);
 	runTest("calculation of path for organism", organismPathCalculationTest);
 	runTest("calculation mouse to grid coordinates", mouseInGridDetectionTest);
+	runTest("Get values from BasicButton", getBasicButtonValuesTest);
+	runTest("Set Width of basicButton", setBasicButtonWidthTest);
+	runTest("Set Height of basicButton", setBasicButtonHeightTest);
+	runTest("Set position of BasicButton", setBasicButtonPositionTest);
+	runTest("Overlapping of buttons", buttonOverlapsButtonTest);
 	
 	// Number of failed tests
 	if (failedTests > 0) {

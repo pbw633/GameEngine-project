@@ -27,12 +27,14 @@ void BasicButton::setButtonSprite(sf::Sprite buttonSprite) {
 	this->buttonSprite = buttonSprite;
 }
 
-void BasicButton::setButtonLength(float length) {
-	this->buttonLength = length;
+void BasicButton::setButtonWidth(float Width) {
+	this->basicButtonShape.setSize(sf::Vector2f(Width, this->getButtonHeight()));
+	
 }
 
 void BasicButton::setButtonHeight(float height) {
-	this->buttonHeight = height;
+	this->basicButtonShape.setSize(sf::Vector2f(this->getButtonWidth(), height));
+	
 }
 
 void BasicButton::setButtonPosition(float x, float y) {
@@ -44,12 +46,16 @@ sf::Vector2f BasicButton::getButtonPosition() {
 	return { this->basicButtonShape.getPosition().x, this->basicButtonShape.getPosition().y };
 }
 
-float BasicButton::getButtonLength() {
-	return this->buttonLength;
+float BasicButton::getButtonWidth() {
+	return this->basicButtonShape.getSize().x;
 }
 
 float BasicButton::getButtonHeight() {
-	return this->buttonHeight;
+	return this->basicButtonShape.getSize().y;
+}
+
+sf::RectangleShape& BasicButton::getButtonShape() {
+	return this->basicButtonShape;
 }
 
 sf::Texture BasicButton::getButtonTexture() {
@@ -127,5 +133,5 @@ bool BasicButton::pointInsideSprite(sf::Vector2i point) {
 }
 
 void BasicButton::resizeButton(float sizeFactor) {
-	this->basicButtonShape.setSize(sf::Vector2f(this->buttonLength * sizeFactor, this->buttonHeight * sizeFactor));
+	this->basicButtonShape.setSize(sf::Vector2f(this->getButtonWidth() * sizeFactor, this->getButtonHeight() * sizeFactor));
 }

@@ -26,6 +26,7 @@ public:
 	// ----------------- Setters ----------------
 	
 	void setGridLocation(sf::Vector2f pos);
+	void setGridWallStatus( bool wallStatus );
 
 	// ----------------- Getters ----------------
 	int getRowCount();

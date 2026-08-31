@@ -47,6 +47,14 @@ void Grid::setGridLocation(sf::Vector2f pos) {
 	this->transform.setPosition(pos);
 }
 
+void Grid::setGridWallStatus(bool wallStatus) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			grid[i][j].wall = wallStatus;
+		}
+	}
+}
+
 //--------------------------- Getters ----------------------------
 int Grid::getRowCount() {
 	return grid.size();

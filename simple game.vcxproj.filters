@@ -109,6 +109,15 @@
     <Filter Include="Source Files\GridObjects\Grid">
       <UniqueIdentifier>{4405def5-f633-4024-93ff-96f20bda90b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tests\ButtonTests">
+      <UniqueIdentifier>{1bbe3df3-0d9a-44eb-a4f7-196d6c44883f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests">
+      <UniqueIdentifier>{e7f244fb-f5c8-42eb-8585-3e5de3b37beb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\BasicButtonTests">
+      <UniqueIdentifier>{495a492c-ad91-4ca4-806c-35cb3f963dd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -159,6 +168,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\GridObjects\Grid</Filter>
     </ClCompile>
+    <ClCompile Include="BasicButtonTests.cpp">
+      <Filter>Source Files\Tests\ButtonTests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windowMenu.h">
@@ -202,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Header Files\GridObjects\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicButtonTests.h">
+      <Filter>Header Files\Tests\BasicButtonTests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

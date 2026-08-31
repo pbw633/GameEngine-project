@@ -11,6 +11,16 @@
 
 class BasicButton : BaseButton {
 public:
+	BasicButton(){}
+
+	BasicButton( float x, float y, float width, float height ) {
+		initButtonShape( x, y, width, height);
+	}
+
+	BasicButton(sf::RectangleShape buttonShape) {
+		initButtonShape( buttonShape );
+	}
+
 
 	// ------------------ variables ------------------
 	bool buttonPressedBool = false;
@@ -29,14 +39,16 @@ public:
 
 	void setButtonPosition(float x, float y);
 
-	void setButtonLength(float length);
+	void setButtonWidth(float Width);
 	void setButtonHeight(float height);
 
 
 	// ------------------ Getters ------------------
-	float getButtonLength();
+	float getButtonWidth();
 	float getButtonHeight();
 	sf::Vector2f getButtonPosition();
+	sf::RectangleShape& getButtonShape();
+
 	sf::Texture getButtonTexture();
 	sf::Sprite getButtonSprite();
 
@@ -57,8 +69,7 @@ private:
 	sf::Text buttonText;
 	sf::Texture buttonTexture;
 	sf::Sprite buttonSprite;
-	float buttonLength;
-	float buttonHeight;
+
 
 	
 };
