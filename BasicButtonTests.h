@@ -12,3 +12,7 @@ void setBasicButtonHeightTest();
 void setBasicButtonPositionTest();
 
 void buttonOverlapsButtonTest();
+
+void resizeBasicButtonTest();
+
+void basicButtonInsideMenuTest();

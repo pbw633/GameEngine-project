@@ -1,4 +1,8 @@
 #include "BasicButton.h"
+/*
+	- 
+*/
+
 
 // ------------------ Initialization ------------------	
 void BasicButton::initButtonShape(float x, float y, float width, float height) {
@@ -80,25 +84,19 @@ bool BasicButton::buttonOverlapsButton(BasicButton& otherButton) {
 //
 
 bool BasicButton::buttonInsideMenu(sf::RectangleShape shape) {
-	if (shape.getPoint(0).x < this->basicButtonShape.getPoint(0).x &&
-		shape.getPoint(0).y < this->basicButtonShape.getPoint(0).y &&
-		shape.getPoint(2).x > this->basicButtonShape.getPoint(2).x &&
-		shape.getPoint(2).y > this->basicButtonShape.getPoint(2).y) {
-		
-		return true;
-	} else {
-		return false;
-	}
+	sf::FloatRect buttonBounds = this->basicButtonShape.getGlobalBounds();
+	sf::FloatRect menuBounds = shape.getGlobalBounds();
+
+	return menuBounds.left <= buttonBounds.left &&
+		menuBounds.top <= buttonBounds.top &&
+		menuBounds.left + menuBounds.width >= buttonBounds.left + buttonBounds.width &&
+		menuBounds.top + menuBounds.height >= buttonBounds.top + buttonBounds.height;
 }
 
 bool BasicButton::containsPoint(sf::Vector2i point) {
-	if (this->basicButtonShape.getPoint(0).x < point.x &&
-		this->basicButtonShape.getPoint(0).y < point.y && 
-		this->basicButtonShape.getPoint(2).x > point.x &&
-		this->basicButtonShape.getPoint(2).y > point.x) {
-		return true;
-	}
-	return false;
+	return this->basicButtonShape.getGlobalBounds().contains(
+					static_cast<float>(point.x),
+					static_cast<float>(point.y) );
 }
 
 

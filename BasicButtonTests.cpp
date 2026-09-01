@@ -161,3 +161,62 @@ void buttonOverlapsButtonTest() {
 
 }
 
+void resizeBasicButtonTest() {
+	// Setup
+	int width = 10;
+	int height = 100;
+	float resizeFactor = 1.5;
+	BasicButton basicButton = BasicButton(0, 0, width, height);
+
+	
+	float expectedWidth = width*resizeFactor;
+	float expectedHeight = height * resizeFactor;
+
+
+	// Act
+	basicButton.resizeButton(resizeFactor);
+	float returnedWidth = basicButton.getButtonWidth();
+	float returnedHeight = basicButton.getButtonHeight();
+
+	// Assert
+	if (expectedWidth != returnedWidth) {
+		throw std::runtime_error("Button width is not resized correctly");
+	}
+	if (expectedHeight != returnedHeight) {
+		throw std::runtime_error("Button height is not resized correctly");
+	}
+	
+}
+
+void basicButtonInsideMenuTest() {
+	// Setup
+	// button
+	int width = 10;
+	int height = 150;
+	BasicButton basicButton = BasicButton(0, 0, width, height);
+	
+	// Menu
+	int menuWidth = 200;
+	int menuHeight = 200;
+	sf::RectangleShape menuShape;
+	menuShape.setSize(sf::Vector2f(menuWidth, menuHeight));
+	menuShape.setPosition(0, 0);
+
+	bool expectedResultBeforeMovement = true;
+	bool expectedResultAfterMovement = false;
+
+	// Act
+	bool returnedValueBeforeMovement = basicButton.buttonInsideMenu(menuShape);
+	basicButton.setButtonPosition(0,100);
+	bool returnedValueAfterMovement = basicButton.buttonInsideMenu(menuShape);
+
+
+	// Assert
+	if (expectedResultBeforeMovement != returnedValueBeforeMovement) {
+		throw std::runtime_error("BasicButton should be inside the menuShape");
+	}
+	if (expectedResultAfterMovement != returnedValueAfterMovement) {
+		throw std::runtime_error("BasicButton should be partly outside the menuShape");
+	}
+
+}

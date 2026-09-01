@@ -449,13 +449,15 @@ int main() {
 	runTest("Delete minimum in heap Test", delMinTestOneElement);
 	runTest("Add item to storage Test", storageAddTest);
 	runTest("Remove items from storage Test", storageRemovalTest);
-	runTest("calculation of path for organism", organismPathCalculationTest);
-	runTest("calculation mouse to grid coordinates", mouseInGridDetectionTest);
-	runTest("Get values from BasicButton", getBasicButtonValuesTest);
-	runTest("Set Width of basicButton", setBasicButtonWidthTest);
-	runTest("Set Height of basicButton", setBasicButtonHeightTest);
-	runTest("Set position of BasicButton", setBasicButtonPositionTest);
-	runTest("Overlapping of buttons", buttonOverlapsButtonTest);
+	runTest("calculation of path for organism Test", organismPathCalculationTest);
+	runTest("calculation mouse to grid coordinates Test", mouseInGridDetectionTest);
+	runTest("Get values from BasicButton Test", getBasicButtonValuesTest);
+	runTest("Set Width of basicButton Test", setBasicButtonWidthTest);
+	runTest("Set Height of basicButton Test", setBasicButtonHeightTest);
+	runTest("Set position of BasicButton Test", setBasicButtonPositionTest);
+	runTest("Overlapping of Basicbuttons Test", buttonOverlapsButtonTest);
+	runTest("Resize BasicButton Test", resizeBasicButtonTest);
+	runTest("BasicButton inside RectangleShape Test", basicButtonInsideMenuTest);
 	
 	// Number of failed tests
 	if (failedTests > 0) {
