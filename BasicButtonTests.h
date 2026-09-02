@@ -16,3 +16,7 @@ void buttonOverlapsButtonTest();
 void resizeBasicButtonTest();
 
 void basicButtonInsideMenuTest();
+
+void basicButtonGetPointTest();
+
+void basicButtonContainsPointTest();

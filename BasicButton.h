@@ -48,6 +48,7 @@ public:
 	float getButtonHeight();
 	sf::Vector2f getButtonPosition();
 	sf::RectangleShape& getButtonShape();
+	sf::Vector2f getPoint(int index);
 
 	sf::Texture getButtonTexture();
 	sf::Sprite getButtonSprite();

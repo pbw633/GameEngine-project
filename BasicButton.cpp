@@ -70,6 +70,22 @@ sf::Sprite BasicButton::getButtonSprite() {
 	return this->buttonSprite;
 }
 
+sf::Vector2f BasicButton::getPoint(int index) {
+	if (index < 0 || index >= 4	) {
+		throw std::runtime_error("BasicButton: Index out of bound");
+	}
+	switch (index) {
+		case 0:
+			return this->basicButtonShape.getPoint(0)+this->basicButtonShape.getPosition();
+		case 1:
+			return this->basicButtonShape.getPoint(1)+this->basicButtonShape.getPosition();
+		case 2:
+			return this->basicButtonShape.getPoint(2)+this->basicButtonShape.getPosition();
+		case 3:
+			return this->basicButtonShape.getPoint(3)+this->basicButtonShape.getPosition();
+	}
+}
+
 // ------------------ Actions ------------------
 bool BasicButton::buttonOverlapsButton(BasicButton& otherButton) {
 	if (this->basicButtonShape.getGlobalBounds().intersects(otherButton.basicButtonShape.getGlobalBounds())) {
@@ -94,10 +110,14 @@ bool BasicButton::buttonInsideMenu(sf::RectangleShape shape) {
 }
 
 bool BasicButton::containsPoint(sf::Vector2i point) {
-	return this->basicButtonShape.getGlobalBounds().contains(
-					static_cast<float>(point.x),
-					static_cast<float>(point.y) );
+	if (this->getPoint(0).x <= point.x && point.x <= this->getPoint(1).x && 
+		this->getPoint(0).y <= point.y && point.y <= this->getPoint(3).y) {
+
+		return true;
+	}
+	return false;
 }
+
 
 
 bool BasicButton::pointInsideSprite(sf::Vector2i point) {

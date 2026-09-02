@@ -220,3 +220,83 @@ void basicButtonInsideMenuTest() {
 	}
 
 }
+
+void basicButtonGetPointTest() {
+	// Setup
+	BasicButton basicButton = BasicButton(20, 20, 100, 100);
+	sf::Vector2f expectedPoint0(20, 20);
+	sf::Vector2f expectedPoint1(120, 20);
+	sf::Vector2f expectedPoint2(120, 120);
+	sf::Vector2f expectedPoint3(20, 120);	
+
+	// Act
+	sf::Vector2f returnedPoint0 = basicButton.getPoint(0);
+	sf::Vector2f returnedPoint1 = basicButton.getPoint(1);
+	sf::Vector2f returnedPoint2 = basicButton.getPoint(2);
+	sf::Vector2f returnedPoint3 = basicButton.getPoint(3);
+
+	// Assert
+	if (expectedPoint0.x != returnedPoint0.x || expectedPoint0.y != returnedPoint0.y) {
+		throw std::runtime_error("BasicButton: Point 0 is not at the expected position");
+	}
+	if (expectedPoint1.x != returnedPoint1.x || expectedPoint1.y != returnedPoint1.y) {
+		throw std::runtime_error("BasicButton: Point 1 is not at the expected position");
+	}
+	if (expectedPoint2.x != returnedPoint2.x || expectedPoint2.y != returnedPoint2.y) {
+		throw std::runtime_error("BasicButton: Point 2 is not at the expected position");
+	}
+	if (expectedPoint3.x != returnedPoint3.x || expectedPoint3.y != returnedPoint3.y) {
+		throw std::runtime_error("BasicButton: Point 3 is not at the expected position");
+	}
+
+}
+
+void basicButtonContainsPointTest() {
+	// Setup
+	int xValue = 20;
+	int yValue = 20;
+	BasicButton basicButton = BasicButton(xValue, yValue, 100, 100);
+	int numberOfChecksAlongX = 10;
+	int numberOfChecksAlongY = 10;
+	float widthStep = basicButton.getButtonWidth() / numberOfChecksAlongX;
+	float heightStep = basicButton.getButtonHeight() / numberOfChecksAlongY;
+
+	std::vector<bool> expectedResultsInside;
+	for (int i = 0; i < numberOfChecksAlongX * numberOfChecksAlongY; i++){
+		expectedResultsInside.push_back(true);
+	}
+
+	std::vector<sf::Vector2i> pointsToCheckOutside = {
+		sf::Vector2i(xValue - 1, yValue - 1), // top-left
+		sf::Vector2i(xValue + basicButton.getButtonWidth() + 1, yValue - 1), // top-right
+		sf::Vector2i(xValue - 1, yValue + basicButton.getButtonHeight() + 1), // bottom-left
+		sf::Vector2i(xValue + basicButton.getButtonWidth() + 1, yValue + basicButton.getButtonHeight() + 1) // bottom-right
+	};
+
+	// Act
+	std::vector<bool> returnedResultsInside;	
+	returnedResultsInside.reserve(numberOfChecksAlongX * numberOfChecksAlongY);
+	for (int i = 0; i < numberOfChecksAlongX; ++i) {
+		for (int j = 0; j < numberOfChecksAlongY; ++j) {
+			sf::Vector2i point(xValue + i * widthStep, yValue + j * heightStep);
+			returnedResultsInside.push_back(basicButton.containsPoint(point));
+		}	
+	}
+	std::vector<bool> returnedResultsoutside;
+	for (int i = 0; i < pointsToCheckOutside.size(); i++) {
+		returnedResultsoutside.push_back(basicButton.containsPoint(pointsToCheckOutside[i]	));
+	}
+
+	// Assert
+	for (int i = 0; i < numberOfChecksAlongX * numberOfChecksAlongY; i++) {
+		if (expectedResultsInside[i] != returnedResultsInside[i]) {
+			throw std::runtime_error("BasicButton: containsPoint inside shape should return true");
+		}
+	}
+
+	for (int i = 0; i < pointsToCheckOutside.size(); i++) {
+		if ( returnedResultsoutside[i]) {	
+			throw std::runtime_error("BasicButton: containsPoint outside of shape should return false");
+		}	
+	}
+}

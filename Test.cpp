@@ -458,6 +458,8 @@ int main() {
 	runTest("Overlapping of Basicbuttons Test", buttonOverlapsButtonTest);
 	runTest("Resize BasicButton Test", resizeBasicButtonTest);
 	runTest("BasicButton inside RectangleShape Test", basicButtonInsideMenuTest);
+	runTest("BasicButton Get Point Test", basicButtonGetPointTest);
+	runTest("BasicButton Contains Point Test", basicButtonContainsPointTest);
 	
 	// Number of failed tests
 	if (failedTests > 0) {
