@@ -21,13 +21,15 @@ void PolygonButton::addPoint(sf::Vector2f point) {
 
 // ------------------ Setters ------------------
 void PolygonButton::setCenter(sf::Vector2f position) {
+	// Need to be reworked 
+	// This should move the center of the object and the rest with it
 	this->buttonShape.setPosition(position);
 	center = position;
 }
 
 // ------------------ Getters ------------------
 sf::Vector2f PolygonButton::getPoint(int index) {
-	if (index < 0 || index >= points.size()) {
+	if (index < 0 || index >= this->buttonShape.getPointCount()) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
 	return this->buttonShape.getPoint(index);
@@ -37,6 +39,9 @@ sf::Vector2f PolygonButton::getCenter() {
 	return this->center;
 }
 
+int PolygonButton::getPointCount() {
+	return this->buttonShape.getPointCount();
+}
 
 
 
@@ -92,7 +97,7 @@ void PolygonButton::update() {
 
 
 bool PolygonButton::containsPoint(sf::Vector2i point) {
-	if (this->points.size() < 3) {
+	if (this->buttonShape.getPointCount() < 3) {
 		throw std::runtime_error("PolygonButton: to few points");
 	}
 	// first check if the point is within the bounding box of the polygon
@@ -101,7 +106,7 @@ bool PolygonButton::containsPoint(sf::Vector2i point) {
 		return false;
 	}
 
-	int n = this->points.size();
+	int n = this->buttonShape.getPointCount();
 	int intersectionCount = 0;
 
 	for (int i = 0; i < n; i++) {

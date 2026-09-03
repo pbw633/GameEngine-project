@@ -118,13 +118,19 @@
     <Filter Include="Header Files\Tests\BasicButtonTests">
       <UniqueIdentifier>{495a492c-ad91-4ca4-806c-35cb3f963dd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tests\PolygonButtonTests">
+      <UniqueIdentifier>{de10a7f9-d350-4224-9a6f-71b851059e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\ButtonTests\PolygonButtonTests">
+      <UniqueIdentifier>{34ba4bf7-bc58-43cc-9103-3c3555f5e8ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\ButtonTests\BasicButtonTests">
+      <UniqueIdentifier>{ff2996ec-9517-42af-9490-05f030456cc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuButton.cpp">
-      <Filter>Source Files\Menus</Filter>
     </ClCompile>
     <ClCompile Include="Organism.cpp">
       <Filter>Source Files\Containers</Filter>
@@ -168,8 +174,11 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\GridObjects\Grid</Filter>
     </ClCompile>
+    <ClCompile Include="PolygonButtonTests.cpp">
+      <Filter>Source Files\Tests\ButtonTests\PolygonButtonTests</Filter>
+    </ClCompile>
     <ClCompile Include="BasicButtonTests.cpp">
-      <Filter>Source Files\Tests\ButtonTests</Filter>
+      <Filter>Source Files\Tests\ButtonTests\BasicButtonTests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="BasicButtonTests.h">
       <Filter>Header Files\Tests\BasicButtonTests</Filter>
+    </ClInclude>
+    <ClInclude Include="PolygonButtonTests.h">
+      <Filter>Header Files\Tests\PolygonButtonTests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -225,9 +225,9 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </ClCompile>
     <ClCompile Include="Heap.cpp" />
     <ClCompile Include="MapCSVExporter.cpp" />
-    <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="Organism.cpp" />
     <ClCompile Include="PolygonButton.cpp" />
+    <ClCompile Include="PolygonButtonTests.cpp" />
     <ClCompile Include="StorageContainer.cpp" />
     <ClCompile Include="Test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug-Test|Win32'">false</ExcludedFromBuild>
@@ -244,6 +244,7 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="commonFunctions.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="PolygonButton.h" />
+    <ClInclude Include="PolygonButtonTests.h" />
     <ClInclude Include="windowMenu.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="Item.h" />

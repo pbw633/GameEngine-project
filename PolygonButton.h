@@ -26,6 +26,7 @@ public:
 	// ------------------ Getters ------------------
 	sf::Vector2f getPoint(int index);
 	sf::Vector2f getCenter();
+	int getPointCount();
 	float getMaxDistanceFromCenter();
 
 	// ------------------ Actions ------------------
@@ -37,7 +38,7 @@ public:
 private:
 	// ------------------ variables ------------------
 	sf::ConvexShape buttonShape;
-	std::vector<sf::Vector2f> points;
+	//std::vector<sf::Vector2f> points;
 	sf::Vector2f center;
 	float maxDistanceFromCenter = 0.f;
 	

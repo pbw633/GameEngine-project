@@ -8,6 +8,7 @@
 #include "MapCSVExporter.h"
 #include "Grid.h"
 #include "BasicButtonTests.h"
+#include "PolygonButtonTests.h"
 
 /*
 TODO:
@@ -451,6 +452,7 @@ int main() {
 	runTest("Remove items from storage Test", storageRemovalTest);
 	runTest("calculation of path for organism Test", organismPathCalculationTest);
 	runTest("calculation mouse to grid coordinates Test", mouseInGridDetectionTest);
+	// BasicButton
 	runTest("Get values from BasicButton Test", getBasicButtonValuesTest);
 	runTest("Set Width of basicButton Test", setBasicButtonWidthTest);
 	runTest("Set Height of basicButton Test", setBasicButtonHeightTest);
@@ -460,7 +462,10 @@ int main() {
 	runTest("BasicButton inside RectangleShape Test", basicButtonInsideMenuTest);
 	runTest("BasicButton Get Point Test", basicButtonGetPointTest);
 	runTest("BasicButton Contains Point Test", basicButtonContainsPointTest);
-	
+	// PolygonButton
+	runTest("Initialize PolygonButton Test", initPolygonButtonTest);
+	runTest("Add Point to PolygonButton Test", addPointToPolygonTest);
+
 	// Number of failed tests
 	if (failedTests > 0) {
 		std::cerr << "Amount of failed tests: " << failedTests << "\n";
