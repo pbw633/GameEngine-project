@@ -23,6 +23,13 @@ void PolygonButton::addPoint(sf::Vector2f point) {
 void PolygonButton::setCenter(sf::Vector2f position) {
 	// Need to be reworked 
 	// This should move the center of the object and the rest with it
+	//this->buttonShape.setOrigin(this->center);
+	for (int i = 0; i < this->buttonShape.getPointCount(); i++) {
+		sf::Vector2f point = this->buttonShape.getPoint(i);
+		point = point - this->center + position;
+		this->buttonShape.setPoint(i, point);
+	}
+
 	this->buttonShape.setPosition(position);
 	center = position;
 }
@@ -32,7 +39,7 @@ sf::Vector2f PolygonButton::getPoint(int index) {
 	if (index < 0 || index >= this->buttonShape.getPointCount()) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
-	return this->buttonShape.getPoint(index);
+	return this->buttonShape.getPoint(index) + this->buttonShape.getOrigin();
 }
 
 sf::Vector2f PolygonButton::getCenter() {
@@ -87,7 +94,7 @@ void PolygonButton::resize(float sizeFactor) {
 		point = (point - center) * sizeFactor + center;
 		this->buttonShape.setPoint(i, point);
 	}
-	
+	this->calculateCenter();
 }
 
 void PolygonButton::update() {

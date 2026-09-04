@@ -7,3 +7,5 @@
 void initPolygonButtonTest();
 
 void addPointToPolygonTest();
+
+void setCenterOfPolygonButtonTest();

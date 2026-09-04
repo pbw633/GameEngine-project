@@ -65,3 +65,27 @@ void addPointToPolygonTest() {
 	}
 
 }
+
+void setCenterOfPolygonButtonTest() {
+	// Setup
+	std::vector<sf::Vector2f> points = { sf::Vector2f(0,0), sf::Vector2f(12,0), sf::Vector2f(0,12), sf::Vector2f(12,12) };
+	PolygonButton button;
+	button.initButtonShape(points);
+	
+	sf::Vector2f newCenter = sf::Vector2f(7, 7);
+	std::vector<sf::Vector2f> expectedPoints = { sf::Vector2f(1,1), sf::Vector2f(13,1), sf::Vector2f(1,13), sf::Vector2f(13,13) };
+
+	// Act
+	button.setCenter(newCenter);
+	std::vector<sf::Vector2f> returnedPoints;
+	for (int i = 0; i < button.getPointCount(); i++) {
+		returnedPoints.push_back(button.getPoint(i));
+	}
+
+	// Assert
+	for (int i = 0; i < expectedPoints.size(); i++) {
+		if (returnedPoints[i].x != expectedPoints[i].x || returnedPoints[i].y != expectedPoints[i].y) {
+			throw std::runtime_error("PolygonButtonTest: Point did not match expected result");
+		}
+	}
+}

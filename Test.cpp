@@ -465,6 +465,7 @@ int main() {
 	// PolygonButton
 	runTest("Initialize PolygonButton Test", initPolygonButtonTest);
 	runTest("Add Point to PolygonButton Test", addPointToPolygonTest);
+	runTest("Set Center of PolygonButton Test", setCenterOfPolygonButtonTest);
 
 	// Number of failed tests
 	if (failedTests > 0) {
