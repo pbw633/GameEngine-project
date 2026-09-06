@@ -89,3 +89,90 @@ void setCenterOfPolygonButtonTest() {
 		}
 	}
 }
+
+void changePointAtIndexOfPolygonButtonTest() {
+	// Setup
+	std::vector<sf::Vector2f> points = { sf::Vector2f(0,0), sf::Vector2f(12,0), sf::Vector2f(0,12) };
+	PolygonButton button;
+	button.initButtonShape(points);
+	sf::Vector2f returnedCenter = button.getCenter();
+	
+	sf::Vector2f newPoint = sf::Vector2f(2, 2);
+	
+	std::vector<sf::Vector2f> returnedPoints;
+	
+	std::vector<sf::Vector2f> expectedPoints = { sf::Vector2f(0,0), newPoint , sf::Vector2f(0,12) };
+	
+	// Act
+	button.changePointAtIndex( newPoint, 1);
+	sf::Vector2f newCenter = button.getCenter();
+	for ( int i = 0; i < points.size(); i++ ) {
+		returnedPoints.push_back(button.getPoint(i) );
+	}
+
+	// Assert
+	if (returnedCenter.x == newCenter.x && returnedCenter.y == newCenter.y) {
+		throw std::runtime_error("PolygonButtonTest: Center did not update after changing a point");
+	}
+
+	for (int i = 0; i < button.getPointCount(); i++) {
+		if (expectedPoints[i].x != returnedPoints[i].x || expectedPoints[i].y != returnedPoints[i].y) {
+			throw std::runtime_error("PolygonButtonTest: Incorrect change of given point");
+		}
+	}
+
+}
+
+void removePointInPolygonButtonTest() {
+	// Setup
+	std::vector<sf::Vector2f> points = { sf::Vector2f(0,0), sf::Vector2f(12,0), sf::Vector2f(0,12),sf::Vector2f(12,12)};
+	PolygonButton button;
+	button.initButtonShape(points);
+
+	std::vector<sf::Vector2f> expectedPoints = { sf::Vector2f(0,0), sf::Vector2f(12,0),sf::Vector2f(12,12) };
+	
+	// Act
+	button.removePoint(2);
+	std::vector<sf::Vector2f> returnedPoints = button.getPoints();
+	
+	// Assert
+	for ( int i = 0; i < expectedPoints.size(); i ++ ) {
+		if (expectedPoints[i].x != returnedPoints[i].x || expectedPoints[i].y != returnedPoints[i].y) {
+			throw std::runtime_error("PolygonButtonTest: The correct point was not removed");
+		}
+	}
+
+}
+
+void resizePolygonButtonTest() {
+	// Setup
+	std::vector<sf::Vector2f> points = { sf::Vector2f(0,0), sf::Vector2f(12,0), sf::Vector2f(0,12),sf::Vector2f(12,12) };
+	PolygonButton button;
+	button.initButtonShape(points);
+
+	float resizeFactor = 0.5;
+	std::vector<sf::Vector2f> expectedPoints = { sf::Vector2f(3,3), sf::Vector2f(9,3), sf::Vector2f(3,9),sf::Vector2f(9,9) };
+
+	sf::Vector2f expectedCenter = button.getCenter();
+
+
+	// Act
+	button.resize(resizeFactor);
+	std::vector<sf::Vector2f> returnedPoints = button.getPoints();
+	
+	sf::Vector2f returnedCenter = button.getCenter();
+
+
+	// Assert
+	for (int i = 0; i < expectedPoints.size(); i++) {
+		if (expectedPoints[i].x != returnedPoints[i].x || expectedPoints[i].y != returnedPoints[i].y) {
+			throw std::runtime_error("PolygonButtonTest: Points was not resized correctly");
+		}
+		
+	}
+
+	if (expectedCenter.x != returnedCenter.x || expectedCenter.y != returnedCenter.y) {
+		throw std::runtime_error("PolygonButtonTest: Center was not recalculated correctly after resizing");
+	}
+
+}

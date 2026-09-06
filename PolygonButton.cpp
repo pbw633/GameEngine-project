@@ -42,6 +42,14 @@ sf::Vector2f PolygonButton::getPoint(int index) {
 	return this->buttonShape.getPoint(index) + this->buttonShape.getOrigin();
 }
 
+std::vector<sf::Vector2f> PolygonButton::getPoints() {
+	std::vector<sf::Vector2f> points;
+	for (int i = 0; i < this->getPointCount(); i++) {
+		points.push_back(this->getPoint(i));
+	}
+	return points;
+}
+
 sf::Vector2f PolygonButton::getCenter() {
 	return this->center;
 }
@@ -60,7 +68,7 @@ void PolygonButton::changePointAtIndex(sf::Vector2f point, int index) {
 		throw std::runtime_error("PolygonButton: index out of bounds");
 	}
 	this->buttonShape.setPoint(index, point);
-	this->calculateCenter();
+	this->update();
 }
 
 void PolygonButton::removePoint(int index) {
@@ -88,13 +96,16 @@ void PolygonButton::resize(float sizeFactor) {
 	if (sizeFactor <= 0) {
 		throw std::runtime_error("PolygonButton: sizeFactor must be strictly larger than 0");
 	}
+	sf::Vector2f oldCenter = this->getCenter();
 
 	for( int i = 0; i < this->buttonShape.getPointCount(); i++ ){
 		sf::Vector2f point = this->buttonShape.getPoint(i);
 		point = (point - center) * sizeFactor + center;
 		this->buttonShape.setPoint(i, point);
 	}
-	this->calculateCenter();
+	this->setCenter(oldCenter);
+	this->calculateMaxDistanceFromCenter();
+	//this->update();
 }
 
 void PolygonButton::update() {

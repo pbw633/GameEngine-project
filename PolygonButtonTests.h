@@ -9,3 +9,10 @@ void initPolygonButtonTest();
 void addPointToPolygonTest();
 
 void setCenterOfPolygonButtonTest();
+
+void changePointAtIndexOfPolygonButtonTest();
+
+void removePointInPolygonButtonTest();
+
+void resizePolygonButtonTest();
+

@@ -25,6 +25,7 @@ public:
 	
 	// ------------------ Getters ------------------
 	sf::Vector2f getPoint(int index);
+	std::vector<sf::Vector2f> getPoints();
 	sf::Vector2f getCenter();
 	int getPointCount();
 	float getMaxDistanceFromCenter();
