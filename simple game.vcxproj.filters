@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Menus">
-      <UniqueIdentifier>{54a88a35-f2c2-4901-b571-150dd4f9ace1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus">
-      <UniqueIdentifier>{d6683d60-5285-46e1-adb1-291fa9c05f6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Containers">
       <UniqueIdentifier>{ff0d552a-47a7-40d4-8376-764c1f1f32e1}</UniqueIdentifier>
     </Filter>
@@ -61,12 +55,6 @@
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{9a19e792-b321-4838-97bf-18a0c1bf0211}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Menus\BaseMenu">
-      <UniqueIdentifier>{2ff4c745-66ab-44ce-abd4-66edce535cbd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\BaseMenu">
-      <UniqueIdentifier>{76444b04-732f-440a-b983-f892937e6faf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{a0131e09-1572-4c55-8504-20d46d0430cc}</UniqueIdentifier>
     </Filter>
@@ -78,30 +66,6 @@
     </Filter>
     <Filter Include="Source Files\Tests\StorageContainerTests">
       <UniqueIdentifier>{93edc6ce-fbdd-4c94-890f-3ac22ea509e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Menus\Buttons">
-      <UniqueIdentifier>{2b409101-b689-4333-9b80-2ec904b52b77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\Buttons">
-      <UniqueIdentifier>{10cf8de9-1441-47ef-b80c-f0060e696970}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Menus\Buttons\BaseButton">
-      <UniqueIdentifier>{77804a12-132c-4cb7-a823-7e8ab9450941}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\Buttons\BaseButton">
-      <UniqueIdentifier>{be36a2b6-197b-4714-81bd-a893697ff4cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Menus\Buttons\BasicButton">
-      <UniqueIdentifier>{f1a06516-eef1-4004-9c35-6fe324ea8d59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Menus\Buttons\PolygonButton">
-      <UniqueIdentifier>{16166fd4-86ce-40f1-a99e-06f24de98d4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\Buttons\BasicButton">
-      <UniqueIdentifier>{fd6117ae-1d48-437a-a4ff-4726c4189c20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus\Buttons\PolygonButton">
-      <UniqueIdentifier>{d5f1bf1c-150d-4851-b163-64f572adaddc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GridObjects\Grid">
       <UniqueIdentifier>{3028326b-6a54-40a5-8bb0-14a48bb3c7e5}</UniqueIdentifier>
@@ -115,17 +79,80 @@
     <Filter Include="Header Files\Tests">
       <UniqueIdentifier>{e7f244fb-f5c8-42eb-8585-3e5de3b37beb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tests\BasicButtonTests">
-      <UniqueIdentifier>{495a492c-ad91-4ca4-806c-35cb3f963dd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Tests\PolygonButtonTests">
-      <UniqueIdentifier>{de10a7f9-d350-4224-9a6f-71b851059e46}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tests\ButtonTests\PolygonButtonTests">
       <UniqueIdentifier>{34ba4bf7-bc58-43cc-9103-3c3555f5e8ec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Tests\ButtonTests\BasicButtonTests">
       <UniqueIdentifier>{ff2996ec-9517-42af-9490-05f030456cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects">
+      <UniqueIdentifier>{54a88a35-f2c2-4901-b571-150dd4f9ace1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Menus">
+      <UniqueIdentifier>{2ff4c745-66ab-44ce-abd4-66edce535cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Buttons">
+      <UniqueIdentifier>{2b409101-b689-4333-9b80-2ec904b52b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Buttons\BaseButton">
+      <UniqueIdentifier>{77804a12-132c-4cb7-a823-7e8ab9450941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Buttons\BasicButton">
+      <UniqueIdentifier>{f1a06516-eef1-4004-9c35-6fe324ea8d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Buttons\PolygonButton">
+      <UniqueIdentifier>{16166fd4-86ce-40f1-a99e-06f24de98d4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects">
+      <UniqueIdentifier>{d6683d60-5285-46e1-adb1-291fa9c05f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Buttons">
+      <UniqueIdentifier>{10cf8de9-1441-47ef-b80c-f0060e696970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Buttons\BaseButton">
+      <UniqueIdentifier>{be36a2b6-197b-4714-81bd-a893697ff4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Buttons\BasicButton">
+      <UniqueIdentifier>{fd6117ae-1d48-437a-a4ff-4726c4189c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Buttons\PolygonButton">
+      <UniqueIdentifier>{d5f1bf1c-150d-4851-b163-64f572adaddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Menus\BaseMenu">
+      <UniqueIdentifier>{09b83e7e-23fc-4559-b150-8fe9ee4f8f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\Menus\BasicMenu">
+      <UniqueIdentifier>{9367010d-b3c9-4320-a98b-669139aa173e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Menues">
+      <UniqueIdentifier>{30ffdd3e-1a95-45cb-98fb-6dfa89c4ece5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Menues\BaseMenu">
+      <UniqueIdentifier>{76444b04-732f-440a-b983-f892937e6faf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\Menues\BasicMenu">
+      <UniqueIdentifier>{e5df6a44-e1af-40c9-8fbd-e25c71b6dba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\MenuTests">
+      <UniqueIdentifier>{0b111ee4-606a-46cf-b797-6b6d45ff96d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\ButtonTests">
+      <UniqueIdentifier>{a25c7861-d682-4a74-b917-73055c58534b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\MenuTests\BasicMenuTests">
+      <UniqueIdentifier>{57d85c6f-ccd4-44d9-bffb-1b68ee0e6b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\ButtonTests\BasicButtonTests">
+      <UniqueIdentifier>{495a492c-ad91-4ca4-806c-35cb3f963dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tests\ButtonTests\PolygonButtonTests">
+      <UniqueIdentifier>{de10a7f9-d350-4224-9a6f-71b851059e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\MenuTests">
+      <UniqueIdentifier>{f292527f-27eb-4e8d-a885-b9ff84cc5195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\MenuTests\BasicMenuTests">
+      <UniqueIdentifier>{ac70c15e-f180-47b9-bb86-2c4cef9aa49b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,19 +184,19 @@
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="baseMenu.cpp">
-      <Filter>Source Files\Menus\BaseMenu</Filter>
+      <Filter>Source Files\MenuObjects\Menues\BaseMenu</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="BaseButton.cpp">
-      <Filter>Source Files\Menus\Buttons\BaseButton</Filter>
+      <Filter>Source Files\MenuObjects\Buttons\BaseButton</Filter>
     </ClCompile>
     <ClCompile Include="BasicButton.cpp">
-      <Filter>Source Files\Menus\Buttons\BasicButton</Filter>
+      <Filter>Source Files\MenuObjects\Buttons\BasicButton</Filter>
     </ClCompile>
     <ClCompile Include="PolygonButton.cpp">
-      <Filter>Source Files\Menus\Buttons\PolygonButton</Filter>
+      <Filter>Source Files\MenuObjects\Buttons\PolygonButton</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\GridObjects\Grid</Filter>
@@ -180,10 +207,16 @@
     <ClCompile Include="BasicButtonTests.cpp">
       <Filter>Source Files\Tests\ButtonTests\BasicButtonTests</Filter>
     </ClCompile>
+    <ClCompile Include="BasicMenu.cpp">
+      <Filter>Source Files\MenuObjects\Menues\BasicMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMenuTests.cpp">
+      <Filter>Source Files\Tests\MenuTests\BasicMenuTests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windowMenu.h">
-      <Filter>Header Files\Menus</Filter>
+      <Filter>Header Files\MenuObjects</Filter>
     </ClInclude>
     <ClInclude Include="Organism.h">
       <Filter>Header Files\Containers</Filter>
@@ -209,26 +242,32 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="baseMenu.h">
-      <Filter>Header Files\Menus\BaseMenu</Filter>
-    </ClInclude>
     <ClInclude Include="BaseButton.h">
-      <Filter>Header Files\Menus\Buttons\BaseButton</Filter>
+      <Filter>Header Files\MenuObjects\Buttons\BaseButton</Filter>
     </ClInclude>
     <ClInclude Include="BasicButton.h">
-      <Filter>Header Files\Menus\Buttons\BasicButton</Filter>
+      <Filter>Header Files\MenuObjects\Buttons\BasicButton</Filter>
     </ClInclude>
     <ClInclude Include="PolygonButton.h">
-      <Filter>Header Files\Menus\Buttons\PolygonButton</Filter>
+      <Filter>Header Files\MenuObjects\Buttons\PolygonButton</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Header Files\GridObjects\Grid</Filter>
     </ClInclude>
     <ClInclude Include="BasicButtonTests.h">
-      <Filter>Header Files\Tests\BasicButtonTests</Filter>
+      <Filter>Header Files\Tests\ButtonTests\BasicButtonTests</Filter>
     </ClInclude>
     <ClInclude Include="PolygonButtonTests.h">
-      <Filter>Header Files\Tests\PolygonButtonTests</Filter>
+      <Filter>Header Files\Tests\ButtonTests\PolygonButtonTests</Filter>
+    </ClInclude>
+    <ClInclude Include="baseMenu.h">
+      <Filter>Header Files\MenuObjects\Menus\BaseMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMenu.h">
+      <Filter>Header Files\MenuObjects\Menus\BasicMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMenuTests.h">
+      <Filter>Header Files\Tests\MenuTests\BasicMenuTests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

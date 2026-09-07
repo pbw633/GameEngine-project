@@ -21,9 +21,7 @@ void PolygonButton::addPoint(sf::Vector2f point) {
 
 // ------------------ Setters ------------------
 void PolygonButton::setCenter(sf::Vector2f position) {
-	// Need to be reworked 
-	// This should move the center of the object and the rest with it
-	//this->buttonShape.setOrigin(this->center);
+	
 	for (int i = 0; i < this->buttonShape.getPointCount(); i++) {
 		sf::Vector2f point = this->buttonShape.getPoint(i);
 		point = point - this->center + position;

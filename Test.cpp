@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "BasicButtonTests.h"
 #include "PolygonButtonTests.h"
+#include "BasicMenuTests.h"	
 
 /*
 TODO:
@@ -469,6 +470,9 @@ int main() {
 	runTest("Change point of PolygonButton Test", changePointAtIndexOfPolygonButtonTest);
 	runTest("Remove point of PolygonButton Test", removePointInPolygonButtonTest);
 	runTest("Resize PolygonButton Test", resizePolygonButtonTest);
+
+	// BasicMenu
+	runTest("Get Points from BasicMenu Test", getBasicMenuPointsTest);
 
 	// Number of failed tests
 	if (failedTests > 0) {
