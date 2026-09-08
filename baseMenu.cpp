@@ -3,6 +3,7 @@
 #include <iostream>
 // ----------------- Initialization -----------------
 
+
 // ------------------- Getters -------------------
 std::vector<BaseButton*>& BaseMenu::getButtons() {
 	return this->buttons;

@@ -236,6 +236,7 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseButton.h" />
@@ -249,13 +250,13 @@ sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Grid.h" />
     <ClInclude Include="PolygonButton.h" />
     <ClInclude Include="PolygonButtonTests.h" />
-    <ClInclude Include="windowMenu.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MapCSVExporter.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="StorageContainer.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="UIComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

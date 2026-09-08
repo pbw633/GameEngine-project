@@ -17,6 +17,8 @@ public:
 	
 	// ------------------ Variables ------------------ 
 	// ------------------ Initialization ------------------
+	
+
     // ------------------ Setters ------------------
 	// ------------------ Getters ------------------
 	std::vector<BaseButton*>& getButtons();
@@ -39,6 +41,9 @@ private:
 	// ------------------ Variables ------------------ 
 	std::vector<BaseButton*> buttons;
 	
+	std::vector<sf::Sprite> menuSprite;
+	
+
 	// ------------------ Initialization ------------------
 	// ------------------ Setters ------------------
 	// ------------------ Getters ------------------

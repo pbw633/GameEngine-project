@@ -37,6 +37,10 @@ sf::Vector2f BasicMenu::getCenter() {
 	return this->center;
 }
 
+sf::RectangleShape&	BasicMenu::getMenuShape() {
+	return this->menuShape;
+}
+
 // ------------------ Adders -------------------
 
 // ------------------ Actions ------------------	

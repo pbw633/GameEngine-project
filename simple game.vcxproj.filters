@@ -154,6 +154,12 @@
     <Filter Include="Source Files\Tests\MenuTests\BasicMenuTests">
       <UniqueIdentifier>{ac70c15e-f180-47b9-bb86-2c4cef9aa49b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MenuObjects\UIComponent">
+      <UniqueIdentifier>{d4002a07-2b95-4256-979b-6b196913ca1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\UIcomponent">
+      <UniqueIdentifier>{29dc533b-c9ae-459d-a3a4-3887bfaca88e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -213,11 +219,11 @@
     <ClCompile Include="BasicMenuTests.cpp">
       <Filter>Source Files\Tests\MenuTests\BasicMenuTests</Filter>
     </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\MenuObjects\UIcomponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="windowMenu.h">
-      <Filter>Header Files\MenuObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Organism.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>
@@ -268,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="BasicMenuTests.h">
       <Filter>Header Files\Tests\MenuTests\BasicMenuTests</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\MenuObjects\UIComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
