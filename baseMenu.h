@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "UIComponent.h"
 #include "BasicButton.h"
 #include "PolygonButton.h"
 #include <SFML/Graphics.hpp>
@@ -9,7 +10,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-class BaseMenu{
+class BaseMenu : public UIComponent{
    
 
 public:
