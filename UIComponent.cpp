@@ -9,12 +9,7 @@ void UIComponent::initVariables(sf::IntRect frame) {
 void UIComponent::initTexture(std::string textureFileName) {
 	if (!this->texture.loadFromFile(textureFileName)) {
 		throw std::invalid_argument("UIComponent::initTexture::Could not load textureFile from filename. Have you remembered location?");
-	}
-
-	if (!this->texture.loadFromFile(textureFileName)) {
-		std::cout << "Failed loading texture: " << textureFileName << std::endl;
-	}
-	else {
+	} else {
 		//std::cout << "Loaded texture: " << fileName << std::endl;
 	}
 }
@@ -57,4 +52,8 @@ float UIComponent::getSpriteWidth() {
 
 float UIComponent::getSpriteHeight() {
 	return this->sprite.getGlobalBounds().height;
+}
+
+sf::Texture& UIComponent::getTexture() {
+	return this->texture;
 }
