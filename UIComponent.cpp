@@ -15,6 +15,7 @@ void UIComponent::initTexture(std::string textureFileName) {
 }
 
 void UIComponent::initSprite() {
+	
 	// Set the texture to the sprite
 	this->sprite.setTexture(this->texture);
 	this->sprite.setTextureRect(this->currentFrame);
@@ -56,4 +57,13 @@ float UIComponent::getSpriteHeight() {
 
 sf::Texture& UIComponent::getTexture() {
 	return this->texture;
+}
+
+sf::Sprite& UIComponent::getSprite() {
+	return this->sprite;
+}
+
+// ------------------- Actions ------------------	
+void UIComponent::drawSprite(sf::RenderTarget& window) {
+	window.draw(this->sprite);
 }

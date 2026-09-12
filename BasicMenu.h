@@ -2,7 +2,7 @@
 #include "baseMenu.h"
 #include "BasicButton.h"
 #include "PolygonButton.h"
-class BasicMenu : BaseMenu
+class BasicMenu : public BaseMenu
 {
 public:
 	BasicMenu() {};
@@ -12,9 +12,11 @@ public:
 	// ------------------ Variables ------------------
 
 	// ------------------ Initialization ------------------
-	void initBasicMenu(sf::Vector2f position, float width, float height);	
-
+	void initBasicMenuByRectangleShape(sf::Vector2f position, float width, float height);	
+	void initBasicMenuByTexture(std::string textureFileName);
 	// ------------------ Setters ------------------
+
+	void setMenuPosition(sf::Vector2f position	);
 
 	// ------------------ Getters ------------------
 	sf::RectangleShape& getMenuShape();
@@ -24,8 +26,7 @@ public:
 
 	sf::Vector2f getPoint(int index);
 	sf::Vector2f getCenter() override;
-	sf::Texture getTexture();
-	sf::Sprite getSprite();
+	
 
 	// ------------------ Adders -------------------
 

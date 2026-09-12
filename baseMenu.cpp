@@ -46,10 +46,22 @@ void BaseMenu::initSubSpritePartitionByFraction(sf::Vector2f partitionX, sf::Vec
 			}
 
 			sf::FloatRect subRect(tempX, tempY, tempWidth, tempHeight);
-			this->subRects.push_back(subRect);
+			this->subFrames.push_back(subRect);
 		}
 	}
 
+}
+
+void BaseMenu::initSubSpritePartitionComponents() {
+	for (const auto& subFrame : this->subFrames) {
+		sf::RectangleShape rectShape;
+		rectShape.setPosition(subFrame.left, subFrame.top);
+		rectShape.setSize(sf::Vector2f(subFrame.width, subFrame.height));
+		rectShape.setFillColor(sf::Color(0, 0, 0, 0)); // Transparent fill
+		rectShape.setOutlineColor(sf::Color::Red); // Red outline
+		rectShape.setOutlineThickness(1.0f);
+		spritePartitions.push_back(rectShape);
+	}
 }
 
 // ------------------- Getters -------------------
@@ -93,3 +105,9 @@ void BaseMenu::resizeMenu(float sizeFactor) {
 void BaseMenu::calculateCenter() {
 	// Placeholder implementation, should be overridden in derived classes
 }
+
+void BaseMenu::drawSubSpritePartitions(sf::RenderTarget& window) {
+	for (const auto& rectShape : this->spritePartitions) {
+		window.draw(rectShape);
+	}
+}	

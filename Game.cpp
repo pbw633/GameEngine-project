@@ -70,6 +70,11 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 	organism.initVariables();
 }
 
+void Game::initPauseMenu() {
+	this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
+	this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
+}
+
 
 //---------------------- constructors/ destructors ------------------
 Game::Game() { //when you start the game somethings need to be initialized
@@ -78,7 +83,7 @@ Game::Game() { //when you start the game somethings need to be initialized
 	this->initFonts();
 	this->initWindow();
 	
-
+	this->initPauseMenu();
 	//this->initEnemies();
 	/*
 	- Declare the grid and its tiles with their variables and properties
@@ -395,6 +400,8 @@ void Game::render() {
 	this->window->draw(grid.getGridTriangles());
 	this->window->draw(grid.getGridLines());
 	
+	this->pauseMenu.drawSprite(*this->window);
+
 	this->renderPlayer();
 	this->renderFrameRate();
 

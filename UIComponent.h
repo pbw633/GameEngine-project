@@ -31,6 +31,7 @@ public:
 	float getSpriteHeight();
 
 	sf::Texture& getTexture();
+	sf::Sprite& getSprite();
 	// ------------------ Adders -------------------	
 
 	// ------------------ Actions ------------------

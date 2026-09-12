@@ -1,7 +1,7 @@
 #include "BasicMenu.h"	
 // ------------------- public -------------------
 // ------------------ Initialization ------------------
-void BasicMenu::initBasicMenu(sf::Vector2f position, float width, float height) {
+void BasicMenu::initBasicMenuByRectangleShape(sf::Vector2f position, float width, float height) {
 	// Set the origin to the center of the rectangle
 	this->menuShape.setOrigin(sf::Vector2f(width, height) * 0.5f);
 	// Set the position of the rectangle
@@ -14,8 +14,21 @@ void BasicMenu::initBasicMenu(sf::Vector2f position, float width, float height) 
 
 }
 
+void BasicMenu::initBasicMenuByTexture(std::string textureFileName) {
+	// Set the origin to the center of the rectangle
+	this->initTexture(textureFileName);
+	this->initVariables(sf::IntRect(0, 0, this->getTexture().getSize().x, this->getTexture().getSize().y)); // full texture as the sprite used
+	this->initSprite();
+	
+	this->getSprite().setOrigin(this->getSprite().getLocalBounds().width / 2.f, this->getSprite().getLocalBounds().height / 2.f	);
+	this->menuShape.setSize(sf::Vector2f(this->getSpriteWidth(), this->getSpriteHeight()));
+}
 // ------------------ Setters ------------------	
-
+void BasicMenu::setMenuPosition(sf::Vector2f position) {
+	this->getSprite().setPosition(position);
+	this->menuShape.setPosition(position);
+	this->calculateCenter();
+}
 // ------------------ Getters ------------------
 sf::Vector2f BasicMenu::getPoint(int index) {
 	if (index < 0 || index >= 4) {

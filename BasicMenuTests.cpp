@@ -4,7 +4,7 @@ void getBasicMenuPointsTest() {
 	// Setup
 	BasicMenu basicMenu;
 	sf::Vector2f center = sf::Vector2f(200, 200);
-	basicMenu.initBasicMenu(center, 100, 200);
+	basicMenu.initBasicMenuByRectangleShape(center, 100, 200);
 	
 	std::vector<sf::Vector2f> expectedPoints = {
 		sf::Vector2f(150, 100),

@@ -9,6 +9,8 @@
 #include "Heap.h"
 #include "Organism.h"
 #include "Grid.h"
+#include "BasicMenu.h"
+
 
 #include <vector>
 #include <string>
@@ -53,12 +55,15 @@ private:
 
 	Organism playerObject;
 
+	// Menus
+	BasicMenu pauseMenu;
+
 	//--------------------- Initialization --------------------
 	void initVariables();
 	void initFonts();
 	void initWindow();
 
-	
+	void initPauseMenu();
 
 	
 	void initOrganism(int rowPos, int colPos, Organism& organism);

@@ -10,7 +10,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-class BaseMenu : UIComponent{
+class BaseMenu : public UIComponent{
    
 
 public:
@@ -18,7 +18,7 @@ public:
 	
 	// ------------------ Variables ------------------ 
 	void initSubSpritePartitionByFraction( sf::Vector2f partitionX, sf::Vector2f partitionY ); // used to partition into 3 x 3
-	
+	void initSubSpritePartitionComponents();
 	// ------------------ Initialization ------------------
 	
 
@@ -26,6 +26,9 @@ public:
 	// ------------------ Getters ------------------
 	std::vector<BaseButton*>& getButtons();
 	virtual sf::Vector2f getCenter();
+
+	//sf::Texture& getTexture();
+	//sf::Sprite& getSprite();
 
 	// ------------------ Adders -------------------
 	void addButton(BaseButton* button);
@@ -40,15 +43,18 @@ public:
 	virtual void resizeMenu(float sizeFactor);
 	virtual void calculateCenter();
 
-	void showSubSpritePartition();
+	void drawSubSpritePartitions(sf::RenderTarget& window);
 
 private:
 	// ------------------ Variables ------------------ 
 	std::vector<BaseButton*> buttons;
 	
-	std::vector<sf::FloatRect> subRects;
+	// used for partioning the sprite into subSprites (3x3)
+	std::vector<sf::FloatRect> subFrames;
 	std::vector<sf::Sprite> subSprites;
 	
+	// helper for debugging the subSprites
+	std::vector<sf::RectangleShape> spritePartitions; 
 
 	// ------------------ Initialization ------------------
 	// ------------------ Setters ------------------
