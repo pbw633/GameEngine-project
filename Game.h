@@ -10,7 +10,7 @@
 #include "Organism.h"
 #include "Grid.h"
 #include "BasicMenu.h"
-
+#include "GameModes.h"
 
 #include <vector>
 #include <string>

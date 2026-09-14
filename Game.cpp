@@ -71,8 +71,10 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 }
 
 void Game::initPauseMenu() {
-	this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
-	this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
+	this->pauseMenu.initSubSpritePartitions(sf::Vector2f(0.2,0.8), sf::Vector2f(0.2, 0.8));
+	this->pauseMenu.initSubSprites("Textures/Menu/pauseMenu.png");
+	//this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
+	//this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
 }
 
 
@@ -400,7 +402,7 @@ void Game::render() {
 	this->window->draw(grid.getGridTriangles());
 	this->window->draw(grid.getGridLines());
 	
-	this->pauseMenu.drawSprite(*this->window);
+	this->pauseMenu.draw(*this->window);
 
 	this->renderPlayer();
 	this->renderFrameRate();

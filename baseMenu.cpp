@@ -2,6 +2,7 @@
 #include "baseMenu.h"
 #include <iostream>
 // ----------------- Initialization -----------------
+/*
 void BaseMenu::initSubSpritePartitionByFraction(sf::Vector2f partitionX, sf::Vector2f partitionY) {
 	float minPartitionX = std::min(partitionX.x, partitionX.y);
 	float minPartitionY = std::min(partitionY.x, partitionY.y);
@@ -63,7 +64,7 @@ void BaseMenu::initSubSpritePartitionComponents() {
 		spritePartitions.push_back(rectShape);
 	}
 }
-
+*/
 // ------------------- Getters -------------------
 std::vector<BaseButton*>& BaseMenu::getButtons() {
 	return this->buttons;
@@ -105,9 +106,10 @@ void BaseMenu::resizeMenu(float sizeFactor) {
 void BaseMenu::calculateCenter() {
 	// Placeholder implementation, should be overridden in derived classes
 }
-
+/*
 void BaseMenu::drawSubSpritePartitions(sf::RenderTarget& window) {
 	for (const auto& rectShape : this->spritePartitions) {
 		window.draw(rectShape);
 	}
-}	
+}
+*/

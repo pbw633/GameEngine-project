@@ -160,6 +160,15 @@
     <Filter Include="Source Files\MenuObjects\UIcomponent">
       <UniqueIdentifier>{29dc533b-c9ae-459d-a3a4-3887bfaca88e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\HelperClasses\GameModes">
+      <UniqueIdentifier>{9339c6be-7683-4163-b7cf-3d915d9a2c0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MenuObjects\NineSliceComponent">
+      <UniqueIdentifier>{96d2d0e3-fb6c-48e6-9b7d-6e68b26775c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MenuObjects\NineSliceComponent">
+      <UniqueIdentifier>{ecf95e10-5127-4281-acec-b3d10d612447}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -222,6 +231,9 @@
     <ClCompile Include="UIComponent.cpp">
       <Filter>Source Files\MenuObjects\UIcomponent</Filter>
     </ClCompile>
+    <ClCompile Include="NineSliceComponent.cpp">
+      <Filter>Source Files\MenuObjects\NineSliceComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Organism.h">
@@ -277,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="UIComponent.h">
       <Filter>Header Files\MenuObjects\UIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModes.h">
+      <Filter>Header Files\HelperClasses\GameModes</Filter>
+    </ClInclude>
+    <ClInclude Include="NineSliceComponent.h">
+      <Filter>Header Files\MenuObjects\NineSliceComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

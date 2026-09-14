@@ -19,25 +19,32 @@ public:
 	// ------------------ Initialization ------------------
 
 	// ------------------ Setters ------------------	
-	void setSpritePosition(float x, float y);
+	virtual void setPosition(float x, float y);
 	void setSpritePosition(sf::Vector2f position);
+
 	void setSpriteScale(float scaleX, float scaleY);
 	void setSpriteScale(sf::Vector2f scale);
 	void setSpriteScale(float scale);
+
+	void setOrigin(sf::Vector2f position);
+	void setOrigin(float positionX, float positionY);
 
 
 	// ------------------ Getters ------------------
 	float getSpriteWidth();
 	float getSpriteHeight();
-
+	float getTextureWidth();
+	float getTextureHeight();
 	sf::Texture& getTexture();
 	sf::Sprite& getSprite();
+
+	sf::RectangleShape& getSpriteBoarder();
 	// ------------------ Adders -------------------	
 
 	// ------------------ Actions ------------------
+	void toggleSpriteBoarder();
 
-
-    void drawSprite(sf::RenderTarget& window);
+    virtual void draw(sf::RenderTarget& window);
 	void resizeSprite(float scaleX, float scaleY);
 	void resizeSprite(sf::Vector2f scale);
 
@@ -45,5 +52,8 @@ private:
 	sf::Texture texture;   
 	sf::Sprite sprite;
 	sf::IntRect currentFrame; // The rectangle of the picture
+
+	sf::RectangleShape spriteBoarder;
+	bool showSpriteBoarder = false;
 
 };

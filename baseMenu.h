@@ -17,8 +17,8 @@ public:
     BaseMenu() {};
 	
 	// ------------------ Variables ------------------ 
-	void initSubSpritePartitionByFraction( sf::Vector2f partitionX, sf::Vector2f partitionY ); // used to partition into 3 x 3
-	void initSubSpritePartitionComponents();
+	//void initSubSpritePartitionByFraction( sf::Vector2f partitionX, sf::Vector2f partitionY ); // used to partition into 3 x 3
+	//void initSubSpritePartitionComponents();
 	// ------------------ Initialization ------------------
 	
 
@@ -43,18 +43,13 @@ public:
 	virtual void resizeMenu(float sizeFactor);
 	virtual void calculateCenter();
 
-	void drawSubSpritePartitions(sf::RenderTarget& window);
+	//void drawSubSpritePartitions(sf::RenderTarget& window);
 
 private:
 	// ------------------ Variables ------------------ 
 	std::vector<BaseButton*> buttons;
 	
-	// used for partioning the sprite into subSprites (3x3)
-	std::vector<sf::FloatRect> subFrames;
-	std::vector<sf::Sprite> subSprites;
 	
-	// helper for debugging the subSprites
-	std::vector<sf::RectangleShape> spritePartitions; 
 
 	// ------------------ Initialization ------------------
 	// ------------------ Setters ------------------
