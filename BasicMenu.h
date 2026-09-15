@@ -2,12 +2,13 @@
 #include "baseMenu.h"
 #include "BasicButton.h"
 #include "PolygonButton.h"
+#include "NineSliceComponent.h"
 /*
 TODO:
 	- MenuShape does not make sense as we already have spriteBoarder which is a square already. fix methods to take this into account
 */
 
-class BasicMenu : public BaseMenu
+class BasicMenu : public BaseMenu, public NineSliceComponent
 {
 public:
 	BasicMenu() {};
@@ -18,16 +19,16 @@ public:
 
 	// ------------------ Initialization ------------------
 	void initBasicMenuByRectangleShape(sf::Vector2f position, float width, float height);	
-	void initBasicMenuByTexture(std::string textureFileName);
+	//void initBasicMenuByTexture(std::string textureFileName);
 
-	void initSubSpritePartitions(sf::Vector2f partitionX, sf::Vector2f partitionY);
-	void initSubSprites(std::string fileName); // used to partition into 3 x 3
+	//void initSubSpritePartitions(sf::Vector2f partitionX, sf::Vector2f partitionY);
+	//void initSubSprites(std::string fileName); // used to partition into 3 x 3
 	// ------------------ Setters ------------------
 
 	void setMenuPosition(sf::Vector2f position	);
 
 	// ------------------ Getters ------------------
-	sf::RectangleShape& getMenuShape();
+	//sf::RectangleShape& getMenuShape();
 	//sf::Vector2f getMenuPosition();
 	float getWidth();
 	float getHeight();
@@ -40,7 +41,7 @@ public:
 
 
 	// ------------------ Actions ------------------
-	void draw(sf::RenderTarget& window) override;
+	
 
 	void calculateCenter() override;
 

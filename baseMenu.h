@@ -10,7 +10,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-class BaseMenu : public UIComponent{
+class BaseMenu {
    
 
 public:

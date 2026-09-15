@@ -71,10 +71,13 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 }
 
 void Game::initPauseMenu() {
-	this->pauseMenu.initSubSpritePartitions(sf::Vector2f(0.2,0.8), sf::Vector2f(0.2, 0.8));
-	this->pauseMenu.initSubSprites("Textures/Menu/pauseMenu.png");
+	//this->pauseMenu.initSubSpritePartitions(sf::Vector2f(0.2,0.8), sf::Vector2f(0.2, 0.8));
+	this->pauseMenu.initTexture("Textures/Menu/pauseMenu.png");
+	this->pauseMenu.initPartition(sf::Vector2f(0.21, 0.75), sf::Vector2f(0.18, 0.82));
+	this->pauseMenu.initSprites();
+	this->pauseMenu.initSpriteOffsets();
 	//this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
-	//this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
+	this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
 }
 
 
