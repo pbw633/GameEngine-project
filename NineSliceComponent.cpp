@@ -74,6 +74,9 @@ void NineSliceComponent::initSprites() {
 			//subSpriteBoarders.setPosition(tempX, tempY);
 			subSpriteBoarders.setSize(sf::Vector2f(tempWidth, tempHeight));
 			subSpriteBoarders.setOrigin(tempWidth / 2, tempHeight / 2);
+			subSpriteBoarders.setFillColor(sf::Color(0,0,0,0));
+			subSpriteBoarders.setOutlineColor(sf::Color::Red);
+			subSpriteBoarders.setOutlineThickness(1);
 			spritePartitions.push_back(subSpriteBoarders);
 
 			// Used for the actual sprites
@@ -134,48 +137,114 @@ void NineSliceComponent::initSpriteOffsets() {
 
 // ------------------ Setters ------------------
 void NineSliceComponent::setPosition(float x, float y) {
-	std::cout << "NineSliceComponent::draw::subSprites.size() = " << subSprites.size() << std::endl;
+	
 	if (subSprites.size() != 9) {
 		throw std::runtime_error("NineSliceComponent::setPosition::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
 	}
-	sf::Vector2f initialCenter = subSprites[4].getPosition(); // The center sprite is at index 4
 	
-	sf::Vector2f spriteOffset = sf::Vector2f(0,0);
-	sf::Vector2f interSpriteSpacing = sf::Vector2f(subSprites[0].getGlobalBounds().getSize().x / 2 + subSprites[1].getGlobalBounds().getSize().x / 2,
-													subSprites[0].getGlobalBounds().getSize().y / 2 + subSprites[1].getGlobalBounds().getSize().y / 2);
 	for (int i = 0; i < 3; i++) {
 		//spriteOffset.y = spriteOffset.y + subSprites[i * 3].getOrigin().y;
 		for (int j = 0; j < 3; j++) {
-			//spriteOffset.x = spriteOffset.x + subSprites[i * 3 + j].getOrigin().x;
+			
 				
 			subSprites[i*3+j].setPosition(spriteOffsets[i*3+j].x + x, spriteOffsets[i*3+j].y + y);
-			// Implementation for setting position of each sub-sprite
+			spritePartitions[i * 3 + j].setPosition(spriteOffsets[i * 3 + j].x + x, spriteOffsets[i * 3 + j].y + y);
+			
 		}
 	}
 	
-	/*
-	for (int i = 0; i < 9; i++) {
-		subSprites[i].setPosition(
-			subSprites[i].getPosition().x- initialCenter.x + x- subSprites[4].getOrigin().x,
-			subSprites[i].getPosition().y - initialCenter.y + y- subSprites[4].getOrigin().y);
-	}
-	*/
+	
 }
 // ------------------ Getters ------------------
+sf::RectangleShape& NineSliceComponent::getSpritePartition(int index) {
+	if (index < 0 || index >= 9) {
+		throw std::runtime_error("NineSliceComponent::getSpritePartition::Index out of bounds. Must be between 0 and 8.");
+	}
+	if (spritePartitions.size() != 9 ) {
+		throw std::runtime_error("NineSliceComponent::getSpritePartition::Sprite partitions not initialized.");	
+	}
+	return spritePartitions[index];
+}
+
+std::vector<sf::RectangleShape>& NineSliceComponent::getSpritePartitions() {
+	if (spritePartitions.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::getSpritePartition::Sprite partitions not initialized.");
+	}
+	return spritePartitions;
+}
 
 // ------------------ Adders -------------------
 
 // ------------------ Actions ------------------
 void NineSliceComponent::draw(sf::RenderTarget& window) {
 	if (subSprites.size() != 9 ) {
-		
 		throw std::runtime_error("NineSliceComponent::draw::This class needs 9 sprites to do 9-slicing... Duh");
 	}
 	
 	for (int i=0; i<9; i++) {
 		window.draw(subSprites.at(i));
+		
 	}
-	//window.draw(subSprites.at(4));
-	
+}
+
+
+void NineSliceComponent::drawSpritePartition(sf::RenderTarget& window) {
+	if (spritePartitions.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::drawSpritePartition::This class needs 9 sprite partitions");
+	}
+	for (int i = 0; i < 9; i++) {
+
+		window.draw(spritePartitions.at(i));
+	}
+}
+
+void NineSliceComponent::expandUpToPoint(sf::Vector2i point) {
+	if (subSprites.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
+	}
+	// if the point is within the bounds of the top  middle partition, then expand the top partition to that point
+	if (this->getSpritePartition(1).getGlobalBounds().getPosition().y < point.y &&
+		this->getSpritePartition(1).getGlobalBounds().getPosition().y + this->getSpritePartition(1).getSize().y > point.y &&
+		this->getSpritePartition(1).getGlobalBounds().getPosition().x < point.x &&
+		this->getSpritePartition(1).getGlobalBounds().getPosition().x + this->getSpritePartition(1).getSize().x > point.x) {
+		// used for the scaling factor of the sprites
+		
+		
+
+		
+		
+		// move the top partitions up to the point
+		for (int i=0; i<3; i++) {
+			this->subSprites[i].setPosition(this->subSprites[i].getPosition().x, point.y ); 
+			this->spritePartitions[i].setPosition(this->spritePartitions[i].getPosition().x, point.y ); 
+		}
+		
+		float scalingFactorY = (this->subSprites[6].getPosition().y - point.y + subSprites[0].getOrigin().y) / subSprites[4].getTextureRect().getSize().y;
+		// resize the middle partitions and their corresponding sprites
+		for (int j=3; j<6; j++) {
+			
+
+			// Resize the sprite partitions
+			this->spritePartitions[j].setSize(sf::Vector2f(this->spritePartitions[j].getSize().x, 
+															this->spritePartitions[6].getPosition().y - (this->spritePartitions[0].getSize().y+this->spritePartitions[0].getPosition().y)));
+			
+			this->spritePartitions[j].setPosition(this->spritePartitions[j].getPosition().x, 
+													(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) + this->spritePartitions[j].getOrigin().y);
+			
+			// resize the sprites
+			this->subSprites[j].setScale(sf::Vector2f(1, scalingFactorY));
+			this->subSprites[j].setPosition(this->subSprites[j].getPosition().x, 
+				(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) + this->spritePartitions[j].getOrigin().y);
+		}
+
+	}
+}
+void NineSliceComponent::expandDownToPoint(sf::Vector2f point) {
+
+}
+void NineSliceComponent::expandLeftToPoint(sf::Vector2f point) {
+
+}
+void NineSliceComponent::expandRightToPoint(sf::Vector2f point) {
 
 }

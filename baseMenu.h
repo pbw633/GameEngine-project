@@ -23,12 +23,12 @@ public:
 	
 
     // ------------------ Setters ------------------
+	void setToggleMenuStatus(bool status);
 	// ------------------ Getters ------------------
 	std::vector<BaseButton*>& getButtons();
 	virtual sf::Vector2f getCenter();
-
-	//sf::Texture& getTexture();
-	//sf::Sprite& getSprite();
+	bool getToggleState();
+	
 
 	// ------------------ Adders -------------------
 	void addButton(BaseButton* button);
@@ -37,7 +37,8 @@ public:
 
     virtual bool containsPoint(sf::Vector2i point);
 
-	virtual void removeButton(BaseButton* button);	
+	virtual void toggleMenuStatus();
+	virtual void removeButton(BaseButton* button);
 	virtual	void closeMenu();
 	virtual	void openMenu();
 	virtual void resizeMenu(float sizeFactor);
@@ -49,7 +50,7 @@ private:
 	// ------------------ Variables ------------------ 
 	std::vector<BaseButton*> buttons;
 	
-	
+	bool isToggled = false;
 
 	// ------------------ Initialization ------------------
 	// ------------------ Setters ------------------

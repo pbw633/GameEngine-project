@@ -346,6 +346,26 @@ void Game::pollEvents() {
 				this->playerObject.updateSpriteLocationInTile();
 			}
 			break;
+		case sf::Event::KeyReleased:
+			if (this->ev.key.code == sf::Keyboard::Tab) {
+				std::cout << "Tab key released" << "\n";
+				this->pauseMenu.toggleMenuStatus();
+			} else if (this->ev.key.code == sf::Keyboard::LShift) {
+				std::cout << "LShift key released" << "\n";
+				if (this->pauseMenu.getToggleState() && this->pauseMenu.containsPoint(mousePosWindow)) {
+					this->pauseMenu.toggleSpritePartition();
+				}
+			}
+			break;
+		case sf::Event::MouseButtonPressed:
+			if (this->ev.mouseButton.button == sf::Mouse::Left) {
+				this->pauseMenu.expandUpToPoint(mousePosWindow);
+				std::cout << "Left-buttonPress" << "\n";
+			}
+			else if (this->ev.mouseButton.button == sf::Mouse::Right) {
+				std::cout << "Right-buttonPress" << "\n";
+			}
+			break;	
 		}
 	}
 }
@@ -405,7 +425,7 @@ void Game::render() {
 	this->window->draw(grid.getGridTriangles());
 	this->window->draw(grid.getGridLines());
 	
-	this->pauseMenu.draw(*this->window);
+	this->pauseMenu.drawMenu(*this->window);
 
 	this->renderPlayer();
 	this->renderFrameRate();

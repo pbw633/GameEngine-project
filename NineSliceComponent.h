@@ -16,11 +16,17 @@ public:
 	//------------------ Setters ---------------------
 	void setPosition(float x, float y) override;
 	//------------------ Getters ---------------------
-
+	sf::RectangleShape& getSpritePartition(int index);
+	std::vector<sf::RectangleShape>& getSpritePartitions();
 	//------------------ Adders ----------------------
 	//------------------ Actions ---------------------
 	void draw(sf::RenderTarget& window) override;
+	void drawSpritePartition( sf::RenderTarget& window );
 
+	void expandUpToPoint(sf::Vector2i point);
+	void expandDownToPoint(sf::Vector2f point);
+	void expandLeftToPoint(sf::Vector2f point);
+	void expandRightToPoint(sf::Vector2f point);
 private:
 	//------------------ Variables ------------------
 	//sf::Texture texture;
@@ -34,5 +40,5 @@ private:
 	sf::Vector2f spritePartitionX;
 	sf::Vector2f spritePartitionY;
 
-	std::vector<sf::Sprite > nineSliceArray;
+	//std::vector<sf::Sprite > nineSliceArray;
 };

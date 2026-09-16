@@ -9,7 +9,7 @@
 #include <SFML/Network.hpp>
 class UIComponent {
 public:
-    virtual ~UIComponent() = default;
+    //virtual ~UIComponent() = default;
 
     //virtual void draw(sf::RenderTarget& window) = 0;
 	// ------------------ Variables ------------------

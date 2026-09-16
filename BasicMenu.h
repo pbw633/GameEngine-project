@@ -41,10 +41,13 @@ public:
 
 
 	// ------------------ Actions ------------------
-	
+	bool containsPoint(sf::Vector2i point) override;
+
+	void drawMenu(sf::RenderTarget& window);
 
 	void calculateCenter() override;
 
+	void toggleMenuStatus() override;
 	void toggleSpritePartition();
 
 private:
@@ -53,15 +56,15 @@ private:
 	sf::Vector2f center;
 
 	// used for partioning the sprite into subSprites (3x3)
-	std::vector<sf::IntRect> subFrames;
-	std::vector<sf::Sprite> subSprites;
+	//std::vector<sf::IntRect> subFrames;
+	//std::vector<sf::Sprite> subSprites;
 
 	// helper for debugging the subSprites
-	std::vector<sf::RectangleShape> spritePartitions;
-	sf::Vector2f spritePartitionX;
-	sf::Vector2f spritePartitionY;
+	//std::vector<sf::RectangleShape> spritePartitions;
+	//sf::Vector2f spritePartitionX;
+	//sf::Vector2f spritePartitionY;
 
-
+	
 	bool showSpritePartition = false;
 
 	// ------------------ Initialization ------------------

@@ -56,10 +56,6 @@ sf::RectangleShape&	BasicMenu::getMenuShape() {
 
 // ------------------ Actions ------------------	
 
-void BasicMenu::toggleSpritePartition() {
-
-}
-
 // ------------------- private -------------------
 // ------------------ Initialization ------------------
 
@@ -69,7 +65,25 @@ void BasicMenu::toggleSpritePartition() {
 
 // ------------------ Adders -------------------
 
-// ------------------ Actions ------------------	
+// ------------------ Actions ------------------
+bool BasicMenu::containsPoint(sf::Vector2i point) {
+	if (this->getSpritePartition(0).getGlobalBounds().getPosition().x < point.x && this->getSpritePartition(0).getGlobalBounds().getPosition().y < point.y &&
+		this->getSpritePartition(8).getGlobalBounds().getPosition().x+ this->getSpritePartition(8).getSize().x > point.x && 
+		this->getSpritePartition(8).getGlobalBounds().getPosition().y + this->getSpritePartition(8).getSize().y > point.y) {
+		
+		return true;
+	}
+	return false;
+}
+
+void BasicMenu::drawMenu(sf::RenderTarget& window) {
+	if (this->getToggleState()) {
+		this->draw(window);
+	}
+	if (this->getToggleState() && showSpritePartition) {
+		this->drawSpritePartition(window);
+	}
+}
 
 void BasicMenu::calculateCenter() {
 	/*
@@ -83,4 +97,15 @@ void BasicMenu::calculateCenter() {
 	center.x = sumX / 4;
 	center.y = sumY / 4;
 	*/
+}
+
+void BasicMenu::toggleMenuStatus() {
+	this->setToggleMenuStatus( !(this->getToggleState())) ;
+	if ( !(this->getToggleState()) ) {
+		this->showSpritePartition = false;
+	}
+}
+
+void BasicMenu::toggleSpritePartition() {
+	this->showSpritePartition = !(this->showSpritePartition);
 }
