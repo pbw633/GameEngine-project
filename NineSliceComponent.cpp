@@ -73,7 +73,7 @@ void NineSliceComponent::initSprites() {
 			sf::RectangleShape subSpriteBoarders;
 			//subSpriteBoarders.setPosition(tempX, tempY);
 			subSpriteBoarders.setSize(sf::Vector2f(tempWidth, tempHeight));
-			subSpriteBoarders.setOrigin(tempWidth / 2, tempHeight / 2);
+			//subSpriteBoarders.setOrigin(tempWidth / 2, tempHeight / 2);
 			subSpriteBoarders.setFillColor(sf::Color(0,0,0,0));
 			subSpriteBoarders.setOutlineColor(sf::Color::Red);
 			subSpriteBoarders.setOutlineThickness(1);
@@ -84,7 +84,7 @@ void NineSliceComponent::initSprites() {
 			subSprite.setTexture(this->getTexture());
 			subSprite.setTextureRect(subFrames[i*3+j]);
 			//subSprite.setPosition(tempX, tempY);
-			subSprite.setOrigin(tempWidth/2, tempHeight/2);
+			//subSprite.setOrigin(tempWidth/2, tempHeight/2);
 			subSprites.push_back(subSprite);
 		}
 	}
@@ -96,39 +96,41 @@ void NineSliceComponent::initSpriteOffsets() {
 	for (int row = 0; row < 3; row++) {
 		for (int col = 0; col < 3; col++) {
 			if (col == 0 && row == 0) {// Top-left
-				spriteOffsets.push_back(sf::Vector2f(std::ceil( - subSprites[row * 3 + col].getOrigin().x - subSprites[4].getOrigin().x),
-														std::ceil( - subSprites[row * 3 + col].getOrigin().y - subSprites[4].getOrigin().y)));
+				//spriteOffsets.push_back(sf::Vector2f(std::ceil( - subSprites[row * 3 + col].getOrigin().x - subSprites[4].getOrigin().x),
+				//										std::ceil( - subSprites[row * 3 + col].getOrigin().y - subSprites[4].getOrigin().y)));
+				spriteOffsets.push_back(sf::Vector2f(std::ceil(-subSprites[row * 3 + col].getTextureRect().getSize().x), 
+														std::ceil(-subSprites[row * 3 + col].getTextureRect().getSize().y)));
 			}
 			else if (col == 1 && row == 0) { // Top-center
 				spriteOffsets.push_back(sf::Vector2f(0,
-					std::ceil( - subSprites[row * 3 + col].getOrigin().y - subSprites[4].getOrigin().y)));
+					std::ceil(-subSprites[row * 3 + col].getTextureRect().getSize().y)));
 			}
 			else if (col == 2 && row == 0) { // Top-right
-				spriteOffsets.push_back(sf::Vector2f(std::floor(subSprites[4].getOrigin().x + subSprites[row * 3 + col].getOrigin().x),
-														std::ceil( - subSprites[row * 3 + col].getOrigin().y - subSprites[4].getOrigin().y)));
+				spriteOffsets.push_back(sf::Vector2f(std::ceil(subSprites[1].getTextureRect().getSize().x),
+														std::ceil(-subSprites[row * 3 + col].getTextureRect().getSize().y)));
 			}
 			else if (col == 0 && row == 1) { // Middle-left
-				spriteOffsets.push_back(sf::Vector2f(std::ceil( - subSprites[row * 3 + col].getOrigin().x - subSprites[4].getOrigin().x),
+				spriteOffsets.push_back(sf::Vector2f(std::ceil( - subSprites[row * 3 + col].getTextureRect().getSize().x),
 																0));
 			}
 			else if (col == 1 && row == 1) { // Center
 				spriteOffsets.push_back(sf::Vector2f(0, 0));
 			}
 			else if (col == 2 && row == 1) { // Middle-right
-				spriteOffsets.push_back(sf::Vector2f(std::floor(subSprites[row * 3 + col].getOrigin().x + subSprites[4].getOrigin().x),
+				spriteOffsets.push_back(sf::Vector2f(std::floor(subSprites[4].getTextureRect().getSize().x),
 																0));
 			}
 			else if (col == 0 && row == 2) {// bottom left
-				spriteOffsets.push_back(sf::Vector2f(std::ceil( - subSprites[row * 3 + col].getOrigin().x - subSprites[4].getOrigin().x),
-															std::floor(subSprites[row * 3 + col].getOrigin().y + subSprites[4].getOrigin().y)));
+				spriteOffsets.push_back(sf::Vector2f(-std::ceil(subSprites[row * 3 + col].getTextureRect().getSize().x),
+															std::floor(subSprites[4].getTextureRect().getSize().y)));
 			}
 			else if (col == 1 && row == 2) { // bottom center
 				spriteOffsets.push_back(sf::Vector2f(0, 
-															std::floor(subSprites[row * 3 + col].getOrigin().y + subSprites[4].getOrigin().y)));
+															std::floor(subSprites[4].getTextureRect().getSize().y )));
 			}
 			else if (col == 2 && row == 2) { // bottom right
-				spriteOffsets.push_back(sf::Vector2f(std::floor(subSprites[row * 3 + col].getOrigin().x + subSprites[4].getOrigin().x),
-														std::floor(subSprites[row * 3 + col].getOrigin().y + subSprites[4].getOrigin().y)));
+				spriteOffsets.push_back(sf::Vector2f(std::floor(subSprites[4].getTextureRect().getSize().x ),
+														std::floor(subSprites[4].getTextureRect().getSize().y)));
 			}
 
 		}
@@ -142,13 +144,14 @@ void NineSliceComponent::setPosition(float x, float y) {
 		throw std::runtime_error("NineSliceComponent::setPosition::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
 	}
 	
+	sf::Vector2i centeringByMiddleSprite = subSprites[4].getTextureRect().getSize();
 	for (int i = 0; i < 3; i++) {
 		//spriteOffset.y = spriteOffset.y + subSprites[i * 3].getOrigin().y;
 		for (int j = 0; j < 3; j++) {
 			
 				
-			subSprites[i*3+j].setPosition(spriteOffsets[i*3+j].x + x, spriteOffsets[i*3+j].y + y);
-			spritePartitions[i * 3 + j].setPosition(spriteOffsets[i * 3 + j].x + x, spriteOffsets[i * 3 + j].y + y);
+			subSprites[i*3+j].setPosition(spriteOffsets[i*3+j].x + x- centeringByMiddleSprite.x/2, spriteOffsets[i*3+j].y + y- centeringByMiddleSprite.y/2);
+			spritePartitions[i * 3 + j].setPosition(spriteOffsets[i * 3 + j].x + x - centeringByMiddleSprite.x / 2, spriteOffsets[i * 3 + j].y + y - centeringByMiddleSprite.y / 2);
 			
 		}
 	}
@@ -211,15 +214,15 @@ void NineSliceComponent::expandUpToPoint(sf::Vector2i point) {
 		
 		
 
-		
+		sf::Vector2i upperMiddleSpriteDimensions = subSprites[1].getTextureRect().getSize();
 		
 		// move the top partitions up to the point
 		for (int i=0; i<3; i++) {
-			this->subSprites[i].setPosition(this->subSprites[i].getPosition().x, point.y ); 
-			this->spritePartitions[i].setPosition(this->spritePartitions[i].getPosition().x, point.y ); 
+			this->subSprites[i].setPosition(this->subSprites[i].getPosition().x, point.y - upperMiddleSpriteDimensions.y/2);
+			this->spritePartitions[i].setPosition(this->spritePartitions[i].getPosition().x, point.y - upperMiddleSpriteDimensions.y / 2);
 		}
 		
-		float scalingFactorY = (this->subSprites[6].getPosition().y - point.y + subSprites[0].getOrigin().y) / subSprites[4].getTextureRect().getSize().y;
+		float scalingFactorY = (this->subSprites[6].getPosition().y - (subSprites[1].getGlobalBounds().getPosition().y+ subSprites[1].getTextureRect().getSize().y)) / subSprites[4].getTextureRect().getSize().y;
 		// resize the middle partitions and their corresponding sprites
 		for (int j=3; j<6; j++) {
 			
@@ -229,7 +232,7 @@ void NineSliceComponent::expandUpToPoint(sf::Vector2i point) {
 															this->spritePartitions[6].getPosition().y - (this->spritePartitions[0].getSize().y+this->spritePartitions[0].getPosition().y)));
 			
 			this->spritePartitions[j].setPosition(this->spritePartitions[j].getPosition().x, 
-													(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) + this->spritePartitions[j].getOrigin().y);
+													(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) );
 			
 			// resize the sprites
 			this->subSprites[j].setScale(sf::Vector2f(1, scalingFactorY));

@@ -161,12 +161,14 @@ public:
 	void updateTileInsides();
 	void updateLastDetectedTileByMouse();
 
+	// updating screen
 	void toggleFullScreen();
 	void switchWindowMode();
 
-	void updateGridSize(float sizeIndex);
-	void updateBoundingBoxsForTiles();
+	// updating Menus
+	void updatePauseMenu();
 
+	// updating events
 	void updateMousePositions();
 	void pollEvents();
 

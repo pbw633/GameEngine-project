@@ -24,11 +24,12 @@ public:
 
     // ------------------ Setters ------------------
 	void setToggleMenuStatus(bool status);
+	void setDraggedStatus(bool status);
 	// ------------------ Getters ------------------
 	std::vector<BaseButton*>& getButtons();
 	virtual sf::Vector2f getCenter();
 	bool getToggleState();
-	
+	bool getDraggedStatus();
 
 	// ------------------ Adders -------------------
 	void addButton(BaseButton* button);
@@ -38,6 +39,7 @@ public:
     virtual bool containsPoint(sf::Vector2i point);
 
 	virtual void toggleMenuStatus();
+	void toggleDraggingIfPointContained(sf::Vector2i point);
 	virtual void removeButton(BaseButton* button);
 	virtual	void closeMenu();
 	virtual	void openMenu();
@@ -50,6 +52,7 @@ private:
 	// ------------------ Variables ------------------ 
 	std::vector<BaseButton*> buttons;
 	
+	bool isDragged = false;
 	bool isToggled = false;
 
 	// ------------------ Initialization ------------------

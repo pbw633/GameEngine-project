@@ -49,6 +49,7 @@ public:
 
 	void toggleMenuStatus() override;
 	void toggleSpritePartition();
+	
 
 private:
 	// ------------------ Variables ------------------

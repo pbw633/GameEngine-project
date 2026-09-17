@@ -73,7 +73,7 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 void Game::initPauseMenu() {
 	//this->pauseMenu.initSubSpritePartitions(sf::Vector2f(0.2,0.8), sf::Vector2f(0.2, 0.8));
 	this->pauseMenu.initTexture("Textures/Menu/pauseMenu.png");
-	this->pauseMenu.initPartition(sf::Vector2f(0.21, 0.75), sf::Vector2f(0.18, 0.82));
+	this->pauseMenu.initPartition(sf::Vector2f(0.21, 0.75), sf::Vector2f(0.18, 0.75));
 	this->pauseMenu.initSprites();
 	this->pauseMenu.initSpriteOffsets();
 	//this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
@@ -294,7 +294,7 @@ void Game::leftMouseClickExecution() {
 			this->playerObject.calculatePath(&(this->grid.getGrid()[detectedTile.first][detectedTile.second]));
 		}
 	}
-	
+	this->pauseMenu.setDraggedStatus(false);
 	
 }
 
@@ -309,6 +309,13 @@ void Game::rightMouseClickExecution() {
 	
 }
 
+void Game::updatePauseMenu() {
+	if (this->pauseMenu.getDraggedStatus()) {
+		this->pauseMenu.expandUpToPoint(mousePosWindow);
+	}
+}
+
+// -------------- updating events -------------------
 void Game::pollEvents() {
 	// what is happening
 	while (this->window->pollEvent(this->ev)) {
@@ -334,15 +341,12 @@ void Game::pollEvents() {
 		case sf::Event::MouseWheelMoved:
 			if ( this->ev.mouseWheel.delta> 0 ) {
 				std::cout << "scrolled up" << "\n";
-				//this->updateGridSize(1.02f);
-				//this->updateBoundingBoxsForTiles();
+				
 				this->playerObject.updateSpriteLocationInTile();
 
 			} else if ( this->ev.mouseWheel.delta < 0 ) {
 				std::cout << "scrolled down" << "\n";
 				
-				//this->updateGridSize(0.98f);
-				//this->updateBoundingBoxsForTiles();
 				this->playerObject.updateSpriteLocationInTile();
 			}
 			break;
@@ -359,8 +363,9 @@ void Game::pollEvents() {
 			break;
 		case sf::Event::MouseButtonPressed:
 			if (this->ev.mouseButton.button == sf::Mouse::Left) {
-				this->pauseMenu.expandUpToPoint(mousePosWindow);
+				//this->pauseMenu.expandUpToPoint(mousePosWindow);
 				std::cout << "Left-buttonPress" << "\n";
+				this->pauseMenu.toggleDraggingIfPointContained(mousePosWindow);
 			}
 			else if (this->ev.mouseButton.button == sf::Mouse::Right) {
 				std::cout << "Right-buttonPress" << "\n";
@@ -380,6 +385,8 @@ void Game::update() {
 
 	this->updateFrameRate();
 	
+	this->updatePauseMenu();
+
 	this->updateGrid();
 	this->grid.update(mousePosWindow);
 	//Player
