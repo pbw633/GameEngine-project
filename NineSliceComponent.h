@@ -24,12 +24,16 @@ public:
 	void drawSpritePartition( sf::RenderTarget& window );
 
 	void expandUpToPoint(sf::Vector2i point);
-	void expandDownToPoint(sf::Vector2f point);
-	void expandLeftToPoint(sf::Vector2f point);
-	void expandRightToPoint(sf::Vector2f point);
+	void expandDownToPoint(sf::Vector2i point);
+	void expandLeftToPoint(sf::Vector2i point);
+	void expandRightToPoint(sf::Vector2i point);
+
+	void moveSlicesToPoint(sf::Vector2i point);
 private:
 	//------------------ Variables ------------------
 	//sf::Texture texture;
+	float scalingFactorSafety = 0.01;
+
 	std::vector<sf::IntRect> subFrames;
 	std::vector<sf::Sprite> subSprites;
 

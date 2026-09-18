@@ -312,6 +312,9 @@ void Game::rightMouseClickExecution() {
 void Game::updatePauseMenu() {
 	if (this->pauseMenu.getDraggedStatus()) {
 		this->pauseMenu.expandUpToPoint(mousePosWindow);
+		this->pauseMenu.expandDownToPoint(mousePosWindow);
+		this->pauseMenu.expandLeftToPoint(mousePosWindow);
+		this->pauseMenu.expandRightToPoint(mousePosWindow);
 	}
 }
 

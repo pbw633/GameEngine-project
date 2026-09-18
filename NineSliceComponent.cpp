@@ -222,32 +222,177 @@ void NineSliceComponent::expandUpToPoint(sf::Vector2i point) {
 			this->spritePartitions[i].setPosition(this->spritePartitions[i].getPosition().x, point.y - upperMiddleSpriteDimensions.y / 2);
 		}
 		
-		float scalingFactorY = (this->subSprites[6].getPosition().y - (subSprites[1].getGlobalBounds().getPosition().y+ subSprites[1].getTextureRect().getSize().y)) / subSprites[4].getTextureRect().getSize().y;
+		float scalingFactorY = ((this->subSprites[6].getPosition().y - (subSprites[1].getGlobalBounds().getPosition().y+ subSprites[1].getTextureRect().getSize().y)) / 
+											subSprites[4].getTextureRect().getSize().y)+ scalingFactorSafety;
 		// resize the middle partitions and their corresponding sprites
 		for (int j=3; j<6; j++) {
 			
 
 			// Resize the sprite partitions
 			this->spritePartitions[j].setSize(sf::Vector2f(this->spritePartitions[j].getSize().x, 
-															this->spritePartitions[6].getPosition().y - (this->spritePartitions[0].getSize().y+this->spritePartitions[0].getPosition().y)));
+															this->spritePartitions[6].getPosition().y - (this->spritePartitions[0].getSize().y+this->spritePartitions[0].getPosition().y)
+																));
 			
 			this->spritePartitions[j].setPosition(this->spritePartitions[j].getPosition().x, 
 													(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) );
 			
 			// resize the sprites
-			this->subSprites[j].setScale(sf::Vector2f(1, scalingFactorY));
+			this->subSprites[j].setScale(sf::Vector2f(this->subSprites[j].getScale().x, scalingFactorY));
 			this->subSprites[j].setPosition(this->subSprites[j].getPosition().x, 
 				(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) + this->spritePartitions[j].getOrigin().y);
 		}
 
 	}
 }
-void NineSliceComponent::expandDownToPoint(sf::Vector2f point) {
+void NineSliceComponent::expandDownToPoint(sf::Vector2i point) {
+	if (subSprites.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
+	}
+	// if the point is within the bounds of the buttom  middle partition, then expand the top partition to that point
+	if (this->getSpritePartition(7).getGlobalBounds().getPosition().y < point.y &&
+		this->getSpritePartition(7).getGlobalBounds().getPosition().y + this->getSpritePartition(7).getSize().y > point.y &&
+		this->getSpritePartition(7).getGlobalBounds().getPosition().x < point.x &&
+		this->getSpritePartition(7).getGlobalBounds().getPosition().x + this->getSpritePartition(7).getSize().x > point.x) {
+		// used for the scaling factor of the sprites
 
-}
-void NineSliceComponent::expandLeftToPoint(sf::Vector2f point) {
 
+
+		sf::Vector2i lowerMiddleSpriteDimensions = subSprites[7].getTextureRect().getSize();
+
+		// move the down partitions up to the point
+		for (int i = 6; i < 9; i++) {
+			this->subSprites[i].setPosition(this->subSprites[i].getPosition().x, point.y - lowerMiddleSpriteDimensions.y / 2);
+			this->spritePartitions[i].setPosition(this->spritePartitions[i].getPosition().x, point.y - lowerMiddleSpriteDimensions.y / 2);
+		}
+
+		float scalingFactorY = ((this->subSprites[7].getPosition().y - (subSprites[1].getGlobalBounds().getPosition().y + subSprites[1].getTextureRect().getSize().y)) /
+			subSprites[4].getTextureRect().getSize().y) + scalingFactorSafety;
+
+		// resize the middle partitions and their corresponding sprites
+		for (int j = 3; j < 6; j++) {
+
+
+			// Resize the sprite partitions
+			this->spritePartitions[j].setSize(sf::Vector2f(this->spritePartitions[j].getSize().x,
+				this->spritePartitions[6].getPosition().y - (this->spritePartitions[0].getSize().y + this->spritePartitions[0].getPosition().y)));
+
+			this->spritePartitions[j].setPosition(this->spritePartitions[j].getPosition().x,
+				(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y));
+
+			// resize the sprites
+			this->subSprites[j].setScale(sf::Vector2f(this->subSprites[j].getScale().x, scalingFactorY));
+			this->subSprites[j].setPosition(this->subSprites[j].getPosition().x,
+				(this->spritePartitions[0].getGlobalBounds().getPosition().y + this->spritePartitions[0].getSize().y) + this->spritePartitions[j].getOrigin().y);
+		}
+
+	}
 }
-void NineSliceComponent::expandRightToPoint(sf::Vector2f point) {
+void NineSliceComponent::expandLeftToPoint(sf::Vector2i point) {
+	if (subSprites.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
+	}
+	// if the point is within the bounds of the left  middle partition, then expand the top partition to that point
+	if (this->getSpritePartition(3).getGlobalBounds().getPosition().y < point.y &&
+		this->getSpritePartition(3).getGlobalBounds().getPosition().y + this->getSpritePartition(3).getSize().y > point.y &&
+		this->getSpritePartition(3).getGlobalBounds().getPosition().x < point.x &&
+		this->getSpritePartition(3).getGlobalBounds().getPosition().x + this->getSpritePartition(3).getSize().x > point.x) {
+		// used for the scaling factor of the sprites
+
+
+
+		sf::Vector2i middleLeftSpriteDimensions = subSprites[3].getTextureRect().getSize();
+
+		// move the left partitions up to the left
+		for (int i = 0; i < 3; i++) {
+			this->subSprites[i*3].setPosition( point.x - middleLeftSpriteDimensions.x / 2, this->subSprites[i * 3].getPosition().y);
+			this->spritePartitions[i * 3].setPosition(point.x - middleLeftSpriteDimensions.x / 2,this->spritePartitions[i * 3].getPosition().y );
+		}
+
+		float scalingFactorX = (( (subSprites[2].getGlobalBounds().getPosition().x ) 
+									- (subSprites[3].getGlobalBounds().getPosition().x + subSprites[3].getTextureRect().getSize().x)) /
+											subSprites[4].getTextureRect().getSize().x) + scalingFactorSafety;
+
+		// resize the middle partitions and their corresponding sprites
+		for (int j = 0; j < 3; j++) {
+
+
+			// Resize the sprite partitions
+			
+			sf::RectangleShape leftPartition = this->spritePartitions[3 * j];
+			this->spritePartitions[j * 3 + 1]
+				.setSize(sf::Vector2f( (spritePartitions[j * 3 + 1].getPosition().x + spritePartitions[j * 3 + 1].getSize().x)- (leftPartition.getPosition().x + leftPartition.getSize().x),
+										spritePartitions[j * 3 + 1].getSize().y));
+
+			this->spritePartitions[j * 3 + 1].setPosition(leftPartition.getPosition().x + leftPartition.getSize().x,
+													leftPartition.getPosition().y);
+			
+			// resize the sprites
+			this->subSprites[j * 3 + 1].setScale(sf::Vector2f(scalingFactorX, this->subSprites[j * 3 + 1].getScale().y));
+			this->subSprites[j * 3 + 1].setPosition(leftPartition.getPosition().x+ leftPartition.getSize().x,
+														leftPartition.getPosition().y);
+		}
+
+	}
+}
+void NineSliceComponent::expandRightToPoint(sf::Vector2i point) {
+	if (subSprites.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
+	}
+	// if the point is within the bounds of the left  middle partition, then expand the top partition to that point
+	if (this->getSpritePartition(5).getGlobalBounds().getPosition().y < point.y &&
+		this->getSpritePartition(5).getGlobalBounds().getPosition().y + this->getSpritePartition(3).getSize().y > point.y &&
+		this->getSpritePartition(5).getGlobalBounds().getPosition().x < point.x &&
+		this->getSpritePartition(5).getGlobalBounds().getPosition().x + this->getSpritePartition(3).getSize().x > point.x) {
+		// used for the scaling factor of the sprites
+
+
+
+		sf::Vector2i middleRightSpriteDimensions = subSprites[5].getTextureRect().getSize();
+
+		// move the left partitions up to the left
+		for (int i = 0; i < 3; i++) {
+			this->subSprites[i * 3 + 2].setPosition(point.x - middleRightSpriteDimensions.x / 2, this->subSprites[i * 3 + 2].getPosition().y);
+			this->spritePartitions[i * 3 + 2].setPosition(point.x - middleRightSpriteDimensions.x / 2, this->spritePartitions[i * 3 + 2].getPosition().y);
+		}
+
+		float scalingFactorX = (((subSprites[5].getGlobalBounds().getPosition().x) - (subSprites[4].getGlobalBounds().getPosition().x)) /
+			subSprites[4].getTextureRect().getSize().x) + scalingFactorSafety;
+
+		// resize the middle partitions and their corresponding sprites
+		for (int j = 0; j < 3; j++) {
+			// Resize the sprite partitions
+
+			sf::RectangleShape rightPartition = this->spritePartitions[3 * j + 2];
+			this->spritePartitions[j * 3 + 1]
+				.setSize(sf::Vector2f((rightPartition.getPosition().x) - (spritePartitions[j * 3 + 1].getPosition().x),
+					spritePartitions[j * 3 + 1].getSize().y));
+
+			this->spritePartitions[j * 3 + 1].setPosition(this->spritePartitions[j * 3 + 1].getPosition());
+
+			// resize the sprites
+			this->subSprites[j * 3 + 1].setScale(sf::Vector2f(scalingFactorX, this->subSprites[j * 3 + 1].getScale().y));
+			this->subSprites[j * 3 + 1].setPosition(this->subSprites[j * 3 + 1].getPosition());
+		}
+	}
+}
+
+void NineSliceComponent::moveSlicesToPoint(sf::Vector2i point) {
+	if (subSprites.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
+	}
+	for ( int i = 0; i < 9; i++ ) {
+		if (i == 4) {
+			continue;
+		}
+		sf::FloatRect currentSprite = subSprites[i].getGlobalBounds();
+		// if point is inside boarderSprites then 
+		if (currentSprite.getPosition().x <= point.x &&
+			currentSprite.getPosition().y <= point.y &&
+			point.x<= currentSprite.getPosition().x + currentSprite.getSize().x &&
+			point.y <= currentSprite.getPosition().y + currentSprite.getSize().y ) {
+			return;
+		}
+
+	}
 
 }
