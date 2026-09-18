@@ -315,6 +315,7 @@ void Game::updatePauseMenu() {
 		this->pauseMenu.expandDownToPoint(mousePosWindow);
 		this->pauseMenu.expandLeftToPoint(mousePosWindow);
 		this->pauseMenu.expandRightToPoint(mousePosWindow);
+		this->pauseMenu.moveSlicesToPoint(mousePosWindow);
 	}
 }
 

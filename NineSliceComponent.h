@@ -44,5 +44,6 @@ private:
 	sf::Vector2f spritePartitionX;
 	sf::Vector2f spritePartitionY;
 
-	//std::vector<sf::Sprite > nineSliceArray;
+	// ------------------- Actions -----------------
+	void calculateSpriteOffsetsAtIndices( std::vector<int> indicies );
 };

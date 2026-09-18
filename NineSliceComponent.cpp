@@ -144,7 +144,8 @@ void NineSliceComponent::setPosition(float x, float y) {
 		throw std::runtime_error("NineSliceComponent::setPosition::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
 	}
 	
-	sf::Vector2i centeringByMiddleSprite = subSprites[4].getTextureRect().getSize();
+	sf::Vector2f centeringByMiddleSprite = sf::Vector2f(subSprites[4].getTextureRect().getSize().x * subSprites[4].getScale().x,
+															subSprites[4].getTextureRect().getSize().y * subSprites[4].getScale().y);
 	for (int i = 0; i < 3; i++) {
 		//spriteOffset.y = spriteOffset.y + subSprites[i * 3].getOrigin().y;
 		for (int j = 0; j < 3; j++) {
@@ -243,6 +244,7 @@ void NineSliceComponent::expandUpToPoint(sf::Vector2i point) {
 		}
 
 	}
+	calculateSpriteOffsetsAtIndices({ 1,2,3 });
 }
 void NineSliceComponent::expandDownToPoint(sf::Vector2i point) {
 	if (subSprites.size() != 9) {
@@ -286,6 +288,7 @@ void NineSliceComponent::expandDownToPoint(sf::Vector2i point) {
 		}
 
 	}
+	calculateSpriteOffsetsAtIndices({ 6,7,8 });
 }
 void NineSliceComponent::expandLeftToPoint(sf::Vector2i point) {
 	if (subSprites.size() != 9) {
@@ -333,6 +336,7 @@ void NineSliceComponent::expandLeftToPoint(sf::Vector2i point) {
 		}
 
 	}
+	calculateSpriteOffsetsAtIndices({ 0,3,6 });
 }
 void NineSliceComponent::expandRightToPoint(sf::Vector2i point) {
 	if (subSprites.size() != 9) {
@@ -374,25 +378,64 @@ void NineSliceComponent::expandRightToPoint(sf::Vector2i point) {
 			this->subSprites[j * 3 + 1].setPosition(this->subSprites[j * 3 + 1].getPosition());
 		}
 	}
+	// recalculate the offsets of the sprites after 
+	calculateSpriteOffsetsAtIndices( { 2,5,8 } );
 }
 
 void NineSliceComponent::moveSlicesToPoint(sf::Vector2i point) {
 	if (subSprites.size() != 9) {
 		throw std::runtime_error("NineSliceComponent::expandUpToPoint::This class needs 9 subSprites. Try calling initPartitions() and initSprites() first.");
 	}
-	for ( int i = 0; i < 9; i++ ) {
-		if (i == 4) {
-			continue;
-		}
-		sf::FloatRect currentSprite = subSprites[i].getGlobalBounds();
-		// if point is inside boarderSprites then 
-		if (currentSprite.getPosition().x <= point.x &&
-			currentSprite.getPosition().y <= point.y &&
-			point.x<= currentSprite.getPosition().x + currentSprite.getSize().x &&
-			point.y <= currentSprite.getPosition().y + currentSprite.getSize().y ) {
-			return;
-		}
-
+	
+	sf::FloatRect middleSprite = subSprites[4].getGlobalBounds();
+	if (middleSprite.getPosition().x <= point.x &&
+		middleSprite.getPosition().y <= point.y && 
+		point.x <= middleSprite.getPosition().x + middleSprite.getSize().x && 
+		point.y <= middleSprite.getPosition().y + middleSprite.getSize().y) {
+		
+		this->setPosition(point.x, point.y);
 	}
 
+}
+
+// --------------------------------- Private ----------------------------------------
+
+// ---------------- Actions ---------------------
+void NineSliceComponent::calculateSpriteOffsetsAtIndices(std::vector<int> indicies) {
+	for (int i = 0; i < indicies.size(); i++) {
+		if (9 <= indicies[i] || indicies[i] < 0) {
+			throw std::runtime_error("NineSliceComponent::calculateSpriteOffsetsAtIndices:: index can at most equal 8 and not negative");
+		}
+	}
+
+	for (int i = 0; i < indicies.size(); i++) {
+		switch (indicies[i]) {
+		case 0:
+			spriteOffsets[0] = sf::Vector2f(-subSprites[0].getTextureRect().getSize().x * subSprites[0].getScale().x,
+												-subSprites[0].getTextureRect().getSize().y * subSprites[0].getScale().y);
+		case 1:
+			spriteOffsets[1] = sf::Vector2f(0,
+												-subSprites[1].getTextureRect().getSize().y * subSprites[1].getScale().y);
+		case 2:
+			spriteOffsets[2] = sf::Vector2f(subSprites[4].getTextureRect().getSize().x * subSprites[4].getScale().x,
+												-subSprites[2].getTextureRect().getSize().y * subSprites[2].getScale().y);
+		case 3:
+			spriteOffsets[3] = sf::Vector2f(-subSprites[3].getTextureRect().getSize().x * subSprites[3].getScale().x,
+												0);
+		case 4:
+			spriteOffsets[4] = sf::Vector2f(0, 0);
+		case 5:
+			spriteOffsets[5] = sf::Vector2f(subSprites[4].getTextureRect().getSize().x * subSprites[4].getScale().x,
+												0);
+		case 6:
+			spriteOffsets[6] = sf::Vector2f( -subSprites[6].getTextureRect().getSize().x * subSprites[6].getScale().x,
+												subSprites[4].getTextureRect().getSize().y * subSprites[4].getScale().y	);
+		case 7:
+			spriteOffsets[7] = sf::Vector2f( 0, 
+												subSprites[4].getTextureRect().getSize().y * subSprites[4].getScale().y);
+		case 8:
+			spriteOffsets[8] = sf::Vector2f( subSprites[4].getTextureRect().getSize().x * subSprites[4].getScale().x,
+												subSprites[4].getTextureRect().getSize().y * subSprites[4].getScale().y);
+		}
+	}
 }
