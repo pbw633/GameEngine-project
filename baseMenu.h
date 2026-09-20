@@ -17,12 +17,13 @@ public:
     BaseMenu() {};
 	
 	// ------------------ Variables ------------------ 
-	//void initSubSpritePartitionByFraction( sf::Vector2f partitionX, sf::Vector2f partitionY ); // used to partition into 3 x 3
-	//void initSubSpritePartitionComponents();
-	// ------------------ Initialization ------------------
 	
+	// ------------------ Initialization ------------------
+	virtual void initButton();
+	virtual void initButton(BaseButton button);
 
     // ------------------ Setters ------------------
+	
 	void setToggleMenuStatus(bool status);
 	void setDraggedStatus(bool status);
 	// ------------------ Getters ------------------

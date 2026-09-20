@@ -13,17 +13,30 @@
 class BaseButton{
 public:
 	//------------------ Initialization ------------------
-
-
+	void initFont(std::string fontLocation);
+	void initText(std::string buttonText);
+	void initTextSize(int textSize);
+	void initTextColor(sf::Color color);
+	void initTextPosition(sf::Vector2f position);
 	//-------------------- Adders ----------------------
 	
 
 	//------------------ Setters ------------------
-	
-	
+	void setButtonMethod(std::is_function <void()> method);
+
+	void setText(std::string buttonText);
+	void setTextSize(int textSize);
+	void setTextColor(sf::Color color);
+	void setTextPosition(sf::Vector2f position);
 	
 	//------------------ Getters ------------------
+	std::string getText();
+	int getTextSize();
+	sf::Color getTextColor();
+	sf::Vector2f getTextPosition();
+	
 	bool getToggleState();
+
 
 	//------------------ Actions ------------------
 	bool isPressed(sf::Vector2i mousePos);
@@ -33,7 +46,12 @@ public:
 	//------------------ Variables ------------------
 
 private:
-	//------------------ Variables ------------------	
+	//------------------ Variables ------------------
+	sf::Font font;
+	sf::Text buttonText;
 	bool togleState = false;
+
+	//------------------- Actions ---------------------
+	std::is_function <void()> buttonMethod;
 };
 

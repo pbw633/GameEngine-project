@@ -2,6 +2,13 @@
 #include "baseMenu.h"
 #include <iostream>
 // ----------------- Initialization -----------------
+void BaseMenu::initButton() { // placeholder
+
+}
+
+void BaseMenu::initButton(BaseButton button) { // placeholder
+
+}
 
 // ------------------- Setters --------------------
 void BaseMenu::setToggleMenuStatus(bool status) {
