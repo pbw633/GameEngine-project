@@ -1,7 +1,9 @@
 #include "BaseButton.h"
 // ------------------- Initialization --------------
 void BaseButton::initFont( std::string fileLocation ) {
-	this->font.loadFromFile(fileLocation);
+	if (!this->font.loadFromFile(fileLocation)) {
+		throw std::runtime_error("BaseButton::initFont:: Font did not load");
+	}
 	this->buttonText.setFont(font);
 	
 }
@@ -9,6 +11,7 @@ void BaseButton::initFont( std::string fileLocation ) {
 
 void BaseButton::initText(std::string buttonText) {
 	this->buttonText.setString(buttonText);
+	//this->buttonText.set
 }
 
 void BaseButton::initTextSize(int textSize) {
@@ -57,10 +60,15 @@ void BaseButton::setTextPosition(sf::Vector2f position) {
 	this->buttonText.setPosition(position);
 }
 
-// ------------------ Getters ------------------
-std::string BaseButton::getText() {
-	return this->buttonText.getString();
+void BaseButton::setPosition(sf::Vector2f position) {
+	// placeholder
 }
+
+// ------------------ Getters ------------------
+sf::Text BaseButton::getText() {
+	return this->buttonText;
+}
+
 int BaseButton::getTextSize() {
 	return this->getTextSize();
 }
@@ -74,6 +82,10 @@ sf::Vector2f BaseButton::getTextPosition() {
 
 bool BaseButton::getToggleState() {
 	return togleState;
+}
+
+sf::Vector2f BaseButton::getSize() {
+	return sf::Vector2f(0, 0);
 }
 
 // ------------------ Actions ------------------
@@ -91,3 +103,7 @@ bool BaseButton::containsPoint(sf::Vector2i point) {
 	return false; // Placeholder implementation, should be overridden in derived classes
 }
 
+void BaseButton::draw(sf::RenderTarget& window) {
+	std::cout << "BaseButton draw" << "\n";
+	// Placehodler
+}

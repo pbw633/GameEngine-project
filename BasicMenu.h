@@ -19,10 +19,9 @@ public:
 
 	// ------------------ Initialization ------------------
 	void initBasicMenuByRectangleShape(sf::Vector2f position, float width, float height);	
-	//void initBasicMenuByTexture(std::string textureFileName);
+	
+	void initButtons();
 
-	//void initSubSpritePartitions(sf::Vector2f partitionX, sf::Vector2f partitionY);
-	//void initSubSprites(std::string fileName); // used to partition into 3 x 3
 	// ------------------ Setters ------------------
 
 	void setMenuPosition(sf::Vector2f position	);

@@ -18,6 +18,8 @@ public:
 	//------------------ Getters ---------------------
 	sf::RectangleShape& getSpritePartition(int index);
 	std::vector<sf::RectangleShape>& getSpritePartitions();
+
+	sf::Sprite& getCenterSprite();
 	//------------------ Adders ----------------------
 	//------------------ Actions ---------------------
 	void draw(sf::RenderTarget& window) override;

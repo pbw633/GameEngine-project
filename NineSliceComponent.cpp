@@ -177,6 +177,13 @@ std::vector<sf::RectangleShape>& NineSliceComponent::getSpritePartitions() {
 	return spritePartitions;
 }
 
+sf::Sprite& NineSliceComponent::getCenterSprite() {
+	if (spritePartitions.size() != 9) {
+		throw std::runtime_error("NineSliceComponent::getCenterSprite::There should be 9 slices in this component");
+	}
+	return this->subSprites[4];
+}
+
 // ------------------ Adders -------------------
 
 // ------------------ Actions ------------------

@@ -9,7 +9,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-class BasicButton : BaseButton {
+class BasicButton : public BaseButton {
 public:
 	BasicButton(){}
 
@@ -29,6 +29,7 @@ public:
 	void initButtonShape(float x, float y, float width, float height);
 	void initButtonShape(sf::RectangleShape buttonShape);
 
+	
 
 
 	// ------------------ Setters ------------------
@@ -37,13 +38,15 @@ public:
 	void setButtonTexture(sf::Texture buttonTexture);
 	void setButtonSprite(sf::Sprite buttonSprite);
 
-	void setButtonPosition(float x, float y);
-
+	//void setButtonPosition(float x, float y);
+	void setPosition(sf::Vector2f position) override;
 	void setButtonWidth(float Width);
 	void setButtonHeight(float height);
 
 
 	// ------------------ Getters ------------------
+	sf::Vector2f getSize() override;
+	
 	float getButtonWidth();
 	float getButtonHeight();
 	sf::Vector2f getButtonPosition();
@@ -62,12 +65,14 @@ public:
 
 	void resizeButton(float sizeFactor);
 
+	void draw(sf::RenderTarget& window) override;
+
 private:
 	// ------------------ variables ------------------
 	//std::vector<sf::Vector2f> points;
 
 	sf::RectangleShape basicButtonShape;
-	sf::Text buttonText;
+	//sf::Text buttonText;
 	sf::Texture buttonTexture;
 	sf::Sprite buttonSprite;
 

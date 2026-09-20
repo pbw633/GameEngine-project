@@ -20,7 +20,7 @@ void BaseMenu::setDraggedStatus(bool status) {
 }
 
 // ------------------- Getters -------------------
-std::vector<BaseButton*>& BaseMenu::getButtons() {
+std::vector<std::unique_ptr<BaseButton>>& BaseMenu::getButtons() {
 	return this->buttons;
 }
 
@@ -36,8 +36,9 @@ bool BaseMenu::getDraggedStatus() {
 	return this->isDragged;
 }
 // ------------------- Adders -------------------
-void BaseMenu::addButton(BaseButton* button) {
-	this->buttons.push_back(button);
+void BaseMenu::addButton(std::unique_ptr<BaseButton> button) {
+	// std::move moves the ownership from where it is currently to the new place it is moved to aka the vector
+	this->buttons.push_back(std::move(button));
 }
 
 // ------------------- Actions -------------------
@@ -58,13 +59,14 @@ void BaseMenu::toggleDraggingIfPointContained(sf::Vector2i point) {
 
 }
 
-
+/*
 void BaseMenu::removeButton(BaseButton* button) {
 	auto it = std::find(this->buttons.begin(), this->buttons.end(), button);
 	if (it != this->buttons.end()) {
 		this->buttons.erase(it);
 	}
 }
+*/
 
 void BaseMenu::closeMenu() {
 	// Placeholder implementation, should be overridden in derived classes

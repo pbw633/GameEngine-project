@@ -6,7 +6,7 @@
 
 // ------------------ Initialization ------------------	
 void BasicButton::initButtonShape(float x, float y, float width, float height) {
-	this->basicButtonShape.setPosition(x, y);
+	this->basicButtonShape.setPosition(x-width/2, y-height/2);
 	this->basicButtonShape.setSize(sf::Vector2f(width, height));
 }
 
@@ -18,10 +18,11 @@ void BasicButton::initButtonShape(sf::RectangleShape buttonShape) {
 void BasicButton::setButtonShape(sf::RectangleShape buttonShape) {
 	this->basicButtonShape = buttonShape;
 }
-
+/*
 void BasicButton::setButtonText(sf::Text buttonText) {
 	this->buttonText = buttonText;
 }
+*/
 
 void BasicButton::setButtonTexture(sf::Texture buttonTexture) {
 	this->buttonTexture = buttonTexture;
@@ -41,8 +42,8 @@ void BasicButton::setButtonHeight(float height) {
 	
 }
 
-void BasicButton::setButtonPosition(float x, float y) {
-	this->basicButtonShape.setPosition(x, y);
+void BasicButton::setPosition(sf::Vector2f position) {
+	this->basicButtonShape.setPosition(position.x + this->basicButtonShape.getSize().x/2, position.y + this->basicButtonShape.getSize().y / 2);
 }
 
 // ------------------ Getters ------------------
@@ -56,6 +57,10 @@ float BasicButton::getButtonWidth() {
 
 float BasicButton::getButtonHeight() {
 	return this->basicButtonShape.getSize().y;
+}
+
+sf::Vector2f BasicButton::getSize() {
+	return sf::Vector2f(this->getButtonWidth(), this->getButtonWidth());
 }
 
 sf::RectangleShape& BasicButton::getButtonShape() {
@@ -152,4 +157,18 @@ bool BasicButton::pointInsideSprite(sf::Vector2i point) {
 
 void BasicButton::resizeButton(float sizeFactor) {
 	this->basicButtonShape.setSize(sf::Vector2f(this->getButtonWidth() * sizeFactor, this->getButtonHeight() * sizeFactor));
+}
+
+void BasicButton::draw(sf::RenderTarget& window) {
+	//std::cout << "BasicButton draw" << "\n";
+	/*
+	std::cout << "Text: " << this->getText().getString().toAnsiString() << '\n';
+	std::cout << "Position: "
+		<< this->getText().getPosition().x << ", "
+		<< this->getText().getPosition().y << '\n';
+	std::cout << "Character size: "
+		<< this->getText().getCharacterSize() << '\n';
+	*/
+	window.draw(this->getButtonShape());
+	window.draw(this->getText());
 }

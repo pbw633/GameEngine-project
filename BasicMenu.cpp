@@ -10,21 +10,45 @@ void BasicMenu::initBasicMenuByRectangleShape(sf::Vector2f position, float width
 	
 	this->center = position;
 }
-/*
-void BasicMenu::initBasicMenuByTexture(std::string textureFileName) {
-	// Set the origin to the center of the rectangle
+
+void BasicMenu::initButtons() {
+	sf::Sprite middleSprite = this->getCenterSprite();
 	
+	auto exitButton = std::make_unique<BasicButton>(middleSprite.getGlobalBounds().getPosition().x + middleSprite.getTextureRect().getSize().x * middleSprite.getScale().x/2,
+														middleSprite.getGlobalBounds().getPosition().y,
+														middleSprite.getTextureRect().getSize().x,
+														middleSprite.getTextureRect().getSize().y / 4);
+	/*
+	BasicButton exitButton = BasicButton(middleSprite.getGlobalBounds().getPosition().x , 
+											middleSprite.getGlobalBounds().getPosition().y, 
+											middleSprite.getTextureRect().getSize().x , 
+											middleSprite.getTextureRect().getSize().y/4);
+											*/
+	exitButton->initFont("Fonts/alagard.ttf");
 	
+	exitButton->initTextPosition(exitButton->getButtonPosition());
+	exitButton->initTextColor(sf::Color::Red);
+	
+	exitButton->initTextSize(20);
+	exitButton->initText("Test Of button");
+
+	this->addButton(std::move(exitButton) );
 }
-*/
 
 
 // ------------------ Setters ------------------	
 void BasicMenu::setMenuPosition(sf::Vector2f position) {
 	this->setPosition(position.x, position.y);
-	//this->calculateCenter();
-	//this->setSpritePosition(position);
-	//this->calculateCenter();
+	int numOfButtons = this->getButtons().size();
+	if (0 < this->getButtons().size()) {
+		float placementY = 0;
+		for (int i = 0; i < numOfButtons; i++) {
+			sf::Vector2f position = sf::Vector2f(this->getCenterSprite().getTextureRect().getPosition().x + (this->getCenterSprite().getTextureRect().getSize().y * this->getCenterSprite().getScale().x/2), 
+													this->getCenterSprite().getTextureRect().getPosition().y + this->getButtons()[i]->getSize().y * this->getCenterSprite().getScale().y / 2);
+			
+			this->getButtons()[i]->setPosition(position);
+		}
+	}
 }
 // ------------------ Getters ------------------
 sf::Vector2f BasicMenu::getPoint(int index) {
@@ -79,6 +103,14 @@ bool BasicMenu::containsPoint(sf::Vector2i point) {
 void BasicMenu::drawMenu(sf::RenderTarget& window) {
 	if (this->getToggleState()) {
 		this->draw(window);
+		int numOfButtons = this->getButtons().size();
+		if (0 < numOfButtons) {
+			
+			for (int i = 0; i < numOfButtons; i++ ) {
+				
+				(this->getButtons()[i])->draw(window);
+			}
+		}
 	}
 	if (this->getToggleState() && showSpritePartition) {
 		this->drawSpritePartition(window);

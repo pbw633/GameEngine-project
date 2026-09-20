@@ -29,7 +29,9 @@ void Game::initVariables() { // like the void setup but for the values
 	
 }
 void Game::initFonts() {
-	font.loadFromFile("Fonts/ARIAL.ttf");
+	if (! font.loadFromFile("Fonts/ARIAL.ttf")) {
+		std::cout << "did not load font" << "\n";
+	}
 
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(14);
@@ -78,6 +80,8 @@ void Game::initPauseMenu() {
 	this->pauseMenu.initSpriteOffsets();
 	//this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
 	this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
+	
+	this->pauseMenu.initButtons();
 }
 
 

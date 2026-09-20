@@ -27,13 +27,13 @@ public:
 	void setToggleMenuStatus(bool status);
 	void setDraggedStatus(bool status);
 	// ------------------ Getters ------------------
-	std::vector<BaseButton*>& getButtons();
+	std::vector<std::unique_ptr<BaseButton>>& getButtons();
 	virtual sf::Vector2f getCenter();
 	bool getToggleState();
 	bool getDraggedStatus();
 
 	// ------------------ Adders -------------------
-	void addButton(BaseButton* button);
+	void addButton(std::unique_ptr<BaseButton> button);
 	// ------------------ Actions ------------------
 
 
@@ -41,18 +41,20 @@ public:
 
 	virtual void toggleMenuStatus();
 	void toggleDraggingIfPointContained(sf::Vector2i point);
-	virtual void removeButton(BaseButton* button);
+	//virtual void removeButton(BaseButton* button);
 	virtual	void closeMenu();
 	virtual	void openMenu();
 	virtual void resizeMenu(float sizeFactor);
 	virtual void calculateCenter();
 
+	
 	//void drawSubSpritePartitions(sf::RenderTarget& window);
 
 private:
 	// ------------------ Variables ------------------ 
-	std::vector<BaseButton*> buttons;
-	
+	//std::vector<BaseButton> buttons;
+	std::vector<std::unique_ptr<BaseButton>> buttons;
+
 	bool isDragged = false;
 	bool isToggled = false;
 

@@ -123,7 +123,7 @@ void setBasicButtonPositionTest() {
 	// Act
 	sf::Vector2f returnedBasicPositionBefore = basicButton.getButtonPosition();
 
-	basicButton.setButtonPosition(xValueChange, yValueChange);
+	basicButton.setPosition(sf::Vector2f(xValueChange, yValueChange));
 
 	sf::Vector2f returnedBasicPositionAfter = basicButton.getButtonPosition();
 
@@ -148,7 +148,7 @@ void buttonOverlapsButtonTest() {
 
 	// Act
 	bool returnedResultFirst = basicButton1.buttonOverlapsButton(basicButton2);
-	basicButton2.setButtonPosition(0, dim);
+	basicButton2.setPosition(sf::Vector2f(0, dim));
 	bool returnedResultSecond = basicButton1.buttonOverlapsButton(basicButton2);
 
 	// Assert
@@ -207,7 +207,7 @@ void basicButtonInsideMenuTest() {
 
 	// Act
 	bool returnedValueBeforeMovement = basicButton.buttonInsideMenu(menuShape);
-	basicButton.setButtonPosition(0,100);
+	basicButton.setPosition(sf::Vector2f(0,100));
 	bool returnedValueAfterMovement = basicButton.buttonInsideMenu(menuShape);
 
 
