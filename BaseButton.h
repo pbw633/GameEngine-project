@@ -52,6 +52,8 @@ public:
 	bool isPressed(sf::Vector2i mousePos);
 	void isToggled(sf::Vector2i mousePos);
 
+	void executeButtonMethod();
+
 	virtual bool containsPoint(sf::Vector2i point);
 
 	virtual void draw(sf::RenderTarget& window);

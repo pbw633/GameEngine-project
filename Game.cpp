@@ -82,6 +82,7 @@ void Game::initPauseMenu() {
 	this->pauseMenu.setMenuPosition(sf::Vector2f(this->window->getSize().x / 2.f - this->pauseMenu.getSpriteWidth() / 2.f, this->window->getSize().y / 2.f - this->pauseMenu.getSpriteHeight() / 2.f));
 	
 	this->pauseMenu.initButtons();
+	this->pauseMenu.getButtons()[0]->setButtonMethod([this]() {this->window->close();});
 }
 
 
@@ -298,6 +299,8 @@ void Game::leftMouseClickExecution() {
 			this->playerObject.calculatePath(&(this->grid.getGrid()[detectedTile.first][detectedTile.second]));
 		}
 	}
+	this->pauseMenu.handleButtonsPressed(this->mousePosWindow);
+
 	this->pauseMenu.setDraggedStatus(false);
 	
 }

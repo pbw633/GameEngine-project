@@ -110,6 +110,13 @@ void BaseButton::isToggled(sf::Vector2i mousePos) {
 	}
 }
 
+void BaseButton::executeButtonMethod() {
+	// If buttonMethod exists then use it
+	if (this->buttonMethod) {
+		this->buttonMethod();
+	}
+}
+
 bool BaseButton::containsPoint(sf::Vector2i point) {
 	return false; // Placeholder implementation, should be overridden in derived classes
 }

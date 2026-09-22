@@ -153,7 +153,8 @@ void BasicMenu::toggleSpritePartition() {
 }
 
 void BasicMenu::handleByDrag(sf::Vector2i point) {
-	if (this->getDraggedStatus()) {
+	// This Method is used for what should happen then the menu is dragged
+	if (this->getDraggedStatus() && this->showSpritePartition) {
 
 		this->expandUpToPoint(point);
 		this->expandDownToPoint(point);
@@ -162,6 +163,23 @@ void BasicMenu::handleByDrag(sf::Vector2i point) {
 		this->moveSlicesToPoint(point);
 		this->updateButtons();
 	}
+}
+
+void BasicMenu::handleButtonsPressed(sf::Vector2i mousePos) {
+	// This Method is used for what should happen then the menu is pressed
+	if ( this->containsPoint( mousePos ) ) {
+		std::cout << "mouse Pressed inside Menu" << "\n";
+		int numOfButtons = this->getButtons().size();
+		if (0 < numOfButtons) {
+			for (int i = 0; i < numOfButtons; i++) {
+				if (this->getButtons()[i]->containsPoint(mousePos)) {
+					std::cout << "mouse Pressed inside button" << "\n";
+					this->getButtons()[i]->executeButtonMethod();
+				}
+			}
+		}
+	}
+	
 }
 
 // ---------------------------- Private -----------------------------
