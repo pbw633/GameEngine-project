@@ -15,23 +15,21 @@ void BasicMenu::initButtons() {
 	sf::Sprite middleSprite = this->getCenterSprite();
 	
 	auto exitButton = std::make_unique<BasicButton>(middleSprite.getGlobalBounds().getPosition().x + middleSprite.getTextureRect().getSize().x * middleSprite.getScale().x/2,
-														middleSprite.getGlobalBounds().getPosition().y,
+														middleSprite.getGlobalBounds().getPosition().y + middleSprite.getTextureRect().getSize().y / 4,
 														middleSprite.getTextureRect().getSize().x,
 														middleSprite.getTextureRect().getSize().y / 4);
-	/*
-	BasicButton exitButton = BasicButton(middleSprite.getGlobalBounds().getPosition().x , 
-											middleSprite.getGlobalBounds().getPosition().y, 
-											middleSprite.getTextureRect().getSize().x , 
-											middleSprite.getTextureRect().getSize().y/4);
-											*/
+
 	exitButton->initFont("Fonts/alagard.ttf");
 	
-	exitButton->initTextPosition(exitButton->getButtonPosition());
-	exitButton->initTextColor(sf::Color::Red);
 	
+	exitButton->initTextColor(sf::Color::Red);
 	exitButton->initTextSize(20);
 	exitButton->initText("Test Of button");
 
+	sf::Vector2f pos = sf::Vector2f(exitButton->getButtonPosition()) 
+						+ sf::Vector2f(exitButton->getSize().x/2, exitButton->getSize().y / 2) 
+							- sf::Vector2f(exitButton->getText().getGlobalBounds().getSize().x/2, exitButton->getText().getGlobalBounds().getSize().y / 2);
+	exitButton->initTextPosition( pos );
 	this->addButton(std::move(exitButton) );
 }
 
@@ -140,4 +138,32 @@ void BasicMenu::toggleMenuStatus() {
 
 void BasicMenu::toggleSpritePartition() {
 	this->showSpritePartition = !(this->showSpritePartition);
+}
+
+void BasicMenu::handleByDrag(sf::Vector2i point) {
+	if (this->getDraggedStatus()) {
+
+		this->expandUpToPoint(point);
+		this->expandDownToPoint(point);
+		this->expandLeftToPoint(point);
+		this->expandRightToPoint(point);
+		this->moveSlicesToPoint(point);
+		this->updateButtons();
+	}
+}
+
+// ---------------------------- Private -----------------------------
+// ----------------- Actions -------------
+void BasicMenu::updateButtons() {
+	int numOfButtons = this->getButtons().size();
+	if (0 < numOfButtons) {
+		
+		float posX = this->getCenterSprite().getGlobalBounds().getPosition().x + this->getCenterSprite().getTextureRect().getSize().x * this->getCenterSprite().getScale().x / 2;
+		for (int i = 0; i < numOfButtons; i++) {
+			this->getButtons()[i]->setSize(sf::Vector2f(this->getCenterSprite().getTextureRect().getSize().x * this->getCenterSprite().getScale().x,
+															this->getButtons()[i]->getSize().y));
+
+			this->getButtons()[i]->setPosition(sf::Vector2f(posX, this->getCenterSprite().getGlobalBounds().getPosition().y + this->getButtons()[i]->getSize().y));
+		}
+	}
 }

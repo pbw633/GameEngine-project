@@ -26,6 +26,7 @@ public:
 	bool buttonPressedBool = false;
 
 	//------------------Initialization------------------
+	void initButtonByText(float x, float y, std::string text);
 	void initButtonShape(float x, float y, float width, float height);
 	void initButtonShape(sf::RectangleShape buttonShape);
 
@@ -42,7 +43,7 @@ public:
 	void setPosition(sf::Vector2f position) override;
 	void setButtonWidth(float Width);
 	void setButtonHeight(float height);
-
+	void setSize(sf::Vector2f dim) override;
 
 	// ------------------ Getters ------------------
 	sf::Vector2f getSize() override;

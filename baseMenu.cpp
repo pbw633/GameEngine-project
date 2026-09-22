@@ -59,15 +59,6 @@ void BaseMenu::toggleDraggingIfPointContained(sf::Vector2i point) {
 
 }
 
-/*
-void BaseMenu::removeButton(BaseButton* button) {
-	auto it = std::find(this->buttons.begin(), this->buttons.end(), button);
-	if (it != this->buttons.end()) {
-		this->buttons.erase(it);
-	}
-}
-*/
-
 void BaseMenu::closeMenu() {
 	// Placeholder implementation, should be overridden in derived classes
 }
@@ -82,3 +73,5 @@ void BaseMenu::resizeMenu(float sizeFactor) {
 void BaseMenu::calculateCenter() {
 	// Placeholder implementation, should be overridden in derived classes
 }
+
+

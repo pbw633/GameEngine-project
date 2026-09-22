@@ -49,6 +49,7 @@ public:
 	void toggleMenuStatus() override;
 	void toggleSpritePartition();
 	
+	void handleByDrag(sf::Vector2i point);
 
 private:
 	// ------------------ Variables ------------------
@@ -76,5 +77,6 @@ private:
 	// ------------------ Adders -------------------
 
 	// ------------------ Actions ------------------
+	void updateButtons();
 	
 };

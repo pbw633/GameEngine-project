@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <functional>
 #include "UIComponent.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -24,7 +25,7 @@ public:
 	
 
 	//------------------ Setters ------------------
-	void setButtonMethod(std::is_function <void()> method);
+	void setButtonMethod(std::function <void()> method);
 
 	virtual void setPosition(sf::Vector2f position);
 
@@ -33,8 +34,9 @@ public:
 	void setTextColor(sf::Color color);
 	void setTextPosition(sf::Vector2f position);
 	
+	virtual void setSize(sf::Vector2f dim);
 	//------------------ Getters ------------------
-	sf::Text getText();
+	sf::Text& getText();
 	int getTextSize();
 	sf::Color getTextColor();
 	sf::Vector2f getTextPosition();
@@ -61,6 +63,8 @@ private:
 	bool togleState = false;
 
 	//------------------- Actions ---------------------
-	std::is_function <void()> buttonMethod;
+	std::function <void()> buttonMethod;
+
+	
 };
 

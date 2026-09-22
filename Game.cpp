@@ -75,7 +75,7 @@ void Game::initOrganism(int rowPos, int colPos, Organism& organism) {
 void Game::initPauseMenu() {
 	//this->pauseMenu.initSubSpritePartitions(sf::Vector2f(0.2,0.8), sf::Vector2f(0.2, 0.8));
 	this->pauseMenu.initTexture("Textures/Menu/pauseMenu.png");
-	this->pauseMenu.initPartition(sf::Vector2f(0.21, 0.75), sf::Vector2f(0.18, 0.75));
+	this->pauseMenu.initPartition(sf::Vector2f(0.21, 0.79), sf::Vector2f(0.18, 0.75));
 	this->pauseMenu.initSprites();
 	this->pauseMenu.initSpriteOffsets();
 	//this->pauseMenu.initBasicMenuByTexture("Textures/Menu/pauseMenu.png");
@@ -314,13 +314,7 @@ void Game::rightMouseClickExecution() {
 }
 
 void Game::updatePauseMenu() {
-	if (this->pauseMenu.getDraggedStatus()) {
-		this->pauseMenu.expandUpToPoint(mousePosWindow);
-		this->pauseMenu.expandDownToPoint(mousePosWindow);
-		this->pauseMenu.expandLeftToPoint(mousePosWindow);
-		this->pauseMenu.expandRightToPoint(mousePosWindow);
-		this->pauseMenu.moveSlicesToPoint(mousePosWindow);
-	}
+	this->pauseMenu.handleByDrag(mousePosWindow);
 }
 
 // -------------- updating events -------------------

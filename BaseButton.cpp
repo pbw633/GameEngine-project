@@ -35,7 +35,7 @@ void BaseButton::initTextPosition(sf::Vector2f position) {
 
 
 // ------------------ Setters ------------------
-void BaseButton::setButtonMethod(std::is_function <void()> method) {
+void BaseButton::setButtonMethod(std::function <void()> method) {
 	this->buttonMethod = method;
 }
 
@@ -64,8 +64,12 @@ void BaseButton::setPosition(sf::Vector2f position) {
 	// placeholder
 }
 
+void BaseButton::setSize(sf::Vector2f dim) {
+	// placeholder;
+}
+
 // ------------------ Getters ------------------
-sf::Text BaseButton::getText() {
+sf::Text& BaseButton::getText() {
 	return this->buttonText;
 }
 

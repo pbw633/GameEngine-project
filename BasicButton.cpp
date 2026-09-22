@@ -5,6 +5,17 @@
 
 
 // ------------------ Initialization ------------------	
+void BasicButton::initButtonByText(float x, float y, std::string text) {
+	this->setText(text);
+	float textLength = this->getText().getGlobalBounds().getSize().x;
+	float textHeight = this->getText().getGlobalBounds().getSize().y;
+
+	this->basicButtonShape.setSize(sf::Vector2f(textLength, textHeight));
+	this->basicButtonShape.setPosition(x-textLength/2,y-textHeight/2);
+
+	this->setTextPosition(sf::Vector2f(x - textLength / 2, y - textHeight / 2));
+
+}
 void BasicButton::initButtonShape(float x, float y, float width, float height) {
 	this->basicButtonShape.setPosition(x-width/2, y-height/2);
 	this->basicButtonShape.setSize(sf::Vector2f(width, height));
@@ -43,7 +54,19 @@ void BasicButton::setButtonHeight(float height) {
 }
 
 void BasicButton::setPosition(sf::Vector2f position) {
-	this->basicButtonShape.setPosition(position.x + this->basicButtonShape.getSize().x/2, position.y + this->basicButtonShape.getSize().y / 2);
+	this->basicButtonShape.setPosition(position.x - this->basicButtonShape.getSize().x/2, position.y - this->basicButtonShape.getSize().y / 2);
+	
+	float posX = this->basicButtonShape.getPosition().x + this->getSize().x / 2 -  this->getText().getGlobalBounds().getSize().x/2;
+	float posY = this->basicButtonShape.getPosition().y + this->getSize().y / 2 - this->getText().getGlobalBounds().getSize().y/2 ;
+	(this->getText()).setPosition(posX, posY);
+	
+}
+
+void BasicButton::setSize(sf::Vector2f dim) {
+	if (dim.x < 0 || dim.y < 0) {
+		throw std::invalid_argument("BasicButton::setSize:: the dimensions must be positive");
+	}
+	this->basicButtonShape.setSize(dim);
 }
 
 // ------------------ Getters ------------------
@@ -60,7 +83,7 @@ float BasicButton::getButtonHeight() {
 }
 
 sf::Vector2f BasicButton::getSize() {
-	return sf::Vector2f(this->getButtonWidth(), this->getButtonWidth());
+	return sf::Vector2f(this->getButtonWidth(), this->getButtonHeight());
 }
 
 sf::RectangleShape& BasicButton::getButtonShape() {
