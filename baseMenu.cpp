@@ -10,6 +10,10 @@ void BaseMenu::initButton(BaseButton button) { // placeholder
 
 }
 
+void BaseMenu::initButtonMethod(std::function <void()> func, int index) {
+	this->setButtonMethod(func, index);
+}
+
 // ------------------- Setters --------------------
 void BaseMenu::setToggleMenuStatus(bool status) {
 	this->isToggled = status;
@@ -17,6 +21,14 @@ void BaseMenu::setToggleMenuStatus(bool status) {
 
 void BaseMenu::setDraggedStatus(bool status) {
 	this->isDragged = status;
+}
+
+void BaseMenu::setButtonMethod(std::function <void()> func, int index) {
+	if (index<0 || this->getButtons().size() <= index) {
+		throw std::invalid_argument("BaseMenu::setButtonMethod:: invalid index value");
+	}
+
+	this->getButtons()[index]->setButtonMethod(func);
 }
 
 // ------------------- Getters -------------------
@@ -47,6 +59,10 @@ bool BaseMenu::containsPoint(sf::Vector2i point) {
 	return false; // Placeholder implementation, should be overridden in derived classes
 }
 
+void BaseMenu::isHovered(sf::Vector2i mousePos) {
+
+}
+
 void BaseMenu::toggleMenuStatus() {
 	this->setToggleMenuStatus(!(this->getToggleState()));
 }
@@ -75,3 +91,6 @@ void BaseMenu::calculateCenter() {
 }
 
 
+void BaseMenu::handleButtonsPressed(sf::Vector2i mousePos) {
+
+}

@@ -41,7 +41,8 @@ public:
 
 	// ------------------ Actions ------------------
 	bool containsPoint(sf::Vector2i point) override;
-
+	void isHovered(sf::Vector2i mousePos) override;
+	
 	void drawMenu(sf::RenderTarget& window);
 
 	void calculateCenter() override;
@@ -49,6 +50,7 @@ public:
 	void toggleMenuStatus() override;
 	void toggleSpritePartition();
 	
+	void handleButtonsPressed(sf::Vector2i mousePos) override;
 	void handleByDrag(sf::Vector2i point);
 
 private:

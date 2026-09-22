@@ -36,7 +36,7 @@ void BaseButton::initTextPosition(sf::Vector2f position) {
 
 // ------------------ Setters ------------------
 void BaseButton::setButtonMethod(std::function <void()> method) {
-	this->buttonMethod = method;
+	this->buttonMethod = std::move(method);
 }
 
 
@@ -68,6 +68,7 @@ void BaseButton::setSize(sf::Vector2f dim) {
 	// placeholder;
 }
 
+
 // ------------------ Getters ------------------
 sf::Text& BaseButton::getText() {
 	return this->buttonText;
@@ -93,6 +94,12 @@ sf::Vector2f BaseButton::getSize() {
 }
 
 // ------------------ Actions ------------------
+
+void BaseButton::isHovered(sf::Vector2i	mousePos) {
+	//placeholder 
+}
+
+
 bool BaseButton::isPressed(sf::Vector2i mousePos) {
 	return containsPoint(mousePos);
 }

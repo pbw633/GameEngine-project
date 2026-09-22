@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <functional>
 #include <iostream>
 #include "UIComponent.h"
 #include "BasicButton.h"
@@ -21,9 +22,11 @@ public:
 	// ------------------ Initialization ------------------
 	virtual void initButton();
 	virtual void initButton(BaseButton button);
-
+	virtual void initButtonMethod(std::function <void()> func, int index);
     // ------------------ Setters ------------------
 	
+	void setButtonMethod(std::function <void()> func, int index);
+
 	void setToggleMenuStatus(bool status);
 	void setDraggedStatus(bool status);
 	// ------------------ Getters ------------------
@@ -35,9 +38,10 @@ public:
 	// ------------------ Adders -------------------
 	void addButton(std::unique_ptr<BaseButton> button);
 	// ------------------ Actions ------------------
-
+	
 
     virtual bool containsPoint(sf::Vector2i point);
+	virtual void isHovered(sf::Vector2i mousePos);
 
 	virtual void toggleMenuStatus();
 	void toggleDraggingIfPointContained(sf::Vector2i point);
@@ -46,7 +50,7 @@ public:
 	virtual	void openMenu();
 	virtual void resizeMenu(float sizeFactor);
 	virtual void calculateCenter();
-
+	virtual void handleButtonsPressed(sf::Vector2i mousePos);
 	
 	//void drawSubSpritePartitions(sf::RenderTarget& window);
 

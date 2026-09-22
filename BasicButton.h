@@ -58,6 +58,8 @@ public:
 	sf::Sprite getButtonSprite();
 
 	// ------------------ Actions ------------------
+	void isHovered(sf::Vector2i mousePos) override;
+
 	bool buttonOverlapsButton(BasicButton& otherButton);
 	bool buttonInsideMenu(sf::RectangleShape shape);
 	bool containsPoint(sf::Vector2i point) override;

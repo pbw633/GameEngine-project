@@ -22,7 +22,7 @@ void BasicMenu::initButtons() {
 	exitButton->initFont("Fonts/alagard.ttf");
 	
 	
-	exitButton->initTextColor(sf::Color::Red);
+	exitButton->initTextColor(sf::Color::Black);
 	exitButton->initTextSize(20);
 	exitButton->initText("Test Of button");
 
@@ -96,6 +96,18 @@ bool BasicMenu::containsPoint(sf::Vector2i point) {
 		return true;
 	}
 	return false;
+}
+
+void BasicMenu::isHovered(sf::Vector2i mousePos) {
+	if (this->containsPoint(mousePos)) {
+		int numOfButtons = this->getButtons().size();
+		
+		if (0 < numOfButtons) {
+			for (int i = 0; i < numOfButtons; i++) {
+				this->getButtons()[i]->isHovered(mousePos);
+			}
+		}
+	}
 }
 
 void BasicMenu::drawMenu(sf::RenderTarget& window) {

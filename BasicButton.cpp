@@ -115,6 +115,14 @@ sf::Vector2f BasicButton::getPoint(int index) {
 }
 
 // ------------------ Actions ------------------
+void BasicButton::isHovered(sf::Vector2i mousePos) {
+	if (this->containsPoint(mousePos)) {
+		this->getText().setFillColor(sf::Color::Red);
+	} else {
+		this->getText().setFillColor(sf::Color::Black);
+	}
+}
+
 bool BasicButton::buttonOverlapsButton(BasicButton& otherButton) {
 	if (this->basicButtonShape.getGlobalBounds().intersects(otherButton.basicButtonShape.getGlobalBounds())) {
 		return true;
@@ -183,15 +191,6 @@ void BasicButton::resizeButton(float sizeFactor) {
 }
 
 void BasicButton::draw(sf::RenderTarget& window) {
-	//std::cout << "BasicButton draw" << "\n";
-	/*
-	std::cout << "Text: " << this->getText().getString().toAnsiString() << '\n';
-	std::cout << "Position: "
-		<< this->getText().getPosition().x << ", "
-		<< this->getText().getPosition().y << '\n';
-	std::cout << "Character size: "
-		<< this->getText().getCharacterSize() << '\n';
-	*/
 	window.draw(this->getButtonShape());
 	window.draw(this->getText());
 }

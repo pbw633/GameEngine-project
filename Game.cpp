@@ -315,6 +315,7 @@ void Game::rightMouseClickExecution() {
 
 void Game::updatePauseMenu() {
 	this->pauseMenu.handleByDrag(mousePosWindow);
+	this->pauseMenu.isHovered(mousePosWindow);
 }
 
 // -------------- updating events -------------------

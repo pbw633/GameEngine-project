@@ -48,6 +48,7 @@ public:
 
 
 	//------------------ Actions ------------------
+	virtual void isHovered(sf::Vector2i mousePos);
 	bool isPressed(sf::Vector2i mousePos);
 	void isToggled(sf::Vector2i mousePos);
 
